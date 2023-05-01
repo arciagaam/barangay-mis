@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .rotate180 {
+        @apply rotate-180
+    }
+
+    .main-table {
+        @apply drop-shadow-md
+    }
+
+    .main-table thead tr {
+        @apply bg-project-blue text-white
+    }
+
+    .main-table thead tr th {
+        @apply text-left p-2
+    }
+
+    .main-table thead tr th:first-child {
+        @apply rounded-tl-md
+    }
+
+    .main-table thead tr th:last-child {
+        @apply rounded-tr-md
+    }
+
+    .main-table tbody tr {
+        @apply odd:bg-table-odd even:bg-table-even
+    }
+
+    .main-table tbody tr td {
+        @apply p-2 text-sm
+    }
+
+    .main-table tbody tr:last-child td:first-child {
+        @apply rounded-bl-md
+    }
+
+    .main-table tbody tr:last-child td:last-child {
+        @apply rounded-br-md  
+    }
+
+    .form-input-container {
+        @apply flex flex-col focus-within:font-bold
+    }
+    
+    .form-input {
+        @apply outline-none border border-table-even rounded-md py-1 px-2 text-sm transition-all duration-300 ease-in-out font-normal
+        focus:border-project-blue
+    }
+    
+    #complete-check {
+        font-size: 10em !important;
+    }
+}
