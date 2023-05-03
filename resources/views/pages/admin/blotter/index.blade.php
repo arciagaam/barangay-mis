@@ -23,7 +23,7 @@
             </form>
 
             <div class="flex flex-row w-full items-center">
-                <a href="{{url('/certificates/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Issue Blotter</a>
+                <a href="{{url('/blotters/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Issue Blotter</a>
             </div>
         </div>
 
@@ -42,19 +42,40 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $certificates = []
-                @endphp
-                @foreach ($certificates as $certificate)
 
+                @foreach ($blotters as $blotter)
+                    
+                    @php
+                        $reporterIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 1);
+                        $victimIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 2);
+                        $suspectIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 3);
+                    @endphp
                     <tr>
-                        <td>{{$certificate->first_name}} {{$certificate->middle_name}} {{$certificate->last_name}}</td>
-                        <td>{{$certificate->certificate_type}}</td>
-                        <td>{{$certificate->created_at}}</td>
+                        <td>{{$blotter->blotter_id}}</td>
+                        <td>{{$blotter->incident_type}}</td>
+                        <td>
+                            @foreach ($reporterIndex as $index)
+                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
+                            @endforeach
+                        </td>
+
+                        <td>
+                            @foreach ($victimIndex as $index)
+                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
+                            @endforeach
+                        </td>
+
+                        <td>
+                            @foreach ($suspectIndex as $index)
+                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
+                            @endforeach
+                        </td>
+                        <td>{{$blotter->incident_place}}</td>
+                        <td>{{ucfirst($blotter->status)}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                {{-- <a href="{{url("/certificates/$certificate->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
-                                <a href="{{url("/certificates/$certificate->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
+                                <a href="{{url("/blotters/$blotter->blotter_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
+                                {{-- <a href="{{url("/certificates/$certificate->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
                             </div>
                         </td>
                     </tr>
@@ -62,7 +83,7 @@
             </tbody>
         </table>
         <div class="w-full flex">
-            {{-- {{$certificates->links()}} --}}
+            {{$blotter_pagination->links()}}
         </div>        
     </div>
 </x-layout>

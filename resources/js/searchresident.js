@@ -102,7 +102,7 @@ if(residentSearch) {
             document.querySelector('form').append(hiddenInput);
         }
 
-        document.querySelectorAll('input').forEach(input => {
+        document.querySelectorAll('input:not([type="hidden"])').forEach(input => {
             if(input.name in resident) {
                 input.value = resident[input.name];
             }

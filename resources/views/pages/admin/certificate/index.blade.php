@@ -39,13 +39,18 @@
             </thead>
             <tbody>
                 @foreach ($certificates as $certificate)
-
                     <tr>
                         <td>{{$certificate->first_name}} {{$certificate->middle_name}} {{$certificate->last_name}}</td>
                         <td>{{$certificate->certificate_type}}</td>
                         <td>{{$certificate->created_at}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
+                                <form target="_blank" action="{{url('/certificates/print')}}" method="POST">
+                                    @csrf
+                                    <input class="flex items-center justify-center" type="hidden" id="certificate_id" name="certificate_id" value="{{$certificate->id}}">
+                                    <input type="hidden" id="certificate_type_id" name="certificate_type_id" value="{{$certificate->certificate_type_id}}">
+                                    <button title="Print" type="submit" class="flex items-center justify-center" href="{{url('/certificates')}}"><i class='bx bx-sm bx-printer'></i></button>
+                                </form>
                                 {{-- <a href="{{url("/certificates/$certificate->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
                                 <a href="{{url("/certificates/$certificate->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
                             </div>

@@ -11,14 +11,19 @@
     <div class="flex flex-col bg-white flex-1 h-fit rounded-md shadow-md py-5 px-5 gap-10 items-center justify-center">
 
             <div class="flex flex-col items-center gap-10">
-
                 <div class="flex flex-col items-center">
                     <i id="complete-check" class='bx bx-lg bx-check-circle'></i>
                     <p class="text-2xl">Certificate Issued!</p>
                 </div>
 
-                <div class="flex flex-row">
-                    <a class="py-2 px-3 bg-project-yellow text-project-blue font-bold rounded-md" href="{{url('/certificates')}}">Back to Certificates List</a>
+                <div class="flex flex-row gap-3">
+                    <a class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md" href="{{url('/certificates')}}">Back to Certificates List</a>
+                    <form target="_blank" action="{{url('/certificates/print')}}" method="POST">
+                        @csrf
+                        <input type="hidden" id="certificate_id" name="certificate_id" value="{{$certificateId}}">
+                        <input type="hidden" id="certificate_type_id" name="certificate_type_id" value="{{$certificateTypeId}}">
+                        <button type="submit" class="py-2 px-3 bg-project-yellow text-project-blue font-bold rounded-md" href="{{url('/certificates')}}">Print Certificate</button>
+                    </form>
                 </div>
             </div>
 

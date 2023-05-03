@@ -64,6 +64,19 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Barangay Indigency'],
         ]);
 
+        DB::table('blotter_roles')->insert([
+            ['name' => 'reporter'],
+            ['name' => 'victim'],
+            ['name' => 'suspect'],
+        ]);
+
+        DB::table('blotter_status')->insert([
+            ['name' => 'inactive'],
+            ['name' => 'active'],
+            ['name' => 'settled'],
+            ['name' => 'scheduled'],
+        ]);
+
 
         Household::factory(10)->create();
         Resident::factory(10)->create();

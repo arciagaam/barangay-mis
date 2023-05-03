@@ -50,3 +50,18 @@ Route::get('/residents', function (Request $request) {
     echo json_encode(['residents' => $residents]);
 });
 
+Route::get('/inventory', function (Request $request) {
+    
+    $item = DB::table('inventory')
+    ->where(function($query) use ($request) {
+        $query->where('name', 'like', $request->search.'%')
+        ->orWhere('quantity', 'like', $request->search.'%')
+        ->orWhere('remarks', 'like', $request->search.'%');
+    })
+    ->orderBy('inventory.created_at', 'asc')
+    ->limit(10)
+    ->get();
+    
+    echo json_encode(['items' => $item]);
+});
+

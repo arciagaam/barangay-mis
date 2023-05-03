@@ -126,6 +126,9 @@ class CertificateController extends Controller
         $type_id = $certificate->certificate_type_id;
         $certificate->save();
 
+        $request->session()->put('certificate_id', $certificate->id);
+        $request->session()->put('certificate_type_id', $type_id);
+
         // BUSINESS PERMIT
         if($type_id == 1) {
             $formFields = $request->validate([
@@ -160,9 +163,48 @@ class CertificateController extends Controller
         return redirect('/certificates/new/step-four');
     }
 
-    public function create_StepFour()
+    public function create_StepFour(Request $request)
     {
-        return view('pages.admin.certificate.create.complete');
+        $certificateId = $request->session()->get('certificate_id');
+        $certificateTypeId = $request->session()->get('certificate_type_id');
+
+        return view('pages.admin.certificate.create.complete', ['certificateId' => $certificateId, 'certificateTypeId' => $certificateTypeId]);
+    }
+
+    public function print(Request $request)
+    {
+        $resident = DB::table('certificates')
+        ->join('residents', 'residents.id', '=', 'certificates.resident_id')
+        ->join('households', 'households.id', '=', 'residents.household_id')
+        ->where('certificates.id', '=', $request->certificate_id)
+        ->select([
+            'certificates.created_at',
+            'residents.first_name',
+            'residents.middle_name',
+            'residents.last_name',
+            'households.house_number',
+            'households.purok',
+            'households.block',
+            'households.lot',
+            'households.others',
+            'households.subdivision',
+        ])
+        ->first();
+
+        $fields = DB::table('certificate_data')
+        ->where('certificate_id', '=', $request->certificate_id)
+        ->select(['certificate_input_id as input_id', 'value'])
+        ->get();
+
+        if($request->certificate_type_id == 1) {
+            $view = 'pages.certificates.business_permit';
+        } else if($request->certificate_type_id == 2) {
+            $view = 'pages.certificates.barangay_clearance';
+        } else if($request->certificate_type_id == 3) {
+            $view = 'pages.certificates.indigency';
+        }
+
+        return view($view, ['resident' => $resident, 'fields' => $fields]);
     }
 
     /**

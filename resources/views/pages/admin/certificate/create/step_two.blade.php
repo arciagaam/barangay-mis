@@ -190,5 +190,4 @@
         
     </div>  
 </x-layout>
-
-@vite('resources/js/certificates.js')
+@vite('resources/js/searchresident.js')

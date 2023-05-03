@@ -50,7 +50,8 @@ class ResidentController extends Controller
                 ->orWhere('others', 'like', '%'.$request->search.'%')
                 ->orWhere('subdivision', 'like', '%'.$request->search.'%');
             })
-            ->orderBy('residents.created_at', 'asc')
+            ->orderBy('residents.created_at', 'desc')
+            ->orderBy('residents.id', 'asc')
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         } else {
@@ -58,7 +59,8 @@ class ResidentController extends Controller
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
             ->where('residents.archived', '=', '0')
-            ->orderBy('residents.created_at', 'asc')
+            ->orderBy('residents.created_at', 'desc')
+            ->orderBy('residents.id', 'asc')
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         }
