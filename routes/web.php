@@ -11,6 +11,7 @@ use App\Http\Controllers\LendController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\MappingController;
 use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'index']);
+// Route::get('/', [AuthController::class, 'index']);
+
+Route::get('/', function(){
+    return view('pages.admin.dashboard.index');
+});
+
 Route::post('/authenticate', [AuthController::class, 'index']);
 
 
@@ -154,6 +160,10 @@ Route::prefix('maintenance')->group(function() {
 
     Route::prefix('/barangay-information')->group(function() {
         Route::get('/', [BarangayInformationController::class, 'index']);
+    });
+
+    Route::prefix('/users')->group(function() {
+        Route::get('/', [UserController::class, 'index']);
     });
 
     Route::prefix('/audit-trail')->group(function() {

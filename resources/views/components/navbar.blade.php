@@ -68,6 +68,22 @@
                             <p class="text-sm font-normal">Barangay Information</p>         
                         </a>
 
+                        <a class="flex items-center gap-5 {{ request()->is('maintenance/users*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/users')}}">
+                            <i class='bx bx-sm bx{{ request()->is('maintenance/users*') ? 's':'' }}-user-pin'></i>
+                            <p class="text-sm font-normal">Manage Users</p>         
+                        </a>
+
+                    
+                        <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">
+                            <i class='bx bx-sm bx{{ request()->is('maintenance/audit-trail*') ? 's':'' }}-file-find'></i>
+                            <p class="text-sm font-normal">Audit Trail</p>         
+                        </a>
+
+                        <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">
+                            <i class='bx bx-sm bx{{ request()->is('maintenance/audit-trail*') ? 's':'' }}-file-find'></i>
+                            <p class="text-sm font-normal">Audit Trail</p>         
+                        </a>
+
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">
                             <i class='bx bx-sm bx{{ request()->is('maintenance/audit-trail*') ? 's':'' }}-file-find'></i>
                             <p class="text-sm font-normal">Audit Trail</p>         
@@ -91,4 +107,4 @@
     </nav>    
 </div>
 
-@vite('resources/js/nav')
+@vite('resources/js/nav.js')
