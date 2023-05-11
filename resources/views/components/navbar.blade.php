@@ -95,4 +95,4 @@
     </nav>    
 </div>
 
-@vite('resources/js/nav')
+@vite('resources/js/nav.js')
