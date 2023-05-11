@@ -53,7 +53,8 @@
                         <td>{{$mapping->latitude ?? 'N/A'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <button data-longitude='{{$mapping->longitude}}' data-latitude='{{$mapping->latitude}}' data-resident='{{$mapping->resident_id}}' data-mapping='{{$mapping->id ?? ''}}' class="mapping_btn py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">View Mapping</button>
+                                <button data-longitude='{{$mapping->longitude}}' data-latitude='{{$mapping->latitude}}' data-resident='{{$mapping->resident_id}}' data-mapping='{{$mapping->id ?? ''}}' class="mapping_btn flex justify-center items-center"><i class='bx bx-sm bx-search-alt-2'></i></button>
+                                <a href="{{url("/mapping/$mapping->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a>
                             </div>
                         </td>
                     </tr>

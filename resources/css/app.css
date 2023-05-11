@@ -9,6 +9,26 @@
       -webkit-appearance: none;
       margin: 0;
     }
+
+ /* width */
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+    
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #003C71;
+    }
+    
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #012d53;
+    }
+    
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #012d53;
+    }    
   }
 
 @layer components {
@@ -59,6 +79,10 @@
     .form-input {
         @apply outline-none border border-table-even rounded-md py-1 px-2 text-sm transition-all duration-300 ease-in-out font-normal
         focus:border-project-blue
+    }
+
+    .dashboard-grid i {
+        font-size: 4em !important;
     }
     
     #complete-check {

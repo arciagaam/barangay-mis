@@ -13,6 +13,11 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.7",
+        "@fullcalendar/daygrid": "^6.1.7",
+        "@fullcalendar/interaction": "^6.1.7",
+        "@fullcalendar/list": "^6.1.7",
+        "@fullcalendar/timegrid": "^6.1.7",
         "@googlemaps/js-api-loader": "^1.15.1"
     }
 }

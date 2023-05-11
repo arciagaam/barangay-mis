@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class CertificateController extends Controller
 {
+    public function __construct()
+    {
+        View::share('barangayInformation', DB::table('barangay_information')->first());
+    }
     /**
      * Display a listing of the resource.
      */
@@ -117,6 +122,8 @@ class CertificateController extends Controller
     public function create_StepThree(Request $request)
     {
         $certificate = $request->session()->get('certificate');
+        $certificate->save();
+        
         return view('pages.admin.certificate.create.step_three', ['certificate' => $certificate]);
     }
 

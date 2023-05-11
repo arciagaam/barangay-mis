@@ -29,15 +29,22 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'username' => 'admin',
-            'first_name' => 'FNAdmin',
-            'middle_name' => null,
-            'last_name' => 'LNAdmin',
-            'password' => bcrypt('password'),
-        ]);
-
-        DB::table('roles')->insert([
-            'name' => 'super_admin'
+            [
+                'username' => 'admin',
+                'first_name' => 'FNAdmin',
+                'middle_name' => null,
+                'last_name' => 'LNAdmin',
+                'role_id' => 1,
+                'password' => bcrypt('password'),
+            ],
+            [
+                'username' => 'staff',
+                'first_name' => 'FNStaff',
+                'middle_name' => null,
+                'last_name' => 'LNStaff',
+                'role_id' => 2,
+                'password' => bcrypt('password'),
+            ]
         ]);
 
         DB::table('religions')->insert([
@@ -77,10 +84,31 @@ class DatabaseSeeder extends Seeder
             ['name' => 'scheduled'],
         ]);
 
+        DB::table('activities')->insert([
+            [
+                'name' => 'Happy Birthday',
+                'description' => 'Birthday Ni Mayor',
+                'start_date' => now(),
+                'is_all_day' => 1,
+            ],
+            [
+                'name' => 'Happy New Year',
+                'description' => 'New Year, New Barangay',
+                'start_date' => now(),
+                'is_all_day' => 1,
+            ]
+        ]);
+
+        DB::table('barangay_information')->insert([
+            'name' => '53-A Yakal',
+        ]);
+
+        DB::table('official_positions')->insert([
+            ['name' => 'Barangay Captain'],
+            ['name' => 'SK Kagawad'],
+        ]);
 
         Household::factory(10)->create();
-        Resident::factory(10)->create();
-
+        Resident::factory(100)->create();
     }
-
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,5 +64,36 @@ Route::get('/inventory', function (Request $request) {
     ->get();
     
     echo json_encode(['items' => $item]);
+});
+
+Route::post('/calendar', function (Request $request) {
+    $activities = DB::table('activities')
+    ->where('start_date', '>', "$request->year-$request->month-01")
+    ->where('start_date', '<', "$request->year-$request->month-31")
+    ->get();
+
+    echo json_encode(['activities' => $activities]);
+});
+
+Route::put('/calendar', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'start_date' => 'required',
+        'end_date' => '',
+        'start_time' => '',
+        'end_time' => '',
+        'name' => 'required',
+        'description' => 'required',
+        'is_all_day' => '',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $id = DB::table('activities')
+    ->insertGetId($request->all());
+
+    return json_encode(['id' => $id]);
 });
 

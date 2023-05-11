@@ -7,6 +7,7 @@ use App\Models\Resident;
 use App\Models\Residents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class ResidentController extends Controller
 {
@@ -14,6 +15,8 @@ class ResidentController extends Controller
 
     public function __construct()
     {
+        View::share('barangayInformation', DB::table('barangay_information')->first());
+
         $civilStatus = DB::table('civil_status')->select('id', 'name')->orderBy('id', 'asc')->get();
         $occupation = DB::table('occupations')->select('id', 'name')->orderBy('id', 'asc')->get();
         $religion = DB::table('religions')->select('id', 'name')->orderBy('id', 'asc')->get();
@@ -347,6 +350,15 @@ class ResidentController extends Controller
         DB::table('residents')
         ->where('id', '=', $id)
         ->update(['archived' => 1]);
+
+        return back();
+    }
+
+    public function recover(string $id)
+    {
+        DB::table('residents')
+        ->where('id', '=', $id)
+        ->update(['archived' => 0]);
 
         return back();
     }

@@ -1,6 +1,6 @@
 <x-layout>
 
-    <x-pageheader>Archived Residents</x-pageheader>
+    <x-pageheader>Archived Inventory</x-pageheader>
 
     <div class="flex flex-col gap-3">
         {{-- TABLE ACTIONS --}}
@@ -28,25 +28,23 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Full Name</th>
-                    <th>Birth Date</th>
-                    <th>Place of Birth</th>
-                    <th>Sex</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Remarks</th>
                     <th class="!text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $data)
+                @foreach ($inventory as $inventory)
                     <tr>
-                        <td>{{$data->id}}</td>
-                        <td>{{$data->first_name}} {{$data->middle_name}} {{$data->last_name}}</td>
-                        <td>{{$data->birth_date}}</td>
-                        <td>{{$data->place_of_birth}}</td>
-                        <td>{{$data->sex == 1 ? 'Male' : 'Female'}}</td>
+                        <td>{{$inventory->id}}</td>
+                        <td>{{$inventory->name}}</td>
+                        <td>{{$inventory->quantity}}</td>
+                        <td>{{$inventory->remarks}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 {{-- <a href="{{url("/residents/$resident->resident_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a> --}}
-                                {{-- <a href="{{url("/residents/$resident->resident_id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
+                                <a href="{{url("/inventory/$inventory->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>
                             </div>
                         </td>
                     </tr>
@@ -54,7 +52,7 @@
             </tbody>
         </table>
         <div class="w-full flex">
-            {{-- {{$residents->links()}} --}}
+            {{$inventory->links()}}
         </div>        
     </div>
 </x-layout>

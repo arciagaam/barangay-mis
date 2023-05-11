@@ -56,7 +56,7 @@
                         <td>{{$mapping->latitude ?? 'N/A'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <button data-resident='{{$mapping->resident_id}}' data-mapping='{{$mapping->id ?? ''}}' class="mapping_btn py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">{{$mapping->longitude ? 'Update Mapping' : 'Add Mapping'}}</button>
+                                <button data-resident='{{$mapping->resident_id}}' data-mapping='{{$mapping->id ?? ''}}' class="mapping_btn font-bold rounded-md"><i class='bx bx-sm bx-map-pin'></i></button>
                             </div>
                         </td>
                     </tr>
@@ -69,9 +69,13 @@
     </div>
 </x-layout>
 
-<div id="map_modal" class="absolute inset-0 invisible items-center justify-center py-10 px-5 bg-black/30 z-0">
+<div id="map_modal" class="absolute inset-0 invisible items-center justify-center py-10 px-5 bg-black/30 z-0 text-project-blue">
     <div class="flex flex-col gap-5 bg-white min-h-[100%] w-3/4 rounded-md p-4 shadow-md">
-        <p>Click anywhere on the map to set location mapping for 'user here'</p>
+
+        <div class="flex flex-row justify-between">
+            <p class="text-project-blue">Click anywhere on the map to set location mapping</p>
+            <i id="close_map" class='bx bx-sm bxs-x-circle self-end cursor-pointer text-project-blue'></i>
+        </div>
 
         <div class="flex flex-1 min-h-full min-w-full rounded-md overflow-hidden">
             <div id="create_map" class="min-h-full min-w-[calc(100%)] bg-blue-500"></div>

@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Blotter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class BlotterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        View::share('barangayInformation', DB::table('barangay_information')->first());
+    }
+
     public function index(Request $request)
     {
         $rows = $request->rows;

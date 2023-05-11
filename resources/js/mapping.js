@@ -1,22 +1,22 @@
 const index_map = document.querySelector('#map');
 const create_map = document.querySelector('#create_map')
 const view_map = document.querySelector('#view_map')
-function generateMap({map_id, dragging=false}) {
+function generateMap({ map_id, dragging = false }) {
     var map = L.map(map_id, {
-        center : [14.493569, 120.904096],
-        zoom:18,
-        maxZoom:20,
-        minZoom:17,
-        scrollWheelZoom:'center',
-        zoomControl:false,
-        dragging:dragging,
+        center: [14.493569, 120.904096],
+        zoom: 18,
+        maxZoom: 20,
+        minZoom: 17,
+        scrollWheelZoom: 'center',
+        zoomControl: false,
+        dragging: dragging,
     })
 
-    const googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    const googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
         maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
-    
+
     const polygon = L.polygon([
         [14.493824, 120.902181],
         [14.493190, 120.902519],
@@ -30,11 +30,11 @@ function generateMap({map_id, dragging=false}) {
     return map;
 }
 
-if(index_map) {
-    const map = generateMap({map_id:'map'});
+if (index_map) {
+    const map = generateMap({ map_id: 'map' });
 }
 
-if(create_map) {
+if (create_map) {
     const mapModal = document.querySelector('#map_modal')
     let residentId = null;
     let mappingId = null;
@@ -49,26 +49,26 @@ if(create_map) {
         })
     })
 
-    const map = generateMap({map_id:'create_map', dragging:true});
+    const map = generateMap({ map_id: 'create_map', dragging: true });
 
     const popup = L.popup();
     function onMapClick(e) {
         popup.setLatLng(e.latlng)
-        .setContent(`<div class="flex gap-2"> <p>Longitude: ${e.latlng.lng.toPrecision(8)}</p> <p>Latitude: ${e.latlng.lat.toPrecision(8)}</p> </div>`)
-        .openOn(map)
+            .setContent(`<div class="flex gap-2"> <p>Longitude: ${e.latlng.lng.toPrecision(8)}</p> <p>Latitude: ${e.latlng.lat.toPrecision(8)}</p> </div>`)
+            .openOn(map)
 
         document.querySelector('#longitude').value = e.latlng.lng.toPrecision(8);
         document.querySelector('#latitude').value = e.latlng.lat.toPrecision(8);
     }
 
     map.on('click', onMapClick);
-    
+
     document.querySelector('#set_mapping').addEventListener('click', () => {
-        if(document.querySelector('#longitude').value == '' || document.querySelector('#latitude').value == '') {
+        if (document.querySelector('#longitude').value == '' || document.querySelector('#latitude').value == '') {
             document.querySelector('#error-msg').innerText = "You must select a location"
             return false;
         }
-        if(mappingId == ''){
+        if (mappingId == '') {
             fetch(BASE_PATH + '/mapping/new', {
                 method: 'POST',
                 headers: {
@@ -82,10 +82,10 @@ if(create_map) {
                     latitude: document.querySelector('#latitude').value
                 })
             }).then((res) => res.json())
-            .then(data => {
-                location.reload();
-            })
-        }else{
+                .then(data => {
+                    location.reload();
+                })
+        } else {
             fetch(BASE_PATH + '/mapping/update', {
                 method: 'POST',
                 headers: {
@@ -100,14 +100,14 @@ if(create_map) {
                     latitude: document.querySelector('#latitude').value
                 })
             }).then((res) => res.json())
-            .then(data => {
-                location.reload();
-            })
+                .then(data => {
+                    location.reload();
+                })
         }
     })
 }
 
-if(view_map) {
+if (view_map) {
     const mapModal = document.querySelector('#map_modal')
     const brgyLat = 14.494045
     const brgyLong = 120.904006
@@ -143,17 +143,21 @@ if(view_map) {
         })
     })
 
+    const map = generateMap({ map_id: 'view_map', dragging: true });
+}
 
-    const map = generateMap({map_id:'view_map', dragging:true});
+if (document.querySelector('#close_map')) {
 
-    
     document.querySelector('#close_map').addEventListener('click', () => {
+        const mapModal = document.querySelector('#map_modal')
         mapModal.classList.toggle('invisible');
         mapModal.classList.toggle('flex');
 
         map.removeControl(routing)
 
     })
+    
 }
+
 
 

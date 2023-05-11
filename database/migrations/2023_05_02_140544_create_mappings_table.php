@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('resident_id')->nullable()->constrained('residents')->cascadeOnUpdate()->nullOnDelete();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
+            $table->tinyInteger('archived')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
