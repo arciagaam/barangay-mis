@@ -182,6 +182,7 @@ class CertificateController extends Controller
     {
         $resident = DB::table('certificates')
         ->join('residents', 'residents.id', '=', 'certificates.resident_id')
+        ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
         ->join('households', 'households.id', '=', 'residents.household_id')
         ->where('certificates.id', '=', $request->certificate_id)
         ->select([
@@ -189,6 +190,7 @@ class CertificateController extends Controller
             'residents.first_name',
             'residents.middle_name',
             'residents.last_name',
+            'civil_status.name as civil_status',
             'households.house_number',
             'households.purok',
             'households.block',

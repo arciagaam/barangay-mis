@@ -28,7 +28,7 @@
                         @endforeach
                     </select>
                 @else
-                    <input class="form-input" type="text" name="position_id" id="position_id" value="{{$official->first_name}}" {{$editing ? '' : 'disabled'}}>
+                    <input class="form-input" type="text" name="position_id" id="position_id" value="{{$official->position}}" {{$editing ? '' : 'disabled'}}>
                 @endif
             </div>
 
@@ -56,7 +56,11 @@
         </div>
 
         <div class="flex flex-col gap-5">
-            <p class="font-bold text-lg">Personal Information</p>
+
+            <div class="flex gap-5 items-baseline">
+                <p class="font-bold text-lg">Personal Information</p>
+                <a class="text-sm underline" href="{{url("/residents/$official->resident_id")}}">View full resident profile</a>
+            </div>
 
             <div class="grid grid-cols-3 gap-3">
                 <div class="form-input-container">
@@ -106,15 +110,7 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    
-                    @if ($editing)
-                        <select class="form-input" name="sex" id="sex">
-                            <option value="1" {{$official->sex == 1 ? 'selected' : ''}}>Male</option>
-                            <option value="2" {{$official->sex == 2 ? 'selected' : ''}}>Female</option>
-                        </select>
-                    @else
-                        <input class="form-input" type="text" name="sex" id="sex" value="{{$official->sex == 1 ? 'Male' : 'Female'}}" disabled>
-                    @endif
+                    <input class="form-input" type="text" name="sex" id="sex" value="{{$official->sex == 1 ? 'Male' : 'Female'}}" disabled>
                 </div>
 
                 <div class="form-input-container">

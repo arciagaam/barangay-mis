@@ -87,13 +87,190 @@ Route::put('/calendar', function (Request $request) {
         'is_all_day' => '',
     ]);
 
+    if($request->is_all_day == 0 && ((!$request->start_time || $request->start_time == '') || (!$request->end_time || $request->end_time == ''))) {
+        return response()->json(['message' => 'Start Time and End Time is required'], 422);
+    }
+    
     if ($validator->fails()) {
         return response()->json($validator->errors(), 422);
     }
 
+
     $id = DB::table('activities')
     ->insertGetId($request->all());
 
-    return json_encode(['id' => $id]);
+    echo json_encode(['id' => $id]);
+});
+
+Route::get('/positions/{id}', function(Request $request, $id) {
+    $data = DB::table('official_positions')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/positions', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('official_positions')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/positions/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('official_positions')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/civil_status/{id}', function(Request $request, $id) {
+    $data = DB::table('civil_status')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Civil Status not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/civil_status', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('civil_status')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/civil_status/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('civil_status')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/occupations/{id}', function(Request $request, $id) {
+    $data = DB::table('occupations')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/occupations', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('occupations')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/occupations/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('occupations')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/religions/{id}', function(Request $request, $id) {
+    $data = DB::table('religions')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/religions', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('religions')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/religions/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('religions')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
 });
 

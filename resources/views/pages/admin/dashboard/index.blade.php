@@ -174,6 +174,9 @@
                 <input type="checkbox" name="all_day" id="all_day">
                 <label for="all_day">All Day</label>
             </div>
+
+            <p id="error_start_end_time" class="text-xs text-red-500 italic ml-auto"></p>
+
         </div>
 
         <div class="form-input-container">

@@ -72,6 +72,11 @@
                             <p class="text-sm font-normal">Users</p>         
                         </a>
 
+                        <a class="flex items-center gap-5 {{ request()->is('maintenance/settings*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/settings')}}">
+                            <i class='bx bx-sm bx{{ request()->is('maintenance/settings*') ? 's':'' }}-cog'></i>
+                            <p class="text-sm font-normal">Settings</p>         
+                        </a>
+
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">
                             <i class='bx bx-sm bx{{ request()->is('maintenance/audit-trail*') ? 's':'' }}-file-find'></i>
                             <p class="text-sm font-normal">Audit Trail</p>         

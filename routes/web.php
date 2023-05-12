@@ -15,6 +15,7 @@ use App\Http\Controllers\MappingController;
 use App\Http\Controllers\OfficialsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -155,6 +156,7 @@ Route::middleware(['auth'])->group(function() {
     });
 
     Route::prefix('maintenance')->group(function() {
+
         Route::prefix('/archive')->group(function() {
             Route::get('/', [ArchiveController::class, 'index']);
             Route::get('/residents', [ArchiveController::class, 'residents']);
@@ -182,6 +184,15 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/{id}', [UserController::class, 'show']);
             Route::get('/{id}/edit', [UserController::class, 'edit']);
             Route::post('/{id}/edit', [UserController::class, 'update']);
+        });
+
+        Route::prefix('/settings')->group(function() {
+            Route::get('/', [SettingsController::class, 'index']);
+
+            Route::get('/positions', [SettingsController::class, 'index_positions']);
+            Route::get('/civil-status', [SettingsController::class, 'index_civil_status']);
+            Route::get('/occupations', [SettingsController::class, 'index_occupations']);
+            Route::get('/religions', [SettingsController::class, 'index_religions']);
         });
 
         Route::prefix('/audit-trail')->group(function() {

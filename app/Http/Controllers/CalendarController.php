@@ -80,6 +80,13 @@ class CalendarController extends Controller
             $formFields['is_all_day'] = 1;
         }
 
+        if($formFields['is_all_day'] == 0) {
+            $request->validate([
+                'start_time' => 'required',
+                'end_time' => 'required',
+            ]);
+        }
+
         DB::table('activities')
         ->where('id', $id)
         ->update($formFields);

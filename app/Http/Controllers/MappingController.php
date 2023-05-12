@@ -63,6 +63,7 @@ class MappingController extends Controller
                 ->orWhere('subdivision', 'like', $request->search.'%');
             })
             ->where('residents.archived', 0)
+            ->orderBy('mappings.longitude', 'desc')
             ->orderBy('residents.created_at', 'desc')
             ->orderBy('residents.id', 'asc')
             ->paginate($rows ?? 10)
@@ -86,6 +87,7 @@ class MappingController extends Controller
             'households.subdivision',
             ])
             ->where('residents.archived', 0)
+            ->orderBy('mappings.longitude', 'desc')
             ->orderBy('residents.created_at', 'desc')
             ->orderBy('residents.id', 'asc')
             ->paginate($rows ?? 10)

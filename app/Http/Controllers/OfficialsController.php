@@ -34,13 +34,18 @@ class OfficialsController extends Controller
         ->orderBy('year', 'asc')
         ->get();
 
+        $selectedYear = null;
+
         if (count($years) > 0) {
             if (!$request->year) {
+
                 $array_years = array();
                 foreach ($years as $year) {
                     array_push($array_years, $year->year);
                 }
+
                 $currentYear = date("Y");
+
                 if (in_array($currentYear, $array_years)) {
                     $selectedYear = $currentYear;
                 } else {
@@ -49,6 +54,10 @@ class OfficialsController extends Controller
                             $selectedYear = $year;
                         }
                     }
+                }
+
+                if(!$selectedYear) {
+                    $selectedYear = $array_years[count($array_years)-1];
                 }
 
                 return redirect('/officials?year=' . $selectedYear);
@@ -249,6 +258,16 @@ class OfficialsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $formFields = $request->validate([
+            'position_id' => 'required',
+            'term_start' => 'required',
+            'term_end' => 'required',
+        ]);
+
+        DB::table('officials')
+        ->where('id', $id)
+        ->update($formFields);
+
+        return redirect("officials/$id");
     }
 }

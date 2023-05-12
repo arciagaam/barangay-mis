@@ -37,9 +37,6 @@
                         <div class="form-input-container {{$activity->is_all_day == 1 ? 'hidden' : ''}}">
                             <div class="flex flex-row justify-between items-center">
                                 <label for="start_time">Start Time</label>
-                                @error('start_time')
-                                    <p class="text-xs text-red-500 italic">{{$message}}</p>
-                                @enderror
                             </div>
                             <input class="form-input w-fit" type="time" name="start_time" id="start_time" value="{{$activity->start_time}}" {{$editing ? '' : 'disabled'}}>
                         </div>
@@ -62,9 +59,6 @@
                         <div class="form-input-container {{$activity->is_all_day == 1 ? 'hidden' : ''}}">
                             <div class="flex flex-row justify-between items-center ">
                                 <label for="end_time">End Time</label>
-                                @error('end_time')
-                                    <p class="text-xs text-red-500 italic">{{$message}}</p>
-                                @enderror
                             </div>
                             <input class="form-input w-fit" type="time" name="end_time" id="end_time" value="{{$activity->end_time}}" {{$editing ? '' : 'disabled'}}>
                         </div>
@@ -73,6 +67,15 @@
                     <div class="flex items-center gap-3">
                         <input type="checkbox" name="all_day" id="all_day" {{$activity->is_all_day == 1 ? 'checked' : ''}} {{$editing ? '' : 'disabled'}}>
                         <label for="all_day">All Day</label>
+                    </div>
+
+                    <div class="flex flex-col ml-auto gap-2">
+                        @error('start_time')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                        @error('end_time')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
                     </div>
                 </div>
     

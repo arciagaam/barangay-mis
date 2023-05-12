@@ -114,6 +114,7 @@ if(calendarEl){
         document.querySelector('#description').value = ""
         document.querySelector('#error_name').innerText = "";
         document.querySelector('#error_description').innerText = "";
+        document.querySelector('#error_start_end_time').innerText = "";
     })
 
     submitActivity.addEventListener('click', async () => {
@@ -137,9 +138,18 @@ if(calendarEl){
         })
     
         if(data.status == 422) {
-            const {name, description} = await data.json(); 
-            document.querySelector('#error_name').innerText = name ?? '';
-            document.querySelector('#error_description').innerText = description ?? '';
+            const {name, description, message} = await data.json(); 
+
+            if(name || description) {
+                document.querySelector('#error_name').innerText = name ?? '';
+                document.querySelector('#error_description').innerText = description ?? '';
+            }
+
+            if(message) {
+                document.querySelector('#error_start_end_time').innerText = message ?? '';
+            }
+        } else if (data.status == 433) {
+
         } else {
             const {id} = await data.json(); 
 
@@ -157,7 +167,6 @@ if(calendarEl){
     
     })
 }
-
 
 allDay.addEventListener('change', () => {
     endTime.closest('.form-input-container').classList.toggle('hidden');
