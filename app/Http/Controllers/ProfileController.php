@@ -71,6 +71,9 @@ class ProfileController extends Controller
         ->where('id', auth()->user()->id)
         ->update($formFields);
 
+        $id = auth()->user()->id;
+        addToLog('Update', "User ID: $id Updated");
+
         return redirect('/profile');
     }
 
@@ -93,6 +96,10 @@ class ProfileController extends Controller
         DB::table('users')
         ->where('id', '=', auth()->user()->id)
         ->update(['password' => bcrypt($request->password)]);
+
+        $id = auth()->user()->id;
+        addToLog('Change Password', "Password for User ID: $id Changed");
+
 
         return redirect('/profile')->with('success', 'Password updated successfully!');
     }

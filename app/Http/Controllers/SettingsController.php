@@ -112,43 +112,48 @@ class SettingsController extends Controller
         return view('pages.admin.maintenance.settings.religions.index', ['religions' => $religions]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function index_security_questions(Request $request)
     {
-        //
+        $rows = $request->rows;
+
+        if($request->search || $request->search == '') {
+            $security_questions = DB::table('security_questions')
+            ->latest('security_questions.created_at')
+            ->where(function($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            })
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $security_questions = DB::table('security_questions')
+            ->latest()
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+        return view('pages.admin.maintenance.settings.security_questions.index', ['security_questions' => $security_questions]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function index_genders(Request $request)
     {
-        //
+        $rows = $request->rows;
+
+        if($request->search || $request->search == '') {
+            $genders = DB::table('genders')
+            ->latest('genders.created_at')
+            ->where(function($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            })
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $genders = DB::table('genders')
+            ->latest()
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+        return view('pages.admin.maintenance.settings.genders.index', ['genders' => $genders]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

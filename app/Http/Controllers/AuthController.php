@@ -29,6 +29,8 @@ class AuthController extends Controller
 
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
+            $id = auth()->user()->id;
+            addToLog('Login', "User ID: $id Logged In");
             return redirect('/dashboard');
         }
 
@@ -43,4 +45,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
 }

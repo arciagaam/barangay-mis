@@ -20,9 +20,18 @@ class ResidentController extends Controller
         $civilStatus = DB::table('civil_status')->select('id', 'name')->orderBy('id', 'asc')->get();
         $occupation = DB::table('occupations')->select('id', 'name')->orderBy('id', 'asc')->get();
         $religion = DB::table('religions')->select('id', 'name')->orderBy('id', 'asc')->get();
+        $genders = DB::table('genders')->select('id', 'name')->orderBy('id', 'asc')->get();
 
-        $this->options = ['civilStatus' => $civilStatus, 'occupation' => $occupation, 'religion' => $religion];
+        $this->options = ['civilStatus' => $civilStatus, 'occupation' => $occupation, 'religion' => $religion, 'genders' => $genders];
+
+        $this->middleware(function ($request, $next) {
+            if (str_contains($request->path(), 'residents/new') && !str_contains($request->path(), 'residents/new/step-one') && $request->session()->missing('resident')) {
+                return redirect('/residents/new/step-one');
+            }
+            return $next($request);
+        });
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -68,16 +77,16 @@ class ResidentController extends Controller
             ->appends(request()->query());
         }
 
-
         return view('pages.admin.residents_information.index', ['residents' => $residents, 'rows' => $rows]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create_StepOne()
+    public function create_StepOne(Request $request)
     {
-        return view('pages.admin.residents_information.create.step_one', ['options' => $this->options]);
+        $resident = $request->session()->get('resident');
+        return view('pages.admin.residents_information.create.step_one', ['options' => $this->options, 'resident' => $resident]);
     }
 
     public function post_StepOne(Request $request)
@@ -88,6 +97,7 @@ class ResidentController extends Controller
             'last_name' => 'required',
             'nickname' => '',
             'sex' => 'required',
+            'gender_id' => 'required',
             'birth_date' => 'required',
             'age' => 'required',
             'place_of_birth' => 'required',
@@ -217,21 +227,12 @@ class ResidentController extends Controller
         }
 
         $resident->save();
+        addToLog('Create', 'Resident Created');
 
         $request->session()->forget('citizen');
         $request->session()->forget('household');
 
         return view('pages.admin.residents_information.create.complete');
-    }
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -240,12 +241,13 @@ class ResidentController extends Controller
     public function show(string $id)
     {
         $resident = DB::table('residents')
-        ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-        ->join('occupations', 'occupations.id', '=', 'residents.occupation_id')
-        ->join('religions', 'religions.id', '=', 'residents.religion_id')
-        ->join('households', 'households.id', '=', 'residents.household_id')
+        ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
+        ->leftJoin('genders', 'genders.id', '=', 'residents.gender_id')
+        ->leftJoin('occupations', 'occupations.id', '=', 'residents.occupation_id')
+        ->leftJoin('religions', 'religions.id', '=', 'residents.religion_id')
+        ->leftJoin('households', 'households.id', '=', 'residents.household_id')
         ->where('residents.id', '=', $id)
-        ->select('residents.*', 'residents.id as resident_id', 'civil_status.name as civil_status', 'occupations.name as occupation', 'religions.name as religion', 'households.*', 'households.id as household_id')
+        ->select('residents.*', 'residents.id as resident_id','genders.name as gender', 'civil_status.name as civil_status', 'occupations.name as occupation', 'religions.name as religion', 'households.*', 'households.id as household_id')
         ->first();
 
         return view('pages.admin.residents_information.show', ['resident' => $resident, 'options' => $this->options, 'editing' => false]);
@@ -257,10 +259,10 @@ class ResidentController extends Controller
     public function edit(string $id)
     {
         $resident = DB::table('residents')
-        ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-        ->join('occupations', 'occupations.id', '=', 'residents.occupation_id')
-        ->join('religions', 'religions.id', '=', 'residents.religion_id')
-        ->join('households', 'households.id', '=', 'residents.household_id')
+        ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
+        ->leftJoin('occupations', 'occupations.id', '=', 'residents.occupation_id')
+        ->leftJoin('religions', 'religions.id', '=', 'residents.religion_id')
+        ->leftJoin('households', 'households.id', '=', 'residents.household_id')
         ->where('residents.id', '=', $id)
         ->select('residents.*', 'residents.id as resident_id','civil_status.name as civil_status', 'occupations.name as occupation', 'religions.name as religion', 'households.*', 'households.id as household_id')
         ->first();
@@ -334,22 +336,19 @@ class ResidentController extends Controller
         ->where('id', '=', $householdID)
         ->update($householdFields);
 
+        addToLog('Update', "Resident ID: $id Updated");
+
         return redirect("/residents/$id");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     public function archive(string $id)
     {
         DB::table('residents')
         ->where('id', '=', $id)
         ->update(['archived' => 1]);
+        
+        addToLog('Archive', "Resident ID: $id Archived");
 
         return back();
     }
@@ -359,6 +358,8 @@ class ResidentController extends Controller
         DB::table('residents')
         ->where('id', '=', $id)
         ->update(['archived' => 0]);
+
+        addToLog('Recover', "Resident ID: $id Recovered");
 
         return back();
     }

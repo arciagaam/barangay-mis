@@ -100,9 +100,9 @@ if (create_map) {
                     latitude: document.querySelector('#latitude').value
                 })
             }).then((res) => res.json())
-                .then(data => {
-                    location.reload();
-                })
+            .then(data => {
+                location.reload();
+            })
         }
     })
 }
@@ -127,9 +127,6 @@ if (view_map) {
 
             mapModal.classList.toggle('invisible');
             mapModal.classList.toggle('flex');
-
-            console.log('wa')
-
 
             marker = L.marker([latitude, longitude]).addTo(map);
 

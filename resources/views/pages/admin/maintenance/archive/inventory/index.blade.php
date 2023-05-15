@@ -35,16 +35,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($inventory as $inventory)
+                @foreach ($inventory as $it)
                     <tr>
-                        <td>{{$inventory->id}}</td>
-                        <td>{{$inventory->name}}</td>
-                        <td>{{$inventory->quantity}}</td>
-                        <td>{{$inventory->remarks}}</td>
+                        <td>{{$it->id}}</td>
+                        <td>{{$it->name}}</td>
+                        <td>{{$it->quantity}}</td>
+                        <td>{{$it->remarks}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 {{-- <a href="{{url("/residents/$resident->resident_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a> --}}
-                                <a href="{{url("/inventory/$inventory->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>
+                                <a href="{{url("/inventory/$it->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>
                             </div>
                         </td>
                     </tr>

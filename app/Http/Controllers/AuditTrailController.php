@@ -16,56 +16,47 @@ class AuditTrailController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $rows = $request->rows;
+
+        if($request->search || $request->search != '') {
+            $logs = DB::table('logs')
+            ->join('users', 'users.id', 'logs.user_id')
+            ->where(function($query) use ($request) {
+                $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', $request->search . '%')
+                ->orWhere('first_name', 'like', $request->search.'%')
+                ->orWhere('middle_name', 'like', $request->search.'%')
+                ->orWhere('last_name', 'like', $request->search.'%')
+                ->orWhere('username', 'like', $request->search.'%');
+            })
+            ->latest('logs.created_at')
+            ->select([
+                'logs.*',
+                'users.username',
+                'users.first_name',
+                'users.middle_name',
+                'users.last_name'
+            ])
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $logs = DB::table('logs')
+            ->join('users', 'users.id', 'logs.user_id')
+            ->latest()
+            ->select([
+                'logs.*',
+                'users.username',
+                'users.first_name',
+                'users.middle_name',
+                'users.last_name'
+            ])
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+
+        return view('pages.admin.maintenance.audit_trail.index', ['logs' => $logs]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

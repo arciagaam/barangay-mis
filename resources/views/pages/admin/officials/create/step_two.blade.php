@@ -54,7 +54,7 @@
 
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href="" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
+                <a href="{{url('/officials/new/step-one')}}" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
                 <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
             </div>
 

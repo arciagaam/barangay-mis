@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
 class LendController extends Controller
@@ -72,11 +73,16 @@ class LendController extends Controller
         DB::table('lent_items')
         ->insert(['resident_id' => $request->resident_id, 'inventory_id' => $request->id, 'status' => 0, ...$formFields]);
 
-        return redirect("/inventory/lend/new/step-two");
+        $request->session()->put('item_id', $request->id);
+        
+        return redirect("/lend/new/step-two");
     }
 
-    public function create_StepTwo()
+    public function create_StepTwo(Request $request)
     {
+        $id = $request->session()->get('item_id', $request->id);
+        addToLog('Lend', "Item ID: $id");
+        $request->session()->forget('item_id', $request->id);
         return view('pages.admin.inventory.lend.create.complete');
     }
 
@@ -105,8 +111,13 @@ class LendController extends Controller
             'lent_items.return_date as return_date',
         ])
         ->first();
+        if($lentItem->status == 1) {
+            $returnedData = DB::table('returned_items')
+            ->where('lent_item_id', $lentItem->id)
+            ->first();
+        }
 
-        return view('pages.admin.inventory.lend.show', ['item' => $lentItem, 'editing' => false]);
+        return view('pages.admin.inventory.lend.show', ['item' => $lentItem, 'returnedData' => $returnedData ?? null, 'editing' => false]);
     }
 
     /**
@@ -152,28 +163,45 @@ class LendController extends Controller
         ->where('id', '=', $id)
         ->update($formFields);
 
-        return redirect("/inventory/lend/$id");
+        addToLog('Update', "Lent Item ID: $id Updated");
+
+        return redirect("/lend/$id");
     }
 
     public function return(Request $request, string $id)
     {
+        
+        $validator = Validator::make($request->post(), [
+            'returned_quantity' => 'required',
+            'remarks' => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $lent_item = DB::table('lent_items')
         ->where('id', '=', $id)
         ->first();
 
-        $quantity = $lent_item->quantity;
-        $itemId = $lent_item->inventory_id;
+        if($lent_item->quantity < $request->returned_quantity) {
+            return response()->json(['returned_quantity' => 'Return quantity should not be higher than the borrowed quantity'], 422);
+        }
 
         DB::table('inventory')
-        ->where('id', '=', $itemId)
-        ->increment('quantity', intval($quantity));
+        ->where('id', '=', $lent_item->inventory_id)
+        ->increment('quantity', intval($request->returned_quantity));
+
+
 
         DB::table('lent_items')
         ->where('id', '=', $id)
         ->update(['status' => 1]);
 
-        return redirect("/inventory/lend/$id");
+        DB::table('returned_items')
+        ->insert(['lent_item_id' => $id, 'returned_quantity' => $request->returned_quantity, 'remarks' => $request->remarks]);
+
+        return redirect("/lend/$id");
     }
 
     /**

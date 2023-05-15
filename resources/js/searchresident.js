@@ -102,9 +102,27 @@ if(residentSearch) {
             document.querySelector('form').append(hiddenInput);
         }
 
-        document.querySelectorAll('input:not([type="hidden"])').forEach(input => {
+        document.querySelectorAll('.form-input').forEach(input => {
+            console.log(input.name);
             if(input.name in resident) {
                 input.value = resident[input.name];
+
+                if(input.name == 'sex') {
+                    const select = document.querySelector('#sex'); 
+                    select.querySelectorAll('option').forEach(option => {
+                        if(option.value == resident[input.name]) {
+                            option.selected = true;
+                        }
+                    })
+                }
+
+                if(input.name == 'voter_status') {
+                    input.value = resident[input.name] == 1 ? 'Registered' : 'Unregistered'
+                }
+
+                if(input.name == 'disabled') {
+                    input.value = resident[input.name] == 1 ? 'Disabled' : 'Abled'
+                }
             }
         })
     }

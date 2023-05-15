@@ -107,7 +107,7 @@ class MappingController extends Controller
         $latitude = $request->latitude;
 
         DB::table('mappings')->insert(['resident_id' => $residentId, 'longitude' => $longitude, 'latitude' => $latitude]);
-
+        addToLog('Create', "Mapping Created for Resident ID: $residentId");
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -125,6 +125,7 @@ class MappingController extends Controller
         ->where('id', '=', $mappingId)
         ->update(['longitude' => $longitude, 'latitude' => $latitude]);
 
+        addToLog('Update', "Mapping ID: $mappingId Updated");
         return response()->json(['success' => 'success'], 200);
     }
 
@@ -214,7 +215,7 @@ class MappingController extends Controller
         DB::table('mappings')
         ->where('id', '=', $id)
         ->update(['archived' => 1]);
-
+        addToLog('Archive', "Mapping ID: $id Archived");
         return back();
     }
 
@@ -224,6 +225,7 @@ class MappingController extends Controller
         ->where('id', '=', $id)
         ->update(['archived' => 0]);
 
+        addToLog('Recover', "Mapping ID: $id Recovered");
         return back();
     }
 }

@@ -42,6 +42,7 @@
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 <button data-id="{{$cs->id}}" data-type="civil_status" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
+                                <button data-id="{{$cs->id}}" data-type="civil_status" class="delete_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
                             </div>
                         </td>
                     </tr>

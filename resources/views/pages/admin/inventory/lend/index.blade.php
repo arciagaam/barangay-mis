@@ -23,7 +23,7 @@
             </form>
 
             <div class="flex flex-row items-center whitespace-nowrap gap-3">
-                <a href="{{url('/inventory/lend/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bxs-hand'></i>Lend Item to Resident</a>
+                <a href="{{url('lend/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bxs-hand'></i>Lend Item to Resident</a>
             </div>
         </div>
 
@@ -50,8 +50,7 @@
                         <td>{{$item->status == 0 ? 'Borrowing' : 'Returned'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <a href="{{url("/inventory/lend/$item->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
-                                {{-- <a href="{{url("/")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
+                                <a href="{{url("/lend/$item->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
                             </div>
                         </td>
                     </tr>

@@ -74,8 +74,7 @@
                         <td>{{ucfirst($blotter->status)}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <a href="{{url("/blotters/$blotter->blotter_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
-                                {{-- <a href="{{url("/certificates/$certificate->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
+                                <a href="{{url("/blotters/$blotter->blotter_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
                             </div>
                         </td>
                     </tr>

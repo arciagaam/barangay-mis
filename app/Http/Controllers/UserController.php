@@ -58,11 +58,15 @@ class UserController extends Controller
      */
     public function create_StepOne()
     {
+        $questions = DB::table('security_questions')
+        ->latest()
+        ->get();
+
         $roles = DB::table('roles')
             ->latest()
             ->get();
 
-        return view('pages.admin.maintenance.user.create.step_one', ['roles' => $roles]);
+        return view('pages.admin.maintenance.user.create.step_one', ['roles' => $roles, 'questions' => $questions]);
     }
 
     /**
@@ -77,16 +81,20 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required',
             'role_id' => 'required',
+            'security_question_id' => 'required',
+            'security_question_answer' => 'required',
         ]);
 
         DB::table('users')
-            ->insert($formFields);
+        ->insert($formFields);
 
         return redirect('/maintenance/users/new/step-two');
     }
 
     public function create_StepTwo(Request $request)
     {
+        addToLog('Create', "New User Created");
+
         return view('pages.admin.maintenance.user.create.complete');
     }
 
@@ -131,18 +139,14 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
 
+        $formFields['password'] = bcrypt($request->password);
+
         DB::table('users')
         ->where('id', $id)
         ->update($formFields);
 
-        return redirect("/maintenance/users/$id");
-    }
+        addToLog('Update', "User ID: $id Updated");
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect("/maintenance/users/$id");
     }
 }

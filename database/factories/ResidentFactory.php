@@ -22,6 +22,7 @@ class ResidentFactory extends Factory
             'last_name' => fake()->lastName(),
             'nickname' => fake()->firstNameMale(),
             'sex' => fake()->numberBetween(1,2),
+            'gender_id' => fake()->numberBetween(1,2),
             'birth_date' => fake()->date(),
             'age' => fake()->numberBetween(1,100),
             'place_of_birth' => fake()->city(),

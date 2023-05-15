@@ -43,10 +43,17 @@
                     <i class='bx bx-sm bx{{ request()->is('mapping*') ? 's':'' }}-map-alt'></i>
                     <p class="text-sm font-normal">Mapping</p>
                 </a>
-    
+                
                 <a href="{{url('/inventory')}}" class="pl-5 flex items-center gap-5  {{ request()->is('inventory*') ? 'text-project-yellow' : '' }}">
                     <i class='bx bx-sm bx{{ request()->is('inventory*') ? 's':'' }}-package'></i>
                     <p class="text-sm font-normal">Inventory</p>
+                </a>
+
+                <a href="{{url('/lend')}}" class="pl-5 flex items-center gap-5  {{ request()->is('lend*') ? 'text-project-yellow' : '' }}">
+                    <span class="material-symbols-outlined lend">
+                        real_estate_agent
+                    </span>
+                    <p class="text-sm font-normal">Lend Items</p>
                 </a>
 
                 <div id="maintenance_main" class="pl-5 flex flex-col {{ request()->is('maintenance*') ? 'border-t border-b border-white py-5 ':'' }} transition-all duration-300 ease-in-out">
@@ -57,20 +64,26 @@
                     </div>
 
                     <div id="maintenance_links" class="flex flex-col gap-3 overflow-hidden {{ request()->is('maintenance*') ? 'max-h-[500px] mt-5' : 'max-h-0' }} transition-all duration-300 ease-in-out">
-                        <a class="flex items-center gap-5 {{ request()->is('maintenance/archive*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/archive')}}">
-                            <i class='bx bx-sm bx{{ request()->is('maintenance/archive*') ? 's':'' }}-box'></i>
-                            <p class="text-sm font-normal">Archive</p>         
-                        </a>
+                        @if (auth()->user()->role_id == 1)                
+                            <a class="flex items-center gap-5 {{ request()->is('maintenance/archive*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/archive')}}">
+                                <i class='bx bx-sm bx{{ request()->is('maintenance/archive*') ? 's':'' }}-box'></i>
+                                <p class="text-sm font-normal">Archive</p>         
+                            </a>
+                        @endif
 
-                        <a class="flex items-center gap-5 {{ request()->is('maintenance/barangay-information*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/barangay-information')}}">
-                            <i class='bx bx-sm bx{{ request()->is('maintenance/barangay-information*') ? 's':'' }}-buildings'></i>
-                            <p class="text-sm font-normal">Barangay Information</p>         
-                        </a>
-
-                        <a class="flex items-center gap-5 {{ request()->is('maintenance/users*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/users')}}">
-                            <i class='bx bx-sm bx{{ request()->is('maintenance/users*') ? 's':'' }}-user-plus'></i>
-                            <p class="text-sm font-normal">Users</p>         
-                        </a>
+                        @if (auth()->user()->role_id == 1)         
+                            <a class="flex items-center gap-5 {{ request()->is('maintenance/barangay-information*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/barangay-information')}}">
+                                <i class='bx bx-sm bx{{ request()->is('maintenance/barangay-information*') ? 's':'' }}-buildings'></i>
+                                <p class="text-sm font-normal">Barangay Information</p>         
+                            </a>
+                        @endif
+                        
+                        @if (auth()->user()->role_id == 1)                   
+                            <a class="flex items-center gap-5 {{ request()->is('maintenance/users*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/users')}}">
+                                <i class='bx bx-sm bx{{ request()->is('maintenance/users*') ? 's':'' }}-user-plus'></i>
+                                <p class="text-sm font-normal">Users</p>         
+                            </a>
+                        @endif
 
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/settings*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/settings')}}">
                             <i class='bx bx-sm bx{{ request()->is('maintenance/settings*') ? 's':'' }}-cog'></i>

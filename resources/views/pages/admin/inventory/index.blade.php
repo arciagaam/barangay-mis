@@ -23,7 +23,6 @@
             </form>
 
             <div class="flex flex-row items-center whitespace-nowrap gap-3">
-                <a href="{{url('/inventory/lend')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bxs-hand'></i>Lend Item</a>
                 <a href="{{url('/inventory/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Add Item</a>
             </div>
         </div>
@@ -47,9 +46,10 @@
                         <td>{{$item->remarks}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <a href="{{url("/inventory/$item->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
-                                <a href="{{url("/inventory/$item->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a>
-                                
+                                <a href="{{url("/inventory/$item->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
+                                @if (auth()->user()->role_id == 1)  
+                                    <a href="{{url("/inventory/$item->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a>
+                                @endif
                             </div>
                         </td>
                     </tr>

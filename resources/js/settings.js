@@ -1,8 +1,13 @@
 const viewBtn = document.querySelectorAll('.view_btn');
+const deleteBtn = document.querySelectorAll('.delete_btn');
+
 const addPosition = document.querySelector('#add_position');
 const addCivilStatus = document.querySelector('#add_civil_status');
 const addOccupation = document.querySelector('#add_occupation');
 const addReligion = document.querySelector('#add_religion');
+const addSecurityQuestion = document.querySelector('#add_security_question');
+const addGender = document.querySelector('#add_gender');
+
 const addModal = document.querySelector('#add_modal');
 const submitBtn = document.querySelector('#submit');
 const closeModal = document.querySelector('#close_modal');
@@ -44,6 +49,8 @@ viewBtn.forEach(view => {
 
     })
 });
+
+deleteBtn.forasd
 
 submitBtn.addEventListener('click', async () => {
     const _method = submitBtn.dataset.type == 'update' ? 'PATCH' : 'PUT'
@@ -98,11 +105,30 @@ if (addOccupation) {
         addModal.classList.toggle('hidden');
     })
 }
+
 if (addReligion) {
     addReligion.addEventListener('click', () => {
         submitBtn.dataset.type = 'create';
         submitBtn.innerText = 'Add Religion'
         modalTitle.innerHTML = 'Add New Religion'
+        addModal.classList.toggle('hidden');
+    })
+}
+
+if (addSecurityQuestion) {
+    addSecurityQuestion.addEventListener('click', () => {
+        submitBtn.dataset.type = 'create';
+        submitBtn.innerText = 'Add Security Question'
+        modalTitle.innerHTML = 'Add New Security Question'
+        addModal.classList.toggle('hidden');
+    })
+}
+
+if (addGender) {
+    addSecurityQuestion.addEventListener('click', () => {
+        submitBtn.dataset.type = 'create';
+        submitBtn.innerText = 'Add Gender'
+        modalTitle.innerHTML = 'Add Gender'
         addModal.classList.toggle('hidden');
     })
 }

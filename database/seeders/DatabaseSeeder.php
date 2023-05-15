@@ -28,6 +28,16 @@ class DatabaseSeeder extends Seeder
             ['name' => 'staff'],
         ]);
 
+        DB::table('security_questions')->insert([
+            ['name' => 'What is the name of your pet?'],
+            ['name' => 'What is your favorite ballpen?'],
+        ]);
+
+        DB::table('genders')->insert([
+            ['name' => 'Gender 1'],
+            ['name' => 'Gender 2'],
+        ]);
+
         DB::table('users')->insert([
             [
                 'username' => 'admin',
@@ -35,6 +45,8 @@ class DatabaseSeeder extends Seeder
                 'middle_name' => null,
                 'last_name' => 'LNAdmin',
                 'role_id' => 1,
+                'security_question_id' => 1,
+                'security_question_answer' => 'answer',
                 'password' => bcrypt('password'),
             ],
             [
@@ -43,6 +55,8 @@ class DatabaseSeeder extends Seeder
                 'middle_name' => null,
                 'last_name' => 'LNStaff',
                 'role_id' => 2,
+                'security_question_id' => 1,
+                'security_question_answer' => 'answer',
                 'password' => bcrypt('password'),
             ]
         ]);
@@ -107,6 +121,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Barangay Captain'],
             ['name' => 'SK Kagawad'],
         ]);
+
 
         Household::factory(10)->create();
         Resident::factory(100)->create();

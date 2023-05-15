@@ -8,6 +8,7 @@ use App\Http\Controllers\BlotterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LendController;
 use App\Http\Controllers\MaintenanceController;
@@ -32,6 +33,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate']);
+
+Route::prefix('/forgot-password')->group(function() {
+    Route::get('/', [ForgotPasswordController::class, 'index']);
+    Route::post('/username-check', [ForgotPasswordController::class, 'usernameCheck']);
+    Route::get('/security-question', [ForgotPasswordController::class, 'securityCheck']);
+    Route::post('/security-check', [ForgotPasswordController::class, 'questionCheck']);
+    Route::get('/change-password', [ForgotPasswordController::class, 'passwordCheck']);
+    Route::post('/change-password', [ForgotPasswordController::class, 'changePassword']);
+
+});
 
 Route::middleware(['auth'])->group(function() {
     Route::get('/logout', [AuthController::class, 'logout']);
@@ -130,29 +141,28 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/step-two', [InventoryController::class, 'create_StepTwo']);
             Route::post('/step-two', [InventoryController::class, 'post_StepTwo']);
         });
-
-        Route::prefix('/lend')->group(function () {
-            Route::get('/', [LendController::class, 'index']);
-            
-            Route::prefix('new')->group(function () {
-                Route::get('/step-one', [LendController::class, 'create_StepOne']);
-                Route::post('/step-one', [LendController::class, 'post_StepOne']);
-        
-                Route::get('/step-two', [LendController::class, 'create_StepTwo']);
-                Route::post('/step-two', [LendController::class, 'post_StepTwo']);
-            });
-
-            Route::get('/{id}', [LendController::class, 'show']);
-            Route::get('/{id}/edit', [LendController::class, 'edit']);
-            Route::post('/{id}/edit', [LendController::class, 'update']);
-            Route::get('/{id}/return', [LendController::class, 'return']);
-        });
-
         Route::get('/{id}', [InventoryController::class, 'show']);
         Route::get('/{id}/edit', [InventoryController::class, 'edit']);
         Route::post('/{id}/edit', [InventoryController::class, 'update']);
         Route::get('/{id}/archive', [InventoryController::class, 'archive']);
-        Route::get('/{id}/recover', [InventoryController::class, 'return']);
+        Route::get('/{id}/recover', [InventoryController::class, 'recover']);
+    });
+
+    Route::prefix('lend')->group(function () {
+        Route::get('/', [LendController::class, 'index']);
+        
+        Route::prefix('new')->group(function () {
+            Route::get('/step-one', [LendController::class, 'create_StepOne']);
+            Route::post('/step-one', [LendController::class, 'post_StepOne']);
+    
+            Route::get('/step-two', [LendController::class, 'create_StepTwo']);
+            Route::post('/step-two', [LendController::class, 'post_StepTwo']);
+        });
+
+        Route::get('/{id}', [LendController::class, 'show']);
+        Route::get('/{id}/edit', [LendController::class, 'edit']);
+        Route::post('/{id}/edit', [LendController::class, 'update']);
+        Route::post('/{id}/return', [LendController::class, 'return']);
     });
 
     Route::prefix('maintenance')->group(function() {
@@ -193,6 +203,8 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/civil-status', [SettingsController::class, 'index_civil_status']);
             Route::get('/occupations', [SettingsController::class, 'index_occupations']);
             Route::get('/religions', [SettingsController::class, 'index_religions']);
+            Route::get('/security-questions', [SettingsController::class, 'index_security_questions']);
+            Route::get('/genders', [SettingsController::class, 'index_genders']);
         });
 
         Route::prefix('/audit-trail')->group(function() {

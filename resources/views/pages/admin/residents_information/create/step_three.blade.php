@@ -45,15 +45,19 @@
                             @enderror
                         </div>
 
+                        @php
+                            $status = old('voter_status') ?? ($resident->voter_status ?? '')
+                        @endphp
+
                         <select class="form-input w-fit" name="voter_status" id="voter_status">
-                            <option value="0">Unregistered</option>
-                            <option value="1">Registered</option>
+                            <option value="0" {{$status == 0 ? 'selected' : ''}}>Unregistered</option>
+                            <option value="1" {{$status == 1 ? 'selected' : ''}}>Registered</option>
                         </select>
                     </div>
 
                     <div class="form-input-container gap-1 hidden">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="preinct_number">Precint Number</label>
+                            <label for="preinct_number">Precinct Number</label>
                             @error('preinct_number')
                                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
@@ -68,7 +72,7 @@
 
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href="" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
+                <a href={{url('/residents/new/step-two')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
                 <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
             </div>
 

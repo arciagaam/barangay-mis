@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-
+use LOGS;
 class CalendarController extends Controller
 {
     public function __construct()
@@ -13,28 +13,9 @@ class CalendarController extends Controller
         View::share('barangayInformation', DB::table('barangay_information')->first());
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         return json_encode(['test' =>  'test']);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -91,6 +72,7 @@ class CalendarController extends Controller
         ->where('id', $id)
         ->update($formFields);
 
+        addToLog('Update', "Updated Calendar Activity ID: $id");
         return redirect("/calendar/activity/$id");
     }
 
@@ -102,6 +84,8 @@ class CalendarController extends Controller
         DB::table('activities')
         ->where('id', $request->id)
         ->delete();
+
+        addToLog('Delete', "Deleted Calendar Activity ID: $request->id");
 
         return redirect("/dashboard");
 

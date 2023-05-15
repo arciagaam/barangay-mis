@@ -51,8 +51,6 @@
                                     <input type="hidden" id="certificate_type_id" name="certificate_type_id" value="{{$certificate->certificate_type_id}}">
                                     <button title="Print" type="submit" class="flex items-center justify-center" href="{{url('/certificates')}}"><i class='bx bx-sm bx-printer'></i></button>
                                 </form>
-                                {{-- <a href="{{url("/certificates/$certificate->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a>
-                                <a href="{{url("/certificates/$certificate->id/archive")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></a> --}}
                             </div>
                         </td>
                     </tr>

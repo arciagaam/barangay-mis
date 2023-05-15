@@ -77,6 +77,30 @@
             </select>
         </div>
 
+        <div class="form-input-container">
+            <div class="flex flex-row justify-between items-center">
+                <label for="security_question_id">Choose a Security Question</label>
+                @error('security_question_id')
+                    <p class="text-xs text-red-500 italic">{{$message}}</p>
+                @enderror
+            </div>
+            <select class="form-input w-fit" name="security_question_id" id="security_question_id">
+                @foreach ($questions as $question)
+                    <option value="{{$question->id}}">{{ucfirst($question->name)}}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-input-container">
+            <div class="flex flex-row justify-between items-center">
+                <label for="security_question_answer">Answer</label>
+                @error('security_question_answer')
+                    <p class="text-xs text-red-500 italic">{{$message}}</p>
+                @enderror
+            </div>
+            <input class="form-input w-fit" type="text" name="security_question_answer" id="security_question_answer">
+        </div>
+
         <div class="flex flex-row self-end mt-auto">
             <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
         </div>

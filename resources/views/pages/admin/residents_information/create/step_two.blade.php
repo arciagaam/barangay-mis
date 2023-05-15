@@ -24,7 +24,7 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="house_number" id="house_number">
+                    <input class="form-input" type="text" name="house_number" id="house_number" value="{{ old('house_number') ?? ($household->house_number ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -34,7 +34,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="purok" id="purok">
+                    <input class="form-input" type="text" name="purok" id="purok" value="{{ old('purok') ?? ($household->purok ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -44,7 +44,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="block" id="block">
+                    <input class="form-input" type="text" name="block" id="block" value="{{ old('block') ?? ($household->block ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -54,7 +54,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="lot" id="lot">
+                    <input class="form-input" type="text" name="lot" id="lot" value="{{ old('lot') ?? ($household->lot ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -64,7 +64,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="others" id="others">
+                    <input class="form-input" type="text" name="others" id="others" value="{{ old('others') ?? ($household->others ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -74,7 +74,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="subdivision" id="subdivision">
+                    <input class="form-input" type="text" name="subdivision" id="subdivision" value="{{ old('subdivision') ?? ($household->subdivision ?? '') }}">
                 </div>
 
                 <div class="form-input-container">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="flex border-[1px] border-nav-inactive rounded-md text-small px-3 items-center focus-within:border-project-blue transition-all duration-300 ease-in-out">
                         <p class="border-r pr-3 text-nav-inactive font-bold text-sm">+63</p>
-                        <input class="form-input focus:outline-0 pl-3 w-full placeholder-neutral border-none" type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number" maxlength="10" pattern="[0-9]{10}" value="">
+                        <input class="form-input focus:outline-0 pl-3 w-full placeholder-neutral border-none" type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number" maxlength="10" pattern="[0-9]{10}" value="{{ old('phone_number') ?? ($resident->phone_number ?? '') }}">
                     </div>
                 </div>
 
@@ -97,13 +97,13 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="telephone_number" id="telephone_number" pattern="[0-9 +()]+$">
+                    <input class="form-input" type="text" name="telephone_number" id="telephone_number" pattern="[0-9 +()]+$" value="{{ old('telephone_number') ?? ($resident->telephone_number ?? '') }}">
                 </div>
             </div>
 
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href="" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
+                <a href={{url('/residents/new/step-one')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
                 <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
             </div>
 

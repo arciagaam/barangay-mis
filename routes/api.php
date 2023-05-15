@@ -274,3 +274,89 @@ Route::patch('/religions/{id}', function(Request $request, $id) {
     return response()->json(['message' => 'success'], 200);
 });
 
+Route::get('/security_questions/{id}', function(Request $request, $id) {
+    $data = DB::table('security_questions')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/security_questions', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('security_questions')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/security_questions/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('security_questions')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/genders/{id}', function(Request $request, $id) {
+    $data = DB::table('genders')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/genders', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    $data = DB::table('genders')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/genders/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    DB::table('genders')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+

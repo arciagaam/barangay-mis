@@ -36,17 +36,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $data)
+                @foreach ($data as $dt)
                     <tr>
-                        <td>{{$data->id}}</td>
-                        <td>{{$data->first_name}} {{$data->middle_name}} {{$data->last_name}}</td>
-                        <td>{{$data->birth_date}}</td>
-                        <td>{{$data->place_of_birth}}</td>
-                        <td>{{$data->sex == 1 ? 'Male' : 'Female'}}</td>
+                        <td>{{$dt->id}}</td>
+                        <td>{{$dt->first_name}} {{$dt->middle_name}} {{$dt->last_name}}</td>
+                        <td>{{$dt->birth_date}}</td>
+                        <td>{{$dt->place_of_birth}}</td>
+                        <td>{{$dt->sex == 1 ? 'Male' : 'Female'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 {{-- <a href="{{url("/residents/$resident->resident_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a> --}}
-                                <a href="{{url("/residents/$data->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>
+                                <a href="{{url("/residents/$dt->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>
                             </div>
                         </td>
                     </tr>

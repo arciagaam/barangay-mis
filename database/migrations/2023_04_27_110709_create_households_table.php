@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('house_number');
             $table->string('purok')->nullable()->default('');
             $table->string('block')->nullable()->default('');
-            $table->string('lot')->nullable()->default('');;
-            $table->string('others')->nullable()->default('');;
-            $table->string('subdivision')->nullable()->default('');;
+            $table->string('lot')->nullable()->default('');
+            $table->string('others')->nullable()->default('');
+            $table->string('subdivision')->nullable()->default('');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

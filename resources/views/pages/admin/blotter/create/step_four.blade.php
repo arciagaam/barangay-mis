@@ -48,7 +48,8 @@
             </div>
         </div>
 
-        <div  class="flex flex-row self-end mt-auto">
+        <div  class="flex flex-row self-end mt-auto gap-3">
+            <a href="{{url('/blotters/new/step-three')}}" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
             <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
         </div>
     </form>  

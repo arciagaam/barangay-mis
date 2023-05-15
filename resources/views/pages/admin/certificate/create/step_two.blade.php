@@ -180,11 +180,12 @@
             </div>
         </div>
 
-        <form method="POST" action="{{url('/certificates/new/step-two')}}" class="flex flex-row self-end mt-auto">
+        <form method="POST" action="{{url('/certificates/new/step-two')}}" class="flex flex-row self-end mt-auto gap-3">
             @csrf
             @if ($residentData)
                 <input type="hidden" name="resident_id" id="resident_id" value="{{$residentData->resident_id}}">
             @endif
+            <a href="{{url('/certificates/new/step-one')}}" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
             <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
         </form>
         

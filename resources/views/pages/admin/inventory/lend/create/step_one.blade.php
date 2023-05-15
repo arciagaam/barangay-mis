@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{url('/inventory/lend/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
+    <form method="POST" action="{{url('/lend/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
         @csrf
 
         <p class="text-red-500 italic text-sm">{{session()->get('error')}}</p>
@@ -196,7 +196,8 @@
             </div>
         </div>
 
-        <div class="flex flex-row self-end mt-auto">
+        <div class="flex flex-row self-end mt-auto gap-3">
+            <a href={{url('/lend')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
             <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
         </div>
         

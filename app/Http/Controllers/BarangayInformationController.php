@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-
+use LOGS;
 class BarangayInformationController extends Controller
 {
     public function __construct()
@@ -18,9 +18,8 @@ class BarangayInformationController extends Controller
     public function index()
     {
         return view('pages.admin.maintenance.barangay_information.index', ['editing' => false]);
+        
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -55,14 +54,8 @@ class BarangayInformationController extends Controller
         ->where('id', 1)
         ->update($formFields);
 
-        return redirect('/maintenance/barangay-information');
-    }
+        addToLog('Update', 'Updated Barangay Information');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('/maintenance/barangay-information');
     }
 }

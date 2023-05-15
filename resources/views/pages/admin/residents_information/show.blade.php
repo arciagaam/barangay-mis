@@ -76,6 +76,31 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
+                        <label for="gender_id">Gender</label>
+                        @error('gender_id')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+
+                    @if ($editing)
+                    
+                    @php
+                        $_gender = old('gender_id') ?? ($resident->gender_id ?? '')
+                    @endphp
+
+                        <select class="form-input" name="gender_id" id="gender_id" {{$editing ? '' : 'disabled'}}>
+                            @foreach ($options['genders'] as $gender)
+                                <option value="{{$gender->id}}" {{$_gender == $gender->id ? 'selected' : ''}}>{{$gender->name}}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <input class="form-input" type="text" name="gender_id" id="gender_id" value="{{$resident->gender}}" {{$editing ? '' : 'disabled'}}>
+                    @endif
+
+                </div>
+
+                <div class="form-input-container">
+                    <div class="flex flex-row justify-between items-center">
                         <label for="birth_date" > Birth Date</label>
                         @error('birth_date')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>

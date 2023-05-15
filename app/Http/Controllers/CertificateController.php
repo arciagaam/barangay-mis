@@ -12,6 +12,13 @@ class CertificateController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+
+        $this->middleware(function ($request, $next) {
+            if (str_contains($request->path(), 'certificates/new') && !str_contains($request->path(), 'certificates/new/step-one') && $request->session()->missing('certificate')) {
+                return redirect('/certificates/new/step-one');
+            }
+            return $next($request);
+        });
     }
     /**
      * Display a listing of the resource.
@@ -174,7 +181,7 @@ class CertificateController extends Controller
     {
         $certificateId = $request->session()->get('certificate_id');
         $certificateTypeId = $request->session()->get('certificate_type_id');
-
+        addToLog('Create', 'Issued Certificate');
         return view('pages.admin.certificate.create.complete', ['certificateId' => $certificateId, 'certificateTypeId' => $certificateTypeId]);
     }
 
@@ -213,48 +220,10 @@ class CertificateController extends Controller
             $view = 'pages.certificates.indigency';
         }
 
+        $request->session()->forget('certificate');
+        $request->session()->forget('certificate_type_id');
+        addToLog('Print', "Printed Certificate ID: $request->certificate_id");
         return view($view, ['resident' => $resident, 'fields' => $fields]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
 
 }

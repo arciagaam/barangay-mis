@@ -27,101 +27,110 @@
             <button type="button" class="py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm">Search</button>
         </div>
 
-        <div class="flex flex-col gap-5">
-            <p class="font-bold text-lg">Suspect Information (Leave blank if unknown)</p>
-
-            <div class="grid grid-cols-3 gap-3">
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="first_name">First Name</label>
+        <form method="POST" action="{{url('/blotters/new/step-three')}}" class="flex flex-col h-full">
+            <div class="flex flex-col gap-5">
+                <p class="font-bold text-lg">Suspect Information</p>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="first_name">First Name</label>
+                        </div>
+                        <input class="form-input" type="text" name="first_name" id="first_name" value="{{$residentData->first_name ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="first_name" id="first_name" value="{{$residentData->first_name ?? ''}}" disabled>
-                </div>
-    
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="middle_name">Middle Name</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="middle_name">Middle Name</label>
+                        </div>
+                        <input class="form-input" type="text" name="middle_name" id="middle_name" value="{{$residentData->middle_name ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="middle_name" id="middle_name" value="{{$residentData->middle_name ?? ''}}" disabled>
-                </div>
-    
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="last_name">Last Name</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="last_name">Last Name</label>
+                        </div>
+                        <input class="form-input" type="text" name="last_name" id="last_name" value="{{$residentData->last_name ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="last_name" id="last_name" value="{{$residentData->last_name ?? ''}}" disabled>
-                </div>
-    
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="nickname">Nickname</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="nickname">Nickname</label>
+                        </div>
+                        <input class="form-input" type="text" name="nickname" id="nickname" value="{{$residentData->nickname ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="nickname" id="nickname" value="{{$residentData->nickname ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="sex">Sex</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="sex">Sex</label>
+                        </div>
+            
+                        @php
+                            $_sex = $residentData->sex ?? null;
+                        @endphp
+                        <select class="form-input" name="sex" id="sex">
+                            <option value="1" {{$_sex == 1 ? 'selected' : ''}}>Male</option>
+                            <option value="2" {{$_sex == 2 ? 'selected' : ''}}>Female</option>
+                        </select>
                     </div>
-                    <input class="form-input" type="text" name="sex" id="sex" value="{{$residentData->sex ?? ''}}" disabled>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex flex-col gap-5">
-            <p class="font-bold text-lg">Contact Information</p>
-
-            <div class="grid grid-cols-3 gap-3">
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="house_number">House Number</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="birth_date">Birth Date</label>
+                        </div>
+                        <input class="form-input" type="date" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="house_number" id="house_number" value="{{$residentData->house_number ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="purok">Purok</label>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="age">Age</label>
+                        </div>
+                        <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}">
                     </div>
-                    <input class="form-input" type="text" name="purok" id="purok" value="{{$residentData->purok ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="block">Block</label>
-                    </div>
-                    <input class="form-input" type="text" name="block" id="block" value="{{$residentData->block ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="lot">Lot</label>
-                    </div>
-                    <input class="form-input" type="text" name="lot" id="lot" value="{{$residentData->lot ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="others">Street/Unit/Bldg/Others</label>
-                    </div>
-                    <input class="form-input" type="text" name="others" id="others" value="{{$residentData->others ?? ''}}" disabled>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="subdivision">Subdivision</label>
-                    </div>
-                    <input class="form-input" type="text" name="subdivision" id="subdivision" value="{{$residentData->subdivision ?? ''}}" disabled>
                 </div>
             </div>
-        </div>
-
-        <form method="POST" action="{{url('/blotters/new/step-three')}}" class="flex flex-row self-end mt-auto">
-            @csrf
-            @if ($residentData)
-                <input type="hidden" name="resident_id" id="resident_id" value="{{$residentData->resident_id}}">
-            @endif
-            <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+            <div class="flex flex-col gap-5">
+                <p class="font-bold text-lg">Contact Information</p>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="house_number">House Number</label>
+                        </div>
+                        <input class="form-input" type="text" name="house_number" id="house_number" value="{{$residentData->house_number ?? ''}}">
+                    </div>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="purok">Purok</label>
+                        </div>
+                        <input class="form-input" type="text" name="purok" id="purok" value="{{$residentData->purok ?? ''}}">
+                    </div>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="block">Block</label>
+                        </div>
+                        <input class="form-input" type="text" name="block" id="block" value="{{$residentData->block ?? ''}}">
+                    </div>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="lot">Lot</label>
+                        </div>
+                        <input class="form-input" type="text" name="lot" id="lot" value="{{$residentData->lot ?? ''}}">
+                    </div>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="others">Street/Unit/Bldg/Others</label>
+                        </div>
+                        <input class="form-input" type="text" name="others" id="others" value="{{$residentData->others ?? ''}}">
+                    </div>
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="subdivision">Subdivision</label>
+                        </div>
+                        <input class="form-input" type="text" name="subdivision" id="subdivision" value="{{$residentData->subdivision ?? ''}}">
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-row self-end mt-auto gap-3">
+                @csrf
+                @if ($residentData && !session()->get('new_resident.suspect'))
+                    <input type="hidden" name="resident_id" id="resident_id" value="{{$residentData->resident_id}}">
+                @endif
+                <a href="{{url('/blotters/new/step-two')}}" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
+                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+            </div>
         </form>
     </div>  
 </x-layout>

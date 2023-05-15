@@ -20,6 +20,13 @@ class OfficialsController extends Controller
         ->latest()
         ->get();
         View::share('barangayInformation', DB::table('barangay_information')->first());
+
+        $this->middleware(function ($request, $next) {
+            if (str_contains($request->path(), 'officials/new') && !str_contains($request->path(), 'officials/new/step-one') && $request->session()->missing('official')) {
+                return redirect('/officials/new/step-one');
+            }
+            return $next($request);
+        });
     }
     /**
      * Display a listing of the resource.
@@ -27,6 +34,7 @@ class OfficialsController extends Controller
     public function index(Request $request)
     {
         $request->session()->forget('official');
+        
         $rows = $request->rows;
         $years = DB::table('officials')
         ->select(DB::raw('YEAR(term_start) as year'))
@@ -139,7 +147,7 @@ class OfficialsController extends Controller
             ->first();
         }
 
-        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null]);
+        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null, 'official' => $official]);
 
     }
 
@@ -193,6 +201,9 @@ class OfficialsController extends Controller
         $official->save();
 
         $request->session()->forget('official');
+
+        addToLog('Create', "New Official Created");
+
         return view('pages.admin.officials.create.complete');
     }
 
@@ -267,6 +278,7 @@ class OfficialsController extends Controller
         DB::table('officials')
         ->where('id', $id)
         ->update($formFields);
+        addToLog('Update', "Official ID: $id Updated");
 
         return redirect("officials/$id");
     }

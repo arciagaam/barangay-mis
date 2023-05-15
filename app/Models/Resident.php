@@ -17,6 +17,7 @@ class Resident extends Model
         'last_name',
         'nickname',
         'sex',
+        'gender_id',
         'birth_date',
         'age',
         'place_of_birth',

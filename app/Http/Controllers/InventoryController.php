@@ -67,16 +67,10 @@ class InventoryController extends Controller
     
     public function create_StepTwo()
     {
+        addToLog('Create', 'Item Added');
         return view('pages.admin.inventory.create.complete');
     }
-    
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
@@ -117,6 +111,7 @@ class InventoryController extends Controller
         ->where('id', '=', $id)
         ->update($formFields);
 
+        addToLog('Update', "Updated Item ID: $id");
         return redirect("/inventory/$id");
     }
 

@@ -23,7 +23,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="first_name" id="first_name">
+                    <input class="form-input" type="text" name="first_name" id="first_name" value="{{ old('first_name') ?? ($resident->first_name ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -33,7 +33,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="middle_name" id="middle_name">
+                    <input class="form-input" type="text" name="middle_name" id="middle_name" value="{{ old('middle_name') ?? ($resident->middle_name ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -43,7 +43,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="last_name" id="last_name">
+                    <input class="form-input" type="text" name="last_name" id="last_name" value="{{ old('last_name') ?? ($resident->last_name ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -53,7 +53,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror    
                     </div>
-                    <input class="form-input" type="text" name="nickname" id="nickname">
+                    <input class="form-input" type="text" name="nickname" id="nickname" value="{{ old('nickname') ?? ($resident->nickname ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -63,9 +63,29 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
+                    @php
+                        $sex = old('sex') ?? ($resident->sex ?? '')
+                    @endphp
                     <select class="form-input" name="sex" id="sex">
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
+                        <option value="1" {{$sex == 1 ? 'selected' : ''}}>Male</option>
+                        <option value="2" {{$sex == 2 ? 'selected' : ''}}>Female</option>
+                    </select>
+                </div>
+
+                <div class="form-input-container">
+                    <div class="flex flex-row justify-between items-center">
+                        <label for="gender_id">Gender</label>
+                        @error('gender_id')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+                    @php
+                        $_gender = old('gender_id') ?? ($resident->gender_id ?? '')
+                    @endphp
+                    <select class="form-input" name="gender_id" id="gender_id">
+                        @foreach ($options['genders'] as $gender)
+                            <option value="{{$gender->id}}" {{$_gender == $gender->id ? 'selected' : ''}}>{{$gender->name}}</option>
+                        @endforeach
                     </select>
                 </div>
     
@@ -76,7 +96,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="date" name="birth_date" id="birth_date">
+                    <input class="form-input" type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') ?? ($resident->birth_date ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -86,7 +106,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="age" id="age" readonly>
+                    <input class="form-input" type="text" name="age" id="age" readonly value="{{ old('age') ?? ($resident->age ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -96,7 +116,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="place_of_birth" id="place_of_birth">
+                    <input class="form-input" type="text" name="place_of_birth" id="place_of_birth" value="{{ old('place_of_birth') ?? ($resident->place_of_birth ?? '') }}">
                 </div>
     
                 <div class="form-input-container">
@@ -106,9 +126,12 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
+                    @php
+                        $civilstatusID =  old('civil_status_id') ?? ($resident->civil_status_id ?? '') 
+                    @endphp
                     <select class="form-input" name="civil_status_id" id="civil_status_id">
                         @foreach ($options['civilStatus'] as $civilStatus)
-                            <option value="{{$civilStatus->id}}">{{ucfirst($civilStatus->name)}}</option>
+                            <option value="{{$civilStatus->id}}" {{$civilstatusID == $civilStatus->id ? 'selected' : ''}}>{{ucfirst($civilStatus->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -120,9 +143,12 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
+                    @php
+                        $occupationdID = old('occupation_id') ?? ($resident->occupation_id ?? '')
+                    @endphp
                     <select class="form-input" name="occupation_id" id="occupation_id">
                         @foreach ($options['occupation'] as $occupation)
-                            <option value="{{$occupation->id}}">{{ucfirst($occupation->name)}}</option>
+                            <option value="{{$occupation->id}}" {{$occupationdID == $occupation->id ? 'selected' : ''}}>{{ucfirst($occupation->name)}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -134,16 +160,19 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
+                    @php
+                        $religionID = old('religion_id') ?? ($resident->religion_id ?? '')
+                    @endphp
                     <select class="form-input" name="religion_id" id="religion_id">
                         @foreach ($options['religion'] as $religion)
-                            <option value="{{$religion->id}}">{{ucfirst($religion->name)}}</option>
+                            <option value="{{$religion->id}}" {{$religionID == $religion->id ? 'selected' : ''}}>{{ucfirst($religion->name)}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href="" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
+                <a href={{url('/residents')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
                 <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
             </div>
 

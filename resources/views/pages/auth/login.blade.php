@@ -38,7 +38,7 @@
                 @error('invalid')
                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror
-                <a class="self-end" href="{{url('/')}}">Forgot Password?</a>
+                <a class="self-end" href="{{url('/forgot-password')}}">Forgot Password?</a>
             </div>
 
             <button class="py-2 w-full self-center bg-project-yellow font-bold rounded-md">LOG IN</button>
