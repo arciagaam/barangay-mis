@@ -55,7 +55,7 @@
     </div>
 </x-layout>
 
-<div id="add_modal"  class="pl-16 absolute hidden flex inset-0 items-center justify-center min-h-[calc(100%)] min-w-[calc(100%)] flex-col bg-black/20 text-project-blue">
+<div id="add_modal" class="pl-16 absolute hidden flex inset-0 items-center justify-center min-h-[calc(100%)] min-w-[calc(100%)] flex-col bg-black/20 text-project-blue">
     <div class="flex flex-col w-3/4 min-h-10 bg-white rounded-md p-5 gap-7">
         <div class="flex justify-between">
             <p id="modal_title" class="text-lg font-bold">Add New Civil Status</p>
@@ -73,7 +73,6 @@
             </div>
 
         </div>
-
 
         <button id="submit" data-group="civil_status" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Civil Status</button>
 
