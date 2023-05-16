@@ -31,17 +31,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::post('/authenticate', [AuthController::class, 'authenticate']);
 
-Route::prefix('/forgot-password')->group(function() {
-    Route::get('/', [ForgotPasswordController::class, 'index']);
-    Route::post('/username-check', [ForgotPasswordController::class, 'usernameCheck']);
-    Route::get('/security-question', [ForgotPasswordController::class, 'securityCheck']);
-    Route::post('/security-check', [ForgotPasswordController::class, 'questionCheck']);
-    Route::get('/change-password', [ForgotPasswordController::class, 'passwordCheck']);
-    Route::post('/change-password', [ForgotPasswordController::class, 'changePassword']);
-
+Route::middleware(['guest'])->group(function() {
+    Route::get('/', [AuthController::class, 'index'])->name('login');
+    Route::post('/authenticate', [AuthController::class, 'authenticate']);
+    
+    Route::prefix('/forgot-password')->group(function() {   
+        Route::get('/', [ForgotPasswordController::class, 'index']);
+        Route::post('/username-check', [ForgotPasswordController::class, 'usernameCheck']);
+        Route::get('/security-question', [ForgotPasswordController::class, 'securityCheck']);
+        Route::post('/security-check', [ForgotPasswordController::class, 'questionCheck']);
+        Route::get('/change-password', [ForgotPasswordController::class, 'passwordCheck']);
+        Route::post('/change-password', [ForgotPasswordController::class, 'changePassword']);
+    
+    });
 });
 
 Route::middleware(['auth'])->group(function() {
@@ -152,7 +155,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/', [LendController::class, 'index']);
         
         Route::prefix('new')->group(function () {
-            Route::get('/step-one', [LendController::class, 'create_StepOne']);
+            Route::get('/step-one/{id?}', [LendController::class, 'create_StepOne']);
             Route::post('/step-one', [LendController::class, 'post_StepOne']);
     
             Route::get('/step-two', [LendController::class, 'create_StepTwo']);

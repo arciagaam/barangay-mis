@@ -20,6 +20,9 @@
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
                         <label for="date_time_incident">Date and Time of Incident</label>
+                        @error('date_time_incident')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
                     </div>
                     <input class="form-input" type="datetime-local" name="date_time_incident" id="date_time_incident" value="{{$residentData->date_time_incident ?? ''}}">
                 </div>
@@ -27,6 +30,9 @@
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
                         <label for="incident_place">Place of Incident</label>
+                        @error('incident_place')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
                     </div>
                     <input class="form-input" type="text" name="incident_place" id="incident_place" value="{{$residentData->incident_place ?? ''}}">
                 </div>
@@ -34,6 +40,9 @@
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
                         <label for="incident_type">Type of Incident</label>
+                        @error('incident_type')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
                     </div>
                     <input class="form-input" type="text" name="incident_type" id="incident_type" value="{{$residentData->incident_type ?? ''}}">
                 </div>
@@ -41,6 +50,9 @@
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
                         <label for="description">Description</label>
+                        @error('description')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
                     </div>
                     <textarea name="description" class="form-input resize-none" id="description" cols="30" rows="10"></textarea>
                 </div>

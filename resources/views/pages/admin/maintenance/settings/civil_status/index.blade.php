@@ -41,8 +41,8 @@
                         <td>{{ucfirst($cs->name)}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <button data-id="{{$cs->id}}" data-type="civil_status" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
-                                <button data-id="{{$cs->id}}" data-type="civil_status" class="delete_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
+                                <button data-id="{{$cs->id}}" data-route="civil_status" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
+                                <button data-id="{{$cs->id}}" data-route="civil_status" data-url="{{url("api/civil_status/$cs->id/delete")}}" data-type="delete" data-group="civil status" class="popup_trigger delete_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-trash'></i></button>
                             </div>
                         </td>
                     </tr>
@@ -80,3 +80,4 @@
 </div>
 
 @vite('resources/js/settings.js')
+@vite('resources/js/popup.js')

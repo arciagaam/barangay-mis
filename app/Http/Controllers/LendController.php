@@ -42,9 +42,21 @@ class LendController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create_StepOne()
+    public function create_StepOne(Request $request, $id = null)
     {
-        return view('pages.admin.inventory.lend.create.step_one');
+        if($id) {
+            $request->session()->put('lend_item', $id);
+
+            $item = DB::table('inventory')
+            ->where('id', $id)
+            ->first();
+
+            if(!$item) {
+                return redirect('/lend/new/step-one/');
+            }
+        }
+
+        return view('pages.admin.inventory.lend.create.step_one', ['item' => $item ?? null]);
         
     }
 

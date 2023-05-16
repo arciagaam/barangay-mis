@@ -8,6 +8,7 @@
     </div>
 
     <div class="flex flex-1 w-full bg-white shadow-md rounded-md overflow-hidden">
+        {{-- MAP DIV --}}
         <div id="map" class="w-[calc(100%)] h-[calc(100%)] bg-blue-200 z-0">
 
         </div>

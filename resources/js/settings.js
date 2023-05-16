@@ -24,7 +24,7 @@ closeModal.addEventListener('click', () => {
 viewBtn.forEach(view => {
     view.addEventListener('click', async () => {
 
-        const data = await fetch(BASE_PATH + `/api/${view.dataset.type}/${view.dataset.id}`, {
+        const data = await fetch(BASE_PATH + `/api/${view.dataset.route}/${view.dataset.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -50,11 +50,8 @@ viewBtn.forEach(view => {
     })
 });
 
-deleteBtn.forasd
-
 submitBtn.addEventListener('click', async () => {
     const _method = submitBtn.dataset.type == 'update' ? 'PATCH' : 'PUT'
-    console.log(_method)
     const url = _method == 'PATCH' ? `/api/${submitBtn.dataset.group}/${id}` : `/api/${submitBtn.dataset.group}`
     const data = await fetch(BASE_PATH + url, {
         method: _method,

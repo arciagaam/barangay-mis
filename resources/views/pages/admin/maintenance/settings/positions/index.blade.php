@@ -41,7 +41,9 @@
                         <td>{{$position->name}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <button data-id="{{$position->id}}" data-type="positions" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
+                                <button data-id="{{$position->id}}" data-route="positions" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button>
+                                <button data-id="{{$position->id}}" data-route="positions" data-url="{{url("api/positions/$position->id/delete")}}" data-type="delete" data-group="position" class="popup_trigger delete_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-trash'></i></button>
+
                             </div>
                         </td>
                     </tr>

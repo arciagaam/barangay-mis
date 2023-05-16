@@ -181,3 +181,4 @@
 </x-layout>
 
 @vite('resources/js/residents.js')
+@vite('resources/js/age.js')

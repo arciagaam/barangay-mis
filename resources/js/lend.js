@@ -18,8 +18,6 @@ if(returnBtn) {
 }
 
 submitReturn.addEventListener('click', async () => {
-    console.log(document.querySelector('#remarks').value)
-
     const data = await fetch(BASE_PATH + `/lend/${submitReturn.dataset.id}/return`, {
         method: 'POST',
         headers: {

@@ -78,6 +78,15 @@
         text-align: center;
     }
 
+    #individual_sig {
+        text-transform: uppercase;
+        top: 750px;
+        left: 80px;
+        width: 275px;
+        font-weight: bold;
+        text-align: center;
+    }
+
 </style>
 <body>
     <img class="absolute certificate" src="{{url('/images/barangay_clearance.png')}}" alt="">
@@ -106,6 +115,7 @@
 
     <p id="issued_this" class="absolute">{{$day}}</p>
     <p id="issued_of" class="absolute">{{$month}}</p>
+    <p id="individual_sig" class="absolute">{{$resident->first_name}} {{$resident->middle_name ?? ''}} {{$resident->last_name}}</p>
 
 </body>
 

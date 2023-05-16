@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Household;
 use App\Models\Official;
+use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
-use PhpParser\Node\Stmt\Return_;
-
-use function Ramsey\Uuid\v1;
 
 class OfficialsController extends Controller
 {
@@ -22,7 +21,7 @@ class OfficialsController extends Controller
         View::share('barangayInformation', DB::table('barangay_information')->first());
 
         $this->middleware(function ($request, $next) {
-            if (str_contains($request->path(), 'officials/new') && !str_contains($request->path(), 'officials/new/step-one') && $request->session()->missing('official')) {
+            if (str_contains($request->path(), 'officials/new') && !str_contains($request->path(), 'officials/new/step-one') && ($request->session()->missing('resident') && $request->session()->missing('official'))) {
                 return redirect('/officials/new/step-one');
             }
             return $next($request);
@@ -134,6 +133,8 @@ class OfficialsController extends Controller
     public function create_StepOne(Request $request)
     {
         $official = $request->session()->get('official');
+        $religions = DB::table('religions')->orderBy('id')->get();
+
 
         if ($official && $official->resident_id) {
             $residentData = DB::table('residents')
@@ -147,34 +148,103 @@ class OfficialsController extends Controller
             ->first();
         }
 
-        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null, 'official' => $official]);
+        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null, 'official' => $official, 'religions' => $religions]);
 
     }
 
     public function post_StepOne(Request $request)
     {
         $formFields = $request->validate([
-            'resident_id' => 'required'
+            'first_name'  => 'required',
+            'middle_name' => '',
+            'last_name' => 'required',
+            'nickname' => '',
+            'sex' => 'required',
+            'birth_date' => 'required',
+            'age' => 'required',
+            'place_of_birth' => 'required',
+            'occupation' => 'required',
+            'religion_id' => 'required',
+            'house_number' => 'required',
+            'purok' => '',
+            'block' => '',
+            'lot' => '',
+            'others' => '',
+            'subdivision' => '',
+            'voter_status' => '',
+            'precinct_number' => '',
+            'disabled' => '',
         ]);
 
-        
-        if (empty($request->session()->get('official'))) {
-            $official = new Official();
-            $official->fill($formFields);
-            $request->session()->put('official', $official);
+        $checkResident = DB::table('residents')
+            ->join('households', 'households.id', 'residents.household_id')
+            ->where('residents.first_name', $request->first_name)
+            ->where('residents.middle_name', $request->middle_name)
+            ->where('residents.last_name', $request->last_name)
+            ->where('residents.nickname', $request->nickname)
+            ->where('residents.sex', $request->sex)
+            ->where('residents.birth_date', $request->birth_date)
+            ->where('residents.age', $request->age)
+            ->where('residents.place_of_birth', $request->place_of_birth)
+            ->where('residents.occupation_id', $request->occupation_id)
+            ->where('residents.religion_id', $request->religion_id)
+            ->where('residents.voter_status', $request->voter_status)
+            ->where('residents.precinct_number', $request->precinct_number)
+            ->where('residents.disabled', $request->disabled)
+            ->where('households.house_number', $request->house_number)
+            ->where('households.purok', $request->purok)
+            ->where('households.block', $request->block)
+            ->where('households.lot', $request->lot)
+            ->where('households.others', $request->others)
+            ->where('households.subdivision', $request->subdivision)
+            ->first();
+
+        if (!$checkResident) {
+            $formFields['voter_status'] = lcfirst($request->voter_status) == 'registered' ? 1 : 0; 
+            $formFields['disabled'] = lcfirst($request->disabled) == 'abled' ? 1 : 0; 
+
+            if (empty($request->session()->get('resident'))) {
+                $resident = new Resident();
+                $resident->fill($formFields);
+                $request->session()->put('resident', $resident);
+
+                $household = new Household();
+                $household->fill($formFields);
+                $request->session()->put('household', $household);
+            } else {
+                $resident = $request->session()->get('resident');
+                $resident->fill($request->post());
+                $request->session()->put('resident', $resident);
+
+                $household = $request->session()->get('household');
+                $household->fill($request->post());
+                $request->session()->put('household', $household);
+            }
+            
+            if(empty($request->session()->get('official'))) {
+                $official = new Official();
+                $request->session()->put('official', $official);
+            }
+
+            $request->session()->put('new_resident', true);
         } else {
-            $official = $request->session()->get('official');
-            $official->fill($formFields);
-            $request->session()->put('official', $official);
+            $request->session()->forget('resident');
+            $request->session()->forget('household');
+            $request->session()->forget('new_resident');
+
+            if (!DB::table('residents')->where('id', '=', $request->resident_id)->exists()) {
+                return back()->with('error', 'Resident not found');
+            }
+
+            $request->session()->put('official', $request->resident_id);
         }
+
 
         return redirect('officials/new/step-two');
     }
 
     public function create_StepTwo(Request $request)
     {
-
-
         $official = $request->session()->get('official');
 
         return view('pages.admin.officials.create.step_two', ['positions' => $this->positions, 'official' => $official]);
@@ -197,8 +267,32 @@ class OfficialsController extends Controller
 
     public function create_StepThree(Request $request)
     {
-        $official = $request->session()->get('official');
-        $official->save();
+        if ($request->session()->get('new_resident')) {
+
+            $household = $request->session()->get('household');
+            $household = Household::firstOrCreate($household->toArray());
+
+            $resident = $request->session()->get('resident');
+            $resident->fill(['household_id' => $household->id]);
+            $resident->save();
+
+            $recipient = $resident->id;
+
+            $official = $request->session()->get('official');
+            $official->fill(['resident_id' => $recipient]);
+            $official->save();
+
+            addToLog('Create', "New Household Created");
+            addToLog('Create', "New Resident Created");
+            
+            $request->session()->forget('resident');
+            $request->session()->forget('household');
+            $request->session()->forget('new_resident');
+            
+        } else {
+            $official = $request->session()->get('official');
+            $official->save();
+        }
 
         $request->session()->forget('official');
 

@@ -33,31 +33,46 @@
                 <div class="grid grid-cols-3 gap-3">
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="first_name">First Name</label>
+                            <label for="first_name" class="flex gap-2 items-center">First Name  <span class="text-xs text-red-500">*</span></label>
+                            @error('first_name')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="first_name" id="first_name" value="{{$residentData->first_name ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
                             <label for="middle_name">Middle Name</label>
+                            @error('middle_name')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="middle_name" id="middle_name" value="{{$residentData->middle_name ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="last_name">Last Name</label>
+                            <label for="last_name" class="flex gap-2 items-center">Last Name <span class="text-xs text-red-500">*</span></label>
+                            @error('last_name')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="last_name" id="last_name" value="{{$residentData->last_name ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
                             <label for="nickname">Nickname</label>
+                            @error('nickname')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="nickname" id="nickname" value="{{$residentData->nickname ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="sex">Sex</label>
+                            <label for="sex" class="flex gap-2 items-center">Sex  <span class="text-xs text-red-500">*</span></label>
+                            @error('sex')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
             
                         @php
@@ -70,7 +85,10 @@
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="birth_date">Birth Date</label>
+                            <label for="birth_date" class="flex gap-2 items-center">Birth Date <span class="text-xs text-red-500">*</span></label>
+                            @error('birth_date')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="date" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
                     </div>
@@ -78,7 +96,7 @@
                         <div class="flex flex-row justify-between items-center">
                             <label for="age">Age</label>
                         </div>
-                        <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}">
+                        <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}" readonly>
                     </div>
                 </div>
             </div>
@@ -87,7 +105,10 @@
                 <div class="grid grid-cols-3 gap-3">
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="house_number">House Number</label>
+                            <label for="house_number" class="flex gap-2 items-center">House Number  <span class="text-xs text-red-500">*</span></label>
+                            @error('house_number')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="house_number" id="house_number" value="{{$residentData->house_number ?? ''}}">
                     </div>
@@ -136,3 +157,4 @@
 </x-layout>
 
 @vite('resources/js/searchresident.js')
+@vite('resources/js/age.js')

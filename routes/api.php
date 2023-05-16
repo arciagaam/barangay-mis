@@ -102,6 +102,10 @@ Route::put('/calendar', function (Request $request) {
     echo json_encode(['id' => $id]);
 });
 
+/*
+    API ROUTES FOR POSITIONS
+*/
+
 Route::get('/positions/{id}', function(Request $request, $id) {
     $data = DB::table('official_positions')
     ->where('id', $id)
@@ -125,6 +129,8 @@ Route::put('/positions', function(Request $request) {
 
     $data = DB::table('official_positions')
     ->insert(['name' => $request->name]);
+
+    addToLog('Create', "New Position Created");
     
     echo json_encode(['data' => $data]);
 });
@@ -138,12 +144,29 @@ Route::patch('/positions/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Position ID: $id Updated");
+
     DB::table('official_positions')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
+
+Route::get('/positions/{id}/delete', function(Request $request, $id) {
+
+    DB::table('official_positions')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Position ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR CIVIL STATUS
+*/
 
 Route::get('/civil_status/{id}', function(Request $request, $id) {
     $data = DB::table('civil_status')
@@ -166,6 +189,8 @@ Route::put('/civil_status', function(Request $request) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Create', "New Civil Status Created");
+
     $data = DB::table('civil_status')
     ->insert(['name' => $request->name]);
     
@@ -181,12 +206,29 @@ Route::patch('/civil_status/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Civil Status ID: $id Updated");
+
     DB::table('civil_status')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
+
+Route::get('/civil_status/{id}/delete', function(Request $request, $id) {
+
+    DB::table('civil_status')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Civil Status ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR OCCUPATION
+*/
 
 Route::get('/occupations/{id}', function(Request $request, $id) {
     $data = DB::table('occupations')
@@ -196,6 +238,8 @@ Route::get('/occupations/{id}', function(Request $request, $id) {
     if(!$data) {
         return response()->json(['message' => 'Occupation not found.'], 422);
     }
+
+    addToLog('Create', "New Occupation Created");
 
     echo json_encode(['data' => $data]);
 });
@@ -208,6 +252,8 @@ Route::put('/occupations', function(Request $request) {
     if ($validator->fails()) {
         return response()->json($validator->errors(), 422);
     }
+
+    addToLog('Create', "New Occupation Created");
 
     $data = DB::table('occupations')
     ->insert(['name' => $request->name]);
@@ -224,12 +270,29 @@ Route::patch('/occupations/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Occupation ID: $id Updated");
+
     DB::table('occupations')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
+
+Route::get('/occupations/{id}/delete', function(Request $request, $id) {
+
+    DB::table('occupations')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Occupation ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR RELIGIONS
+*/
 
 Route::get('/religions/{id}', function(Request $request, $id) {
     $data = DB::table('religions')
@@ -252,6 +315,8 @@ Route::put('/religions', function(Request $request) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Create', "New Religion Created");
+
     $data = DB::table('religions')
     ->insert(['name' => $request->name]);
     
@@ -267,12 +332,29 @@ Route::patch('/religions/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Religion ID: $id Updated");
+
     DB::table('religions')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
+
+Route::get('/religions/{id}/delete', function(Request $request, $id) {
+
+    DB::table('religions')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Religion ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR SECURITY QUESTIONS
+*/
 
 Route::get('/security_questions/{id}', function(Request $request, $id) {
     $data = DB::table('security_questions')
@@ -282,6 +364,7 @@ Route::get('/security_questions/{id}', function(Request $request, $id) {
     if(!$data) {
         return response()->json(['message' => 'Occupation not found.'], 422);
     }
+    
 
     echo json_encode(['data' => $data]);
 });
@@ -294,6 +377,8 @@ Route::put('/security_questions', function(Request $request) {
     if ($validator->fails()) {
         return response()->json($validator->errors(), 422);
     }
+
+    addToLog('Create', "New Security Question Created");
 
     $data = DB::table('security_questions')
     ->insert(['name' => $request->name]);
@@ -310,12 +395,29 @@ Route::patch('/security_questions/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Security Question ID: $id Updated");
+
     DB::table('security_questions')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
+
+Route::get('/security_questions/{id}/delete', function(Request $request, $id) {
+
+    DB::table('security_questions')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Security Question ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR GENDERS
+*/
 
 Route::get('/genders/{id}', function(Request $request, $id) {
     $data = DB::table('genders')
@@ -338,6 +440,8 @@ Route::put('/genders', function(Request $request) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Create', "New Gender Created");
+
     $data = DB::table('genders')
     ->insert(['name' => $request->name]);
     
@@ -353,9 +457,22 @@ Route::patch('/genders/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
+    addToLog('Update', "Gender ID: $id Updated");
+
     DB::table('genders')
     ->where('id', $id)
     ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/genders/{id}/delete', function(Request $request, $id) {
+
+    DB::table('genders')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Gender ID: $id Deleted");
 
     return response()->json(['message' => 'success'], 200);
 });

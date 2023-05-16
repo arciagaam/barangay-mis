@@ -10,6 +10,10 @@
     <form method="POST" action="{{url('/lend/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
         @csrf
 
+        @if ($item)
+            <input type="hidden" name="id" id="id" value="{{$item->id}}">
+        @endif
+
         <p class="text-red-500 italic text-sm">{{session()->get('error')}}</p>
         <div class="flex flex-col gap-2">
             <div class="flex gap-3">
@@ -39,7 +43,7 @@
                                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="text" name="name" id="name" disabled>
+                        <input class="form-input" type="text" name="name" id="name" value="{{$item ? $item->name : ''}}" disabled>
                     </div>
             
                     <div class="form-input-container">
@@ -49,7 +53,7 @@
                                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="number" name="quantity" min="1" id="item_quantity" disabled>
+                        <input class="form-input" type="number" name="quantity" min="1" id="item_quantity" value="{{$item ? $item->quantity : ''}}" disabled>
                     </div>
                 </div>
                 
@@ -61,7 +65,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea class="form-input resize-none" name="remarks" id="item_remarks" cols="30" rows="6" disabled></textarea>
+                    <textarea class="form-input resize-none" name="remarks" id="item_remarks" cols="30" rows="6" disabled>{{$item ? $item->remarks : ''}}</textarea>
                 </div>
     
             </div>

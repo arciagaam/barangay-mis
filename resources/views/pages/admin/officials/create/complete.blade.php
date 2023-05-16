@@ -22,5 +22,3 @@
 
     </div>
 </x-layout>
-
-@vite('resources/js/residents.js')

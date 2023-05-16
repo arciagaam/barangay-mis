@@ -18,7 +18,7 @@ if (itemSearch) {
         clearTimeout(timeout);
 
         timeout = setTimeout(() => {
-            fetchResident(e.target.value)
+            fetchItem(e.target.value)
         }, 500);
     })
 
@@ -33,7 +33,7 @@ if (itemSearch) {
         searchItemsContainer.classList.remove('hidden');
 
         if (itemSearch.value.length > 0) {
-            fetchResident(itemSearch.value);
+            fetchItem(itemSearch.value);
         }
     });
 
@@ -41,7 +41,7 @@ if (itemSearch) {
         searchItemsContainer.classList.add('hidden');
     });
 
-    function fetchResident(searchQuery) {
+    function fetchItem(searchQuery) {
         if (searchQuery != '') {
             fetch(BASE_PATH + `/api/inventory/?search=${searchQuery}`)
                 .then(res => res.json())
@@ -49,9 +49,6 @@ if (itemSearch) {
                     if (data.items.length > 0) {
                         searchItemsContainer.innerText = '';
                         data.items.forEach(item => {
-
-                            console.log(item);
-
                             const selectItemContainer = Object.assign(document.createElement('div'), {
                                 className: 'flex flex-col w-full cursor-pointer hover:bg-table-even transition-all duration-300 ease-in-out rounded-md py-1 px-2',
                                 onmousedown: (e) => { selectItem(item.id, item) }
@@ -98,25 +95,28 @@ if (itemSearch) {
     }
 
     function selectItem(id, item) {
-        const inventoryIdInput = document.querySelector('#id') 
-        if(inventoryIdInput){
+        const inventoryIdInput = document.querySelector('#id')
+        if (inventoryIdInput) {
             inventoryIdInput.value = id;
-        }else{
+        } else {
+
             const hiddenInput = Object.assign(document.createElement('input'), {
                 type: 'hidden',
                 id: 'id',
                 name: 'id',
                 value: id,
             })
-            quantity = item.quantity;
-    
+
             document.querySelector('form').append(hiddenInput);
+
+
+            quantity = item.quantity;
             document.querySelectorAll('input').forEach(input => {
                 if (input.name in item) {
                     input.value = item[input.name];
                 }
             })
-    
+
             document.querySelectorAll('textarea').forEach(textarea => {
                 if (textarea.name in item) {
                     textarea.value = item[textarea.name];
@@ -128,15 +128,15 @@ if (itemSearch) {
 
     document.addEventListener('change', (e) => {
         const target = e.target;
-    
-        if(target.id == 'quantity') {
-            if(!target.value || target.value == '') return;
-    
-            if(target.value > quantity) {
+
+        if (target.id == 'quantity') {
+            if (!target.value || target.value == '') return;
+
+            if (target.value > quantity) {
                 target.value = quantity;
             }
         }
-    
+
         e.stopPropagation();
     })
 }

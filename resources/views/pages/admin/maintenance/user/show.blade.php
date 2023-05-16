@@ -51,7 +51,7 @@
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
                 </div>
-                <input class="form-input w-fit" type="text" name="username" id="username" value="{{$user->username}}" disabled>
+                <input class="form-input w-fit" type="text" name="username" id="username" value="{{$user->username}}" {{$editing ? '' : 'disabled'}}>
             </div>
 
             <div class="form-input-container">
@@ -61,7 +61,7 @@
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
                 </div>
-                <input class="form-input w-fit" type="password" name="password" id="password" value="{{$user->password}}" {{$editing ? '' : 'disabled'}}>
+                <input class="form-input w-1/4" type="password" name="password" id="password" value="{{$user->password}}" {{$editing ? '' : 'disabled'}}>
             </div>
 
             <div class="form-input-container">
@@ -79,7 +79,7 @@
                     @endforeach
                 </select>
                 @else
-                    <input class="form-input w-fit" type="text" name="role_id" id="role_id" value="{{$user->role_id}}" {{$editing ? '' : 'disabled'}}>  
+                    <input class="form-input w-fit" type="text" name="role_id" id="role_id" value="{{ucfirst($user->role)}}" {{$editing ? '' : 'disabled'}}>  
                 @endif
             </div>
         </div>

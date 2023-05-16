@@ -1,6 +1,6 @@
 <x-layout>
 
-    <x-pageheader>Settings</x-pageheader>
+    <x-pageheader>System Variables</x-pageheader>
 
     <div class="grid grid-cols-3 w-full gap-5">
         <a href="{{url('/maintenance/settings/positions')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">

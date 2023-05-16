@@ -78,7 +78,7 @@ class UserController extends Controller
             'first_name' => 'required',
             'middle_name' => '',
             'last_name' => 'required',
-            'username' => 'required',
+            'username' => "required|unique:users,username",
             'password' => 'required',
             'role_id' => 'required',
             'security_question_id' => 'required',
@@ -104,7 +104,9 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = DB::table('users')
-            ->where('id', $id)
+            ->join('roles', 'roles.id', 'users.role_id')
+            ->select('users.*', 'roles.name as role')
+            ->where('users.id', $id)
             ->first();
 
         return view('pages.admin.maintenance.user.show', ['user' => $user, 'editing' => false]);
@@ -137,6 +139,7 @@ class UserController extends Controller
             'last_name' => 'required',
             'password' => 'required',
             'role_id' => 'required',
+            'username' => "required|unique:users,username, $id",
         ]);
 
         $formFields['password'] = bcrypt($request->password);

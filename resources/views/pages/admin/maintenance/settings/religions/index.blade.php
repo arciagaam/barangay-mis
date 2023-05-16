@@ -41,7 +41,9 @@
                         <td>{{ucfirst($religion->name)}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <button data-id="{{$religion->id}}" data-type="religions" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button> 
+                                <button data-id="{{$religion->id}}" data-route="religions" class="view_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bxs-pencil'></i></button> 
+                                <button data-id="{{$religion->id}}" data-route="religions" data-url="{{url("api/religions/$religion->id/delete")}}" data-type="delete" data-group="religion" class="popup_trigger delete_btn aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-trash'></i></button>
+
                             </div>
                         </td>
                     </tr>

@@ -1,6 +1,7 @@
 const popupTrigger = document.querySelectorAll('popup_trigger');
 const modal = document.querySelector('#warning_modal');
 let fetchUrl = '';
+let _method = '';
 
 document.addEventListener('click', (e) => {
     const target = e.target;

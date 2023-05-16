@@ -66,15 +66,7 @@
                             @enderror
                         </div>
     
-                        @if ($editing)
-                            <select class="form-input" name="role_id" id="role_id">
-                                @foreach ($roles as $role)
-                                    <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <input class="form-input" type="text" name="role_id" id="role_id" value="{{ucfirst($user->role)}}" {{$editing ? '' : 'disabled'}}>
-                        @endif
+                        <input class="form-input" type="text" name="role_id" id="role_id" value="{{ucfirst($user->role)}}" disabled>
                     </div>
                 </div>
     
@@ -86,7 +78,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="text" name="username" id="username" value="{{$user->username}}" disabled>
+                        <input class="form-input" type="text" name="username" id="username" value="{{$user->username}}" {{$editing ? '' : 'disabled'}}>
                     </div>
                 </div>
             </div>

@@ -106,6 +106,7 @@ class MappingController extends Controller
         $longitude = $request->longitude;
         $latitude = $request->latitude;
 
+        // sineset yung mapping ng resident
         DB::table('mappings')->insert(['resident_id' => $residentId, 'longitude' => $longitude, 'latitude' => $latitude]);
         addToLog('Create', "Mapping Created for Resident ID: $residentId");
         return response()->json(['success' => 'success'], 200);

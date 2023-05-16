@@ -391,7 +391,7 @@ class BlotterController extends Controller
         $formFields = $request->validate([
             'incident_type' => 'required',
             'incident_place' => 'required',
-            'description' => 'required',
+            'description' => '',
             'date_time_incident' => 'required',
         ]);
 
@@ -404,11 +404,12 @@ class BlotterController extends Controller
             $household = $request->session()->get('household.reporter');
             $household = Household::firstOrCreate($household->toArray());
 
-            
-
             $resident = $request->session()->get('resident.reporter');
             $resident->fill(['household_id' => $household->id]);
             $resident->save();
+
+            addToLog('Create', "New Resident Created");
+            
 
             $recipient = $resident->id;
             DB::table('blotter_recipients')->insert(['blotter_id' => $blotter_id, 'resident_id' => $recipient, 'blotter_role_id' => 1]);
@@ -422,6 +423,9 @@ class BlotterController extends Controller
             $resident = $request->session()->get('resident.victim');
             $resident->fill(['household_id' => $household->id]);
             $resident->save();
+
+            addToLog('Create', "New Resident Created");
+
             
             $recipient = $resident->id;
             DB::table('blotter_recipients')->insert(['blotter_id' => $blotter_id, 'resident_id' => $recipient, 'blotter_role_id' => 2]);
@@ -435,6 +439,9 @@ class BlotterController extends Controller
             $resident = $request->session()->get('resident.suspect');
             $resident->fill(['household_id' => $household->id]);
             $resident->save();
+
+            addToLog('Create', "New Resident Created");
+
             
             $recipient = $resident->id;
             DB::table('blotter_recipients')->insert(['blotter_id' => $blotter_id, 'resident_id' => $recipient, 'blotter_role_id' => 3]);
@@ -560,7 +567,7 @@ class BlotterController extends Controller
             'date_time_reported' => 'required',
             'incident_place' => 'required',
             'incident_type' => 'required',
-            'description' => 'required',
+            'description' => '',
         ]);
 
         DB::table('blotters')

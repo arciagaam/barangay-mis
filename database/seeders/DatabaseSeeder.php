@@ -16,13 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         DB::table('roles')->insert([
             ['name' => 'admin'],
             ['name' => 'staff'],
@@ -37,7 +30,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Gender 1'],
             ['name' => 'Gender 2'],
         ]);
-
+        
         DB::table('users')->insert([
             [
                 'username' => 'admin',
@@ -79,18 +72,21 @@ class DatabaseSeeder extends Seeder
             ['name' => 'widowed'],
         ]);
 
+        // DO NOT ALTER
         DB::table('certificate_types')->insert([
             ['name' => 'Business Permit'],
             ['name' => 'Barangay Clearance'],
             ['name' => 'Barangay Indigency'],
         ]);
 
+        // DO NOT ALTER
         DB::table('blotter_roles')->insert([
             ['name' => 'reporter'],
             ['name' => 'victim'],
             ['name' => 'suspect'],
         ]);
 
+        // DO NOT ALTER
         DB::table('blotter_status')->insert([
             ['name' => 'inactive'],
             ['name' => 'active'],
@@ -100,17 +96,11 @@ class DatabaseSeeder extends Seeder
 
         DB::table('activities')->insert([
             [
-                'name' => 'Happy Birthday',
-                'description' => 'Birthday Ni Mayor',
+                'name' => 'Test Activity',
+                'description' => 'Test Activity Description',
                 'start_date' => now(),
                 'is_all_day' => 1,
             ],
-            [
-                'name' => 'Happy New Year',
-                'description' => 'New Year, New Barangay',
-                'start_date' => now(),
-                'is_all_day' => 1,
-            ]
         ]);
 
         DB::table('barangay_information')->insert([
@@ -122,8 +112,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'SK Kagawad'],
         ]);
 
-
         Household::factory(10)->create();
-        Resident::factory(100)->create();
+        Resident::factory(1000)->create();
     }
 }

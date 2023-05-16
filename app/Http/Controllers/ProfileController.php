@@ -64,7 +64,7 @@ class ProfileController extends Controller
             'first_name' => 'required',
             'middle_name' => '',
             'last_name' => 'required',
-            'role_id' => 'required',
+            'username' => 'required|unique:users,username,'.auth()->user()->id,
         ]);
 
         DB::table('users')

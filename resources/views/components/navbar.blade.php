@@ -87,7 +87,7 @@
 
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/settings*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/settings')}}">
                             <i class='bx bx-sm bx{{ request()->is('maintenance/settings*') ? 's':'' }}-cog'></i>
-                            <p class="text-sm font-normal">Settings</p>         
+                            <p class="text-sm font-normal">System Variables</p>         
                         </a>
 
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">

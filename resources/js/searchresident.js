@@ -103,7 +103,6 @@ if(residentSearch) {
         }
 
         document.querySelectorAll('.form-input').forEach(input => {
-            console.log(input.name);
             if(input.name in resident) {
                 input.value = resident[input.name];
 
@@ -114,6 +113,19 @@ if(residentSearch) {
                             option.selected = true;
                         }
                     })
+                }
+
+                if(input.name == 'religion_id') {
+                    const select = document.querySelector('#religion_id');
+                    select.querySelectorAll('option').forEach(option => {
+                        if(option.value == resident[input.name]) {
+                            option.selected = true;
+                        }
+                    })
+                }
+
+                if(input.name == "age") {
+                    input.value = resident[input.name] = calculateAge(resident["birth_date"])
                 }
 
                 if(input.name == 'voter_status') {
@@ -128,3 +140,10 @@ if(residentSearch) {
     }
 
 }
+
+const calculateAge = (birthDate) => {
+    const diff_ms = Date.now() - new Date(birthDate).getTime();
+    const age_dt = new Date(diff_ms);
+    
+    return (age_dt.getUTCFullYear() - 1970) < 0 ? 0 : Math.abs(age_dt.getUTCFullYear() - 1970);
+};
