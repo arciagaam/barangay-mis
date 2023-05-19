@@ -32,6 +32,14 @@
   }
 
 @layer components {
+    .primary-btn {
+        @apply py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit
+    }
+
+    .secondary-btn {
+        @apply py-2 px-4 bg-project-blue text-white rounded-md w-fit
+    }
+
     .rotate180 {
         @apply rotate-180
     }

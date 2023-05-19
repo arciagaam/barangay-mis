@@ -32,6 +32,7 @@
                     <th>Birth Date</th>
                     <th>Place of Birth</th>
                     <th>Sex</th>
+                    <th>Archive Reason</th>
                     <th class="!text-center">Actions</th>
                 </tr>
             </thead>
@@ -43,6 +44,7 @@
                         <td>{{$dt->birth_date}}</td>
                         <td>{{$dt->place_of_birth}}</td>
                         <td>{{$dt->sex == 1 ? 'Male' : 'Female'}}</td>
+                        <td>{{$dt->reason ?? 'N/A'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 {{-- <a href="{{url("/residents/$resident->resident_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a> --}}

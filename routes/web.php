@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{id}', [ResidentController::class, 'show']);
         Route::get('/{id}/edit', [ResidentController::class, 'edit']);
         Route::post('/{id}/edit', [ResidentController::class, 'update']);
-        Route::get('/{id}/archive', [ResidentController::class, 'archive']);
+        Route::post('/{id}/archive', [ResidentController::class, 'archive']);
         Route::get('/{id}/recover', [ResidentController::class, 'recover']);
     });
 
@@ -121,7 +121,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{id}', [CertificateController::class, 'show']);
         Route::get('/{id}/edit', [CertificateController::class, 'edit']);
         Route::post('/{id}/edit', [CertificateController::class, 'update']);
-        Route::get('/{id}/archive', [CertificateController::class, 'archive']);
+        Route::post('/{id}/archive', [CertificateController::class, 'archive']);
     });
 
     Route::prefix('mapping')->group(function() {
@@ -130,7 +130,7 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/new', [MappingController::class, 'store']);
         Route::post('/update', [MappingController::class, 'update']);
         Route::get('/list', [MappingController::class, 'list']);
-        Route::get('/{id}/archive', [MappingController::class, 'archive']);
+        Route::post('/{id}/archive', [MappingController::class, 'archive']);
         Route::get('/{id}/recover', [MappingController::class, 'recover']);
     });
 
@@ -147,7 +147,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{id}', [InventoryController::class, 'show']);
         Route::get('/{id}/edit', [InventoryController::class, 'edit']);
         Route::post('/{id}/edit', [InventoryController::class, 'update']);
-        Route::get('/{id}/archive', [InventoryController::class, 'archive']);
+        Route::post('/{id}/archive', [InventoryController::class, 'archive']);
         Route::get('/{id}/recover', [InventoryController::class, 'recover']);
     });
 
@@ -197,6 +197,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/{id}', [UserController::class, 'show']);
             Route::get('/{id}/edit', [UserController::class, 'edit']);
             Route::post('/{id}/edit', [UserController::class, 'update']);
+            Route::post('/{id}/delete', [UserController::class, 'destroy']);
         });
 
         Route::prefix('/settings')->group(function() {

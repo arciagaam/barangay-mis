@@ -22,8 +22,8 @@
 
                 <div class="flex gap-2 items-center">
                     <label class="text-sm" for="rows">Term</label>
-                    <div class="flex w-fit items-center border border-table-even focus-within:border-project-blue rounded-md overflow-hidden gap-2 px-1 bg-white transition-all duration-300 ease-in-out">
-                        <select name="year" id="year" onchange="this.form.submit()">
+                    <div class="form-input flex w-fit items-center border border-table-even focus-within:border-project-blue rounded-md overflow-hidden gap-2 px-1 bg-white transition-all duration-300 ease-in-out">
+                        <select class="outline-none" name="year" id="year" onchange="this.form.submit()">
                             @foreach ($years as $year)
                                 <option value="{{$year->year}}" {{$selectedYear == $year->year ? 'selected' : ''}}>{{$year->year}}</option>
                             @endforeach

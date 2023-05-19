@@ -4,7 +4,7 @@
     <div class="flex flex-col gap-5">
         <div class="flex flex-col min-h-[70vh]">
             <div class="dashboard-grid grid grid-cols-3 gap-5 h-full">
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-lg bxs-user-account'></i>
@@ -14,9 +14,9 @@
                         <p>Total Residents</p>
                         <p class="text-3xl font-bold">{{$data['residents']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=male')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-sm bx-male-sign' ></i>
                     </div>
@@ -25,9 +25,9 @@
                         <p>Total Male</p>
                         <p class="text-3xl font-bold">{{$data['male']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=female')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-sm bx-female-sign' ></i>
                     </div>
@@ -36,9 +36,9 @@
                         <p>Total Female</p>
                         <p class="text-3xl font-bold">{{$data['female']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=voter')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-sm bx-fingerprint' ></i>
                     </div>
@@ -47,9 +47,9 @@
                         <p>Total Voters</p>
                         <p class="text-3xl font-bold">{{$data['voter']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=non-voter')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                     <div class="flex flex-1 items-center justify-center">
                         <div class="relative">
@@ -62,9 +62,9 @@
                         <p>Total Non-Voters</p>
                         <p class="text-3xl font-bold">{{$data['non_voter']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=toddler')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-sm bxs-baby-carriage' ></i>
@@ -74,9 +74,9 @@
                         <p>Total Toddlers</p>
                         <p class="text-3xl font-bold">{{$data['toddler']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/residents?filter=senior')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
                     
                     <div class="flex flex-1 items-center justify-center">
                         <div class="relative">
@@ -89,9 +89,9 @@
                         <p>Total Senior</p>
                         <p class="text-3xl font-bold">{{$data['senior']}}</p>
                     </div>
-                </div>
+                </a>
     
-                <div class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+                <a href="{{url('/blotters')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                     <div class="flex flex-1 items-center justify-center">
                         <i class='bx bx-sm bx-file'></i>
@@ -101,7 +101,7 @@
                         <p>Total Blotter</p>
                         <p class="text-3xl font-bold">{{$data['blotter_count']}}</p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 

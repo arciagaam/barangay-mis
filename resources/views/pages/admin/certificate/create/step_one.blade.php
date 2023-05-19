@@ -22,7 +22,7 @@
             </div>
 
             <div class="flex flex-row self-end mt-auto">
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+                <button class="primary-btn">Next</button>
             </div>
             
         </form>    

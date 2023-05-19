@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="flex flex-row gap-3">
-                    <a class="py-2 px-3 bg-project-yellow text-project-blue font-bold rounded-md" href="{{url('/officials')}}">Back to Officials List</a>
+                    <a class="primary-btn" href="{{url('/officials')}}">Back to Officials List</a>
                 </div>
             </div>
 

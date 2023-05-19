@@ -16,9 +16,20 @@
 
                 <div class="flex gap-2 items-center">
                     <label class="text-sm" for="rows">Rows per page</label>
-                    <div class="flex w-10 items-center border border-table-even focus-within:border-project-blue rounded-md overflow-hidden gap-2 px-1 bg-white transition-all duration-300 ease-in-out">
-                        <input class="w-full outline-none px-1 text-sm py-1" type="text" name="rows" id="rows" value={{ request()->query()['rows'] ?? 10 }}>
-                    </div>
+                    <input class="form-input w-10" type="text" name="rows" id="rows" value={{ request()->query()['rows'] ?? 10 }}>
+                </div>
+
+                <div class="flex gap-2 items-center">
+                    <label class="text-sm" for="filter">Filter</label>
+                    <select onchange="this.form.submit()" class="form-input" name="filter" id="filter">
+                        <option value="none" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'none' ? 'selected' : '') : ''}}>No Filter</option>
+                        <option value="male" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'male' ? 'selected' : '') : ''}}>Male</option>
+                        <option value="female" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'female' ? 'selected' : '') : ''}}>Female</option>
+                        <option value="voter" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'voter' ? 'selected' : '') : ''}}>Voter</option>
+                        <option value="non-voter" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'non-voter' ? 'selected' : '') : ''}}>Non-Voter</option>
+                        <option value="toddler" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'toddler' ? 'selected' : '') : ''}}>Toddler</option>
+                        <option value="senior" {{isset(request()->query()['filter']) ? (request()->query()['filter'] == 'senior' ? 'selected' : '') : ''}}>Senior</option>
+                    </select>
                 </div>
             </form>
 
@@ -26,7 +37,6 @@
                 <a href="{{url('/residents/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Add Resident</a>
             </div>
         </div>
-
 
         <table class="main-table">
             <thead>

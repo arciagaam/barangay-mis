@@ -100,7 +100,7 @@
 
             <p id="error-msg" class="text-red-500 italic text-xs"></p>
 
-            <button id="set_mapping" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md ml-auto">Set Mapping</button>
+            <button id="set_mapping" class="primary-btn ml-auto">Set Mapping</button>
         </div>
     </div>
 </div>

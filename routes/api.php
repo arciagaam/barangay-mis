@@ -23,10 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/residents', function (Request $request) {
     
     $residents = DB::table('residents')
-    ->join('households', 'households.id', '=', 'residents.household_id')
-    ->join('religions', 'religions.id', '=', 'residents.religion_id')
-    ->join('occupations', 'occupations.id', '=', 'residents.occupation_id')
-    ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
+    ->leftJoin('households', 'households.id', '=', 'residents.household_id')
+    ->leftJoin('religions', 'religions.id', '=', 'residents.religion_id')
+    ->leftJoin('occupations', 'occupations.id', '=', 'residents.occupation_id')
+    ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
     ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'religions.name as religion', 'occupations.name as occupation', 'civil_status.name as civil_status')
     ->where('residents.archived', '=', '0')
     ->where(function($query) use ($request) {
@@ -51,19 +51,14 @@ Route::get('/residents', function (Request $request) {
     echo json_encode(['residents' => $residents]);
 });
 
-Route::get('/inventory', function (Request $request) {
+Route::get('/inventory/{id}', function ($id) {
     
     $item = DB::table('inventory')
-    ->where(function($query) use ($request) {
-        $query->where('name', 'like', $request->search.'%')
-        ->orWhere('quantity', 'like', $request->search.'%')
-        ->orWhere('remarks', 'like', $request->search.'%');
-    })
+    ->where('id', $id)
     ->orderBy('inventory.created_at', 'asc')
-    ->limit(10)
-    ->get();
+    ->first();
     
-    echo json_encode(['items' => $item]);
+    echo json_encode(['item' => $item]);
 });
 
 Route::post('/calendar', function (Request $request) {

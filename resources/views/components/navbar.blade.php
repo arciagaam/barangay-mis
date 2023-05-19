@@ -84,11 +84,13 @@
                                 <p class="text-sm font-normal">Users</p>         
                             </a>
                         @endif
-
-                        <a class="flex items-center gap-5 {{ request()->is('maintenance/settings*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/settings')}}">
-                            <i class='bx bx-sm bx{{ request()->is('maintenance/settings*') ? 's':'' }}-cog'></i>
-                            <p class="text-sm font-normal">System Variables</p>         
-                        </a>
+                        
+                        @if (auth()->user()->role_id == 1)   
+                            <a class="flex items-center gap-5 {{ request()->is('maintenance/settings*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/settings')}}">
+                                <i class='bx bx-sm bx{{ request()->is('maintenance/settings*') ? 's':'' }}-cog'></i>
+                                <p class="text-sm font-normal">System Variables</p>         
+                            </a>
+                        @endif
 
                         <a class="flex items-center gap-5 {{ request()->is('maintenance/audit-trail*') ? 'text-project-yellow' : '' }}" href="{{url('/maintenance/audit-trail')}}">
                             <i class='bx bx-sm bx{{ request()->is('maintenance/audit-trail*') ? 's':'' }}-file-find'></i>
@@ -99,7 +101,7 @@
 
                 <a href="{{url('/profile')}}" class="pl-5 flex items-center gap-5 {{ request()->is('profile*') ? 'text-project-yellow' : '' }}">
                     <i class='bx bx-sm bx{{ request()->is('profile*') ? 's':'' }}-user'></i>
-                    <p class="text-sm font-normal">Profile</p>
+                    <p class="text-sm font-normal">My Account</p>
                 </a>
 
                 <a href="{{url('/logout')}}" class="pl-5 flex items-center gap-5 mt-auto hover:text-red-500">

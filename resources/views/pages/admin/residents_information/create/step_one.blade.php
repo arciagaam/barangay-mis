@@ -18,7 +18,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="first_name">First Name</label>
+                        <label for="first_name">First Name <span class="text-xs text-red-500">*</span></label>
                         @error('first_name')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -28,7 +28,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="middle_name" class="flex gap-2 items-center"> Middle Name  <span class="text-xs text-project-blue/20">optional</span></label>
+                        <label for="middle_name" class="flex gap-2 items-center"> Middle Name</label>
                         @error('middle_name')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -38,7 +38,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="last_name">Last Name</label>
+                        <label for="last_name">Last Name <span class="text-xs text-red-500">*</span></label>
                         @error('last_name')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -48,7 +48,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="nickname" class="flex gap-2 items-center">Nickname <span class="text-xs text-project-blue/20">optional</span></label>
+                        <label for="nickname" class="flex gap-2 items-center">Nickname</label>
                         @error('nickname')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror    
@@ -58,7 +58,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="sex">Sex</label>
+                        <label for="sex">Sex <span class="text-xs text-red-500">*</span></label>
                         @error('sex')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -74,7 +74,7 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="gender_id">Gender</label>
+                        <label for="gender_id">Gender <span class="text-xs text-red-500">*</span></label>
                         @error('gender_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -91,7 +91,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="birth_date">Birth Date</label>
+                        <label for="birth_date">Birth Date <span class="text-xs text-red-500">*</span></label>
                         @error('birth_date')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -101,7 +101,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="age">Age</label>
+                        <label for="age">Age <span class="text-xs text-red-500">*</span></label>
                         @error('age')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -111,7 +111,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="place_of_birth">Place of Birth</label>
+                        <label for="place_of_birth">Place of Birth <span class="text-xs text-red-500">*</span></label>
                         @error('place_of_birth')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -121,7 +121,7 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="civil_status_id">Civil Status</label>
+                        <label for="civil_status_id">Civil Status <span class="text-xs text-red-500">*</span></label>
                         @error('civil_status_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -138,7 +138,7 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="occupation_id">Occupation</label>
+                        <label for="occupation_id">Occupation <span class="text-xs text-red-500">*</span></label>
                         @error('occupation_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -155,7 +155,7 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="religion_id">Religion</label>
+                        <label for="religion_id">Religion <span class="text-xs text-red-500">*</span></label>
                         @error('religion_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -172,8 +172,8 @@
             </div>
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href={{url('/residents')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
-                <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+                <a href={{url('/residents')}} class="secondary-btn">Cancel</a>
+                <button type="submit" class="primary-btn">Next</button>
             </div>
 
         </form>

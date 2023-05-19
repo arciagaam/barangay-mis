@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('contact');
             $table->date('return_date');
-            $table->string('remarks');
+            $table->string('remarks')->nullable()->default('');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

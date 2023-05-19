@@ -11,14 +11,14 @@
                         <input type="hidden" name="id" id="id" value="{{$activity->id}}">
                         <button class="py-2 px-4 bg-red-500 text-white font-bold rounded-md">Remove Activity</button>
                     </form>
-                    <a href="{{url("/calendar/activity/$activity->id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                    <a href="{{url("/calendar/activity/$activity->id/edit")}}" class="primary-btn">Edit</a>
                 @else
                     <p class="italic text-sm">Editing</p>
                 @endif
             </div>
         </div>
 
-        <form href="{{url("/calendar/activity/$activity->id/edit")}}" method="POST" class="flex flex-col">
+        <form href="{{url("/calendar/activity/$activity->id/edit")}}" method="POST" class="flex flex-col h-full gap-5">
             @csrf
             <div class="flex flex-col gap-5">
                 <div class="flex gap-5 items-center">
@@ -102,9 +102,9 @@
             </div>
     
             @if ($editing)
-                <div class="flex justify-end gap-5 items-center">
-                    <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("calendar/activity/$activity->id")}}">Cancel</a>
-                    <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+                <div class="flex justify-end gap-3 items-center mt-auto">
+                    <a class="secondary-btn" href="{{url("calendar/activity/$activity->id")}}">Cancel</a>
+                    <button class="primary-btn w-fit">Save</button>
                 </div>
              @endif
         </form>

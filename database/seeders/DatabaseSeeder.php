@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Gender 1'],
             ['name' => 'Gender 2'],
         ]);
+
+        DB::table('archive_reasons')->insert([
+            ['name' => 'Reason 1'],
+            ['name' => 'Reason 2'],
+        ]);
         
         DB::table('users')->insert([
             [

@@ -27,6 +27,7 @@ class ArchiveController extends Controller
 
         if($request->search || $request->search != '') {
             $data = DB::table('residents')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'residents.archive_reason_id')
             ->where('archived', '=', 1)
             ->where(function($query) use ($request){
                 $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', '%' . $request->search . '%')
@@ -37,17 +38,19 @@ class ArchiveController extends Controller
                 ->orWhere('birth_date', 'like', '%'.$request->search.'%')
                 ->orWhere('place_of_birth', 'like', '%'.$request->search.'%');
             })
-            ->latest()
+            ->select('residents.*', 'archive_reasons.name as reason')
+            ->latest('residents.created_at')
             ->paginate($rows ?? 10)
             ->appends($request->query());
         } else {
             $data = DB::table('residents')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'residents.archive_reason_id')
             ->where('archived', '=', 1)
-            ->latest()
+            ->select('residents.*', 'archive_reasons.name as reason')
+            ->latest('residents.created_at')
             ->paginate($rows ?? 10)
             ->appends($request->query());
         }
-
         return view('pages.admin.maintenance.archive.residents.index', ['data' => $data]);   
     }
 
@@ -57,19 +60,23 @@ class ArchiveController extends Controller
 
         if($request->search || $request->search != '') {
             $inventory = DB::table('inventory')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'inventory.archive_reason_id')
             ->where('archived', 1)
             ->where(function($query) use ($request) {
                 $query->where('name', 'like', $request->search.'%')
                 ->orWhere('quantity', 'like', $request->search.'%')
                 ->orWhere('remarks', 'like', $request->search.'%');
             })
-            ->latest()
+            ->select('inventory.*', 'archive_reasons.name as reason')
+            ->latest('inventory.created_at')
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         }else {
             $inventory = DB::table('inventory')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'inventory.archive_reason_id')
             ->where('archived', 1)
-            ->latest()
+            ->select('inventory.*', 'archive_reasons.name as reason')
+            ->latest('inventory.created_at')
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         }
@@ -84,8 +91,9 @@ class ArchiveController extends Controller
 
         if($request->search || $request->search != '') {
             $mappings = DB::table('residents')
-            ->join('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'mappings.archive_reason_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -99,6 +107,7 @@ class ArchiveController extends Controller
             'households.lot',
             'households.others',
             'households.subdivision',
+            'archive_reasons.name as reason'
             ])
             ->where(function($query) use ($request) {
                 $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', $request->search . '%')
@@ -126,8 +135,9 @@ class ArchiveController extends Controller
             ->appends(request()->query());
         }else {
             $mappings = DB::table('residents')
-            ->join('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'mappings.archive_reason_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -141,6 +151,7 @@ class ArchiveController extends Controller
             'households.lot',
             'households.others',
             'households.subdivision',
+            'archive_reasons.name as reason'
             ])
             ->where('mappings.archived', 1)
             ->where(function($query) use ($request) {

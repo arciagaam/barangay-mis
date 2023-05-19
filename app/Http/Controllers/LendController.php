@@ -56,7 +56,12 @@ class LendController extends Controller
             }
         }
 
-        return view('pages.admin.inventory.lend.create.step_one', ['item' => $item ?? null]);
+        $inventory = DB::table('inventory')
+        ->where('archived', 0)
+        ->latest()
+        ->get();
+
+        return view('pages.admin.inventory.lend.create.step_one', ['item' => $item ?? null, 'inventory' => $inventory]);
         
     }
 
@@ -123,6 +128,7 @@ class LendController extends Controller
             'lent_items.return_date as return_date',
         ])
         ->first();
+
         if($lentItem->status == 1) {
             $returnedData = DB::table('returned_items')
             ->where('lent_item_id', $lentItem->id)
@@ -157,7 +163,7 @@ class LendController extends Controller
         ])
         ->first();
 
-        return view('pages.admin.inventory.lend.show', ['item' => $lentItem, 'editing' => true]);
+        return view('pages.admin.inventory.lend.show', ['item' => $lentItem, 'editing' => true, 'returnedData' => null]);
     }
 
     /**
@@ -203,7 +209,6 @@ class LendController extends Controller
         DB::table('inventory')
         ->where('id', '=', $lent_item->inventory_id)
         ->increment('quantity', intval($request->returned_quantity));
-
 
 
         DB::table('lent_items')

@@ -6,7 +6,7 @@
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">{{$resident->first_name}} {{$resident->middle_name}} {{$resident->last_name}}</p>
             @if (!$editing)
-                <a href="{{url("/residents/$resident->resident_id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                <a href="{{url("/residents/$resident->resident_id/edit")}}" class="primary-btn">Edit</a>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif
@@ -311,8 +311,8 @@
 
         @if ($editing)
             <div class="flex justify-end gap-5 items-center">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/residents/$resident->resident_id")}}">Cancel</a>
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+                <a class="secondary-btn" href="{{url("/residents/$resident->resident_id")}}">Cancel</a>
+                <button class="primary-btn w-fit">Save</button>
             </div>
         @endif
     </form>

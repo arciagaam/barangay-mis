@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex flex-row">
-                    <a class="py-2 px-3 bg-project-yellow text-project-blue font-bold rounded-md" href="{{url('/residents')}}">Back to Residents List</a>
+                    <a class="primary-btn" href="{{url('/residents')}}">Back to Residents List</a>
                 </div>
             </div>
 

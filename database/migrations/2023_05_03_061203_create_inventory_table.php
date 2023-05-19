@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('quantity');
-            $table->string('remarks');
+            $table->string('remarks')->nullable()->default('');
             $table->tinyInteger('archived')->default(0);
+            $table->foreignId('archive_reason_id')->nullable()->constrained('archive_reasons')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

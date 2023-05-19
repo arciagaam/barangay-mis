@@ -12,7 +12,7 @@
             <p class="font-bold text-lg">Blotter Information</p>
 
             @if (!$editing)
-                <a href="{{url("/blotters/$blotter->blotter_id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                <a href="{{url("/blotters/$blotter->blotter_id/edit")}}" class="primary-btn">Edit</a>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif
@@ -248,9 +248,9 @@
 
 
         @if ($editing)
-            <div class="flex justify-end gap-5 items-center">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/blotters/$blotter->blotter_id")}}">Cancel</a>
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+            <div class="flex justify-end gap-3 items-center">
+                <a class="secondary-btn" href="{{url("/blotters/$blotter->blotter_id")}}">Cancel</a>
+                <button class="primary-btn">Save</button>
             </div>
         @endif
     </form>

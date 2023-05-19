@@ -50,8 +50,8 @@
                     <input class="form-input" type="text" name="email_address" id="email_address" value="{{$barangayInformation->email_address}}" {{$editing ? '' : 'disabled'}}>
                 </div>
                 @if($editing)
-                <div class="flex flex-row self-end justify-self-end gap-5">
-                    <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url('/maintenance/barangay-information/')}}">Cancel</a>
+                <div class="flex flex-row self-end justify-self-end gap-3">
+                    <a class="secondary-btn" href="{{url('/maintenance/barangay-information/')}}">Cancel</a>
                     <button class="self-end justify-self-end bg-project-yellow text-project-blue font-bold py-2 px-4 rounded-md" href="{{url('/maintenance/barangay-information/edit')}}">Save</button>
                 </div>
                 @else

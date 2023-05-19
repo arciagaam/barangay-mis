@@ -152,4 +152,11 @@ class UserController extends Controller
 
         return redirect("/maintenance/users/$id");
     }
+
+    public function destroy(Request $request)
+    {
+        DB::table('users')
+        ->delete($request->id);
+        addToLog('Delete', "User ID: $request->id Deleted");
+    }
 }

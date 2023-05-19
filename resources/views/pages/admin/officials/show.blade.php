@@ -6,7 +6,7 @@
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">Barangay Official Information</p>
             @if (!$editing)
-                <a href="{{url("/officials/$official->id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                <a href="{{url("/officials/$official->id/edit")}}" class="primary-btn">Edit</a>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif
@@ -136,9 +136,9 @@
         </div>
 
         @if ($editing)
-            <div class="flex justify-end gap-5 items-center mt-auto">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/officials/$official->id")}}">Cancel</a>
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+            <div class="flex justify-end gap-3 items-center mt-auto">
+                <a class="secondary-btn" href="{{url("/officials/$official->id")}}">Cancel</a>
+                <button class="primary-btn w-fit">Save</button>
             </div>
         @endif
     </form>

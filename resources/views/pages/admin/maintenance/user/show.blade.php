@@ -5,7 +5,12 @@
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">{{$user->username}}</p>
             @if (!$editing)
-                <a href="{{url("/maintenance/users/$user->id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                <div class="flex gap-3">
+                    @if (auth()->user()->role_id == 1)  
+                        <button type="button" data-url="{{url("/maintenance/users/$user->id/delete")}}" data-type="delete" data-group="user" class="popup_trigger primary-btn bg-red-500 font-normal text-white">Delete User</button>
+                    @endif
+                    <a href="{{url("/maintenance/users/$user->id/edit")}}" class="primary-btn">Edit</a>
+                </div>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif
@@ -66,18 +71,26 @@
 
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="role_id">Role</label>
+                    @if($editing)
+                        @if(auth()->user()->role_id == 1)
+                            <label for="role_id">Role</label>
+                        @endif
+                    @else
+                        <label for="role_id">Role</label>
+                    @endif
                     @error('role_id')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
                 </div>
 
                 @if ($editing)
-                <select class="form-input w-fit" name="role_id" id="role_id">
-                    @foreach ($roles as $role)
-                        <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
-                    @endforeach
-                </select>
+                    @if(auth()->user()->role_id == 1)                    
+                        <select class="form-input w-fit" name="role_id" id="role_id">
+                            @foreach ($roles as $role)
+                                <option value="{{$role->id}}">{{ucfirst($role->name)}}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 @else
                     <input class="form-input w-fit" type="text" name="role_id" id="role_id" value="{{ucfirst($user->role)}}" {{$editing ? '' : 'disabled'}}>  
                 @endif
@@ -85,8 +98,8 @@
         </div>
         @if ($editing)
             <div class="flex justify-end gap-5 items-center mt-auto">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/maintenance/users/$user->id")}}">Cancel</a>
-                <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+                <a class="secondary-btn" href="{{url("/maintenance/users/$user->id")}}">Cancel</a>
+                <button type="submit" class="primary-btn w-fit">Save</button>
             </div>
         @endif
     </form>

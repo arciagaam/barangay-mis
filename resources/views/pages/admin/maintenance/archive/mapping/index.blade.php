@@ -30,6 +30,7 @@
                     <th>Address</th>
                     <th>Longitude</th>
                     <th>Latitude</th>
+                    <th>Archive Reason</th>
                     <th class="!text-center">Actions</th>
                 </tr>
             </thead>
@@ -51,6 +52,7 @@
                         <td>{{$address}}</td>
                         <td>{{$mapping->longitude ?? 'N/A'}}</td>
                         <td>{{$mapping->latitude ?? 'N/A'}}</td>
+                        <td>{{$mapping->reason ?? 'N/A'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 <a href="{{url("/mapping/$mapping->id/recover")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i title="Recover from archive" class='bx bx-sm bx-undo'></i></a>

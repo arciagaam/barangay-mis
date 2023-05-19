@@ -28,6 +28,8 @@
                 <tr>
                     <th>Username</th>
                     <th>Fullname</th>
+                    <th>Type</th>
+                    <th>Message</th>
                     <th>Time</th>
                 </tr>
             </thead>
@@ -36,6 +38,8 @@
                     <tr>
                         <td>{{$log->username}}</td>
                         <td>{{$log->first_name}} {{$log->middle_name ?? ''}} {{$log->last_name}}</td>
+                        <td>{{$log->type}}</td>
+                        <td>{{$log->message}}</td>
                         <td>{{$log->created_at}}</td>
                     </tr>
                 @endforeach

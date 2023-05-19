@@ -31,6 +31,7 @@
                     <th>Item Name</th>
                     <th>Quantity</th>
                     <th>Remarks</th>
+                    <th>Archive Reason</th>
                     <th class="!text-center">Actions</th>
                 </tr>
             </thead>
@@ -41,6 +42,7 @@
                         <td>{{$it->name}}</td>
                         <td>{{$it->quantity}}</td>
                         <td>{{$it->remarks}}</td>
+                        <td>{{$it->reason ?? 'N/A'}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 {{-- <a href="{{url("/residents/$resident->resident_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-search-alt-2'></i></a> --}}

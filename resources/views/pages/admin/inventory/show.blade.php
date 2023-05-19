@@ -5,7 +5,7 @@
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">{{$item->name}}</p>
             @if (!$editing)
-                <a href="{{url("/inventory/$item->id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit</a>
+                <a href="{{url("/inventory/$item->id/edit")}}" class="primary-btn">Edit</a>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif
@@ -40,14 +40,14 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea class="form-input" name="remarks" id="remarks" cols="30" rows="10"{{$editing ? '' : 'disabled'}}>{{$item->remarks}}</textarea>
+                    <textarea class="form-input resize-none" name="remarks" id="remarks" cols="30" rows="10"{{$editing ? '' : 'disabled'}}>{{$item->remarks}}</textarea>
                 </div>    
             </div>
         </div>
         @if ($editing)
-            <div class="flex justify-end gap-5 items-center mt-auto">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/inventory/$item->id")}}">Cancel</a>
-                <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+            <div class="flex justify-end gap-3 items-center mt-auto">
+                <a class="secondary-btn" href="{{url("/inventory/$item->id")}}">Cancel</a>
+                <button type="submit" class="primary-btn w-fit">Save</button>
             </div>
         @endif
     </form>

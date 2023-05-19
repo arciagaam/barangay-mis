@@ -16,6 +16,7 @@ class ResidentController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('reasons',  DB::table('archive_reasons')->latest()->get());
 
         $civilStatus = DB::table('civil_status')->select('id', 'name')->orderBy('id', 'asc')->get();
         $occupation = DB::table('occupations')->select('id', 'name')->orderBy('id', 'asc')->get();
@@ -42,6 +43,8 @@ class ResidentController extends Controller
 
         $rows = $request->rows;
 
+        $filter = $request->filter ?? null;
+
         if($request->search || $request->search != ''){
             $residents = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')
@@ -62,12 +65,32 @@ class ResidentController extends Controller
                 ->orWhere('others', 'like', '%'.$request->search.'%')
                 ->orWhere('subdivision', 'like', '%'.$request->search.'%');
             })
+            ->when($filter != null, function ($query) use ($request, $filter) {
+                switch(lcfirst($filter)) {
+                    case 'male' : $query->where("residents.sex", 1); break;
+                    case 'female' : $query->where("residents.sex", 2); break;
+                    case 'voter' : $query->where("residents.voter_status", 1); break;
+                    case 'non-voter' : $query->where("residents.voter_status", 0); break;
+                    case 'toddler' : $query->where("residents.age",'<=', 3); break;
+                    case 'senior' : $query->where("residents.age", '>=', 60); break;
+                }
+            })
             ->orderBy('residents.created_at', 'desc')
             ->orderBy('residents.id', 'asc')
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         } else {
             $residents = DB::table('residents')
+            ->when($filter != null, function ($query) use ($request, $filter) {
+                switch(lcfirst($filter)) {
+                    case 'male' : $query->where("residents.sex", 1); break;
+                    case 'female' : $query->where("residents.sex", 2); break;
+                    case 'voter' : $query->where("residents.voter_status", 1); break;
+                    case 'non-voter' : $query->where("residents.voter_status", 0); break;
+                    case 'toddler' : $query->where("residents.age",'<=', 3); break;
+                    case 'senior' : $query->where("residents.age", '>=', 60); break;
+                }
+            })
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
             ->where('residents.archived', '=', '0')
@@ -342,12 +365,11 @@ class ResidentController extends Controller
     }
 
 
-    public function archive(string $id)
+    public function archive(string $id, Request $request)
     {
         DB::table('residents')
         ->where('id', '=', $id)
-        ->update(['archived' => 1]);
-        
+        ->update(['archived' => 1, 'archive_reason_id' => $request->reason]);
         addToLog('Archive', "Resident ID: $id Archived");
 
         return back();

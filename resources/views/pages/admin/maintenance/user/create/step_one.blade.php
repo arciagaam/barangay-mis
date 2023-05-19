@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{url('/maintenance/users/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
+    <form method="POST" action="{{url('/maintenance/users/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-5">
         @csrf
 
         <div class="flex flex-wrap gap-3">
@@ -101,8 +101,9 @@
             <input class="form-input w-fit" type="text" name="security_question_answer" id="security_question_answer">
         </div>
 
-        <div class="flex flex-row self-end mt-auto">
-            <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+        <div class="flex flex-row self-end mt-auto gap-3">
+            <a href="{{url('/maintenance/users')}}" class="secondary-btn">Cancel</a>
+            <button class="primary-btn">Next</button>
         </div>
     </form>
 </x-layout>

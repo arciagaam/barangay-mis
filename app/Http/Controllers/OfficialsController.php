@@ -135,6 +135,29 @@ class OfficialsController extends Controller
         $official = $request->session()->get('official');
         $religions = DB::table('religions')->orderBy('id')->get();
 
+        $formFields = $request->validate([
+            'first_name'  => 'required',
+            'middle_name' => '',
+            'last_name' => 'required',
+            'nickname' => '',
+            'sex' => 'required',
+            'birth_date' => 'required',
+            'age' => 'required',
+            'place_of_birth' => 'required',
+            'occupation_id' => 'required',
+            'religion_id' => 'required',
+            'house_number' => 'required',
+            'purok' => '',
+            'block' => '',
+            'lot' => '',
+            'others' => '',
+            'subdivision' => '',
+            'voter_status' => '',
+            'precinct_number' => '',
+            'disabled' => '',
+        ]);
+
+        
 
         if ($official && $official->resident_id) {
             $residentData = DB::table('residents')

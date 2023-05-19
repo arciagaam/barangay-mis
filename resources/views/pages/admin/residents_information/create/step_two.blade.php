@@ -103,8 +103,8 @@
 
 
             <div class="flex items-center gap-2 self-end mt-auto">
-                <a href={{url('/residents/new/step-one')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
-                <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+                <a href={{url('/residents/new/step-one')}} class="secondary-btn">Back</a>
+                <button type="submit" class="primary-btn">Next</button>
             </div>
 
         </form>

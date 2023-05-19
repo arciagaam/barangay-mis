@@ -15,26 +15,26 @@
         @endif
 
         <p class="text-red-500 italic text-sm">{{session()->get('error')}}</p>
-        <div class="flex flex-col gap-2">
-            <div class="flex gap-3">
-                <div class="flex gap-2 w-1/2 items-center">
-                    <label class="text-sm" for="search">Search</label>
-                    <div class="relative w-full">
-                        <div class="flex items-center border w-full border-table-even focus-within:border-project-blue rounded-md overflow-hidden gap-2 px-1 bg-white transition-all duration-300 ease-in-out">
-                            <input id="item_search" class="w-full outline-none px-1 text-sm py-1" type="text" name="search" id="search" placeholder="Search for Item">
-                            <button class="w-fit h-fit aspect-square flex items-center justify-center"><i class='bx bx-search'></i></button>
-                        </div>
-                        <div id="search_items_container" class="absolute top-[calc(100% + 2em)] flex flex-col gap-1 bg-white rounded-md shadow-md w-full p-2 hidden">
-                        </div>
-                    </div>
-                </div>
-    
-                <button type="button" class="py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm">Search</button>
-            </div>
-    
+        <div class="flex flex-col gap-2">    
             <div class="flex flex-col gap-3">
     
-                <p class="text-lg font-bold">Item Details</p>
+                <p class="text-lg font-bold">Inventory</p>
+
+                <div class="form-input-container w-full">
+                    <div class="flex flex-row justify-between items-center">
+                        <label for="inventory_id">Items <span class="text-xs text-red-500">*</span></label>
+                        @error('inventory_id')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+
+                    <select class="form-input" name="inventory_id" id="inventory_id">
+                        @foreach ($inventory as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="flex flex-row gap-3">
                     <div class="form-input-container w-full">
                         <div class="flex flex-row justify-between items-center">
@@ -43,7 +43,7 @@
                                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="text" name="name" id="name" value="{{$item ? $item->name : ''}}" disabled>
+                        <input class="form-input" type="text" name="name" id="name" disabled>
                     </div>
             
                     <div class="form-input-container">
@@ -53,7 +53,7 @@
                                 <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="number" name="quantity" min="1" id="item_quantity" value="{{$item ? $item->quantity : ''}}" disabled>
+                        <input class="form-input" type="number" name="quantity" min="1" id="item_quantity" disabled>
                     </div>
                 </div>
                 
@@ -65,7 +65,7 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea class="form-input resize-none" name="remarks" id="item_remarks" cols="30" rows="6" disabled>{{$item ? $item->remarks : ''}}</textarea>
+                    <textarea class="form-input resize-none" name="remarks" id="item_remarks" cols="30" rows="6" disabled></textarea>
                 </div>
     
             </div>
@@ -89,7 +89,7 @@
             </div>
     
             <div class="flex flex-col gap-3">
-                <p class="font-bold text-lg">Borrower Information</p>
+                <p class="font-bold text-lg">Borrower Information <span class="text-xs text-red-500">*</span></p>
     
                 <div class="grid grid-cols-3 gap-3">
                     <div class="form-input-container">
@@ -172,7 +172,10 @@
 
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="quantity">Quantity</label>
+                    <label for="quantity">Quantity <span class="text-xs text-red-500">*</span></label>
+                    @error('quantity')
+                        <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
                 </div>
                 <input class="form-input w-1/2" type="number" name="quantity" id="quantity">
             </div>
@@ -180,6 +183,9 @@
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
                     <label for="remarks">Remarks</label>
+                    @error('remarks')
+                        <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
                 </div>
 
                 <textarea class="form-input w-1/2 resize-none" name="remarks" id="remarks" cols="30" rows="10"></textarea>
@@ -187,22 +193,28 @@
 
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="contact">Contact Number</label>
+                    <label for="contact">Contact Number <span class="text-xs text-red-500">*</span></label>
+                    @error('contact')
+                        <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
                 </div>
                 <input class="form-input w-1/2" type="number" name="contact" id="contact">
             </div>
 
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="return_date">Return Date</label>
+                    <label for="return_date">Return Date <span class="text-xs text-red-500">*</span></label>
+                    @error('return_date')
+                        <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
                 </div>
                 <input class="form-input w-1/2" type="date" name="return_date" id="return_date">
             </div>
         </div>
 
         <div class="flex flex-row self-end mt-auto gap-3">
-            <a href={{url('/lend')}} class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Cancel</a>
-            <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+            <a href={{url('/lend')}} class="secondary-btn">Cancel</a>
+            <button class="primary-btn">Next</button>
         </div>
         
     </form>    

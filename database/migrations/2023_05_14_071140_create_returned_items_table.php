@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('lent_item_id')->nullable()->constrained('lent_items')->cascadeOnUpdate()->nullOnDelete();
             $table->integer('returned_quantity');
-            $table->string('remarks');
+            $table->string('remarks')->nullable()->default('');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

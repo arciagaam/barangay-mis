@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="flex flex-row">
-                    <a class="py-2 px-3 bg-project-yellow text-project-blue font-bold rounded-md" href="{{url('/inventory')}}">Back to Inventory List</a>
+                    <a class="primary-btn" href="{{url('/inventory')}}">Back to Inventory List</a>
                 </div>
             </div>
 

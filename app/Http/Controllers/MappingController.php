@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\View;
 class MappingController extends Controller
 {
 
+
     public function __construct()
     {
+        View::share('reasons',  DB::table('archive_reasons')->latest()->get());
         View::share('barangayInformation', DB::table('barangay_information')->first());
     }
     /**
@@ -207,15 +209,14 @@ class MappingController extends Controller
             ->appends(request()->query());
         }
 
-
         return view('pages.admin.mapping.list', ['mappings' => $mappings]);   
     }
 
-    public function archive(string $id)
+    public function archive(string $id, Request $request)
     {
         DB::table('mappings')
         ->where('id', '=', $id)
-        ->update(['archived' => 1]);
+        ->update(['archived' => 1, 'archive_reason_id' => $request->reason]);
         addToLog('Archive', "Mapping ID: $id Archived");
         return back();
     }

@@ -27,7 +27,7 @@
             <button type="button" class="py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm">Search</button>
         </div>
 
-        <form method="POST" action="{{url('/blotters/new/step-three')}}" class="flex flex-col h-full">
+        <form method="POST" action="{{url('/blotters/new/step-three')}}" class="flex flex-col h-full gap-5">
             <div class="flex flex-col gap-5">
                 <p class="font-bold text-lg">Suspect Information</p>
                 <div class="grid grid-cols-3 gap-3">
@@ -149,8 +149,8 @@
                 @if ($residentData && !session()->get('new_resident.suspect'))
                     <input type="hidden" name="resident_id" id="resident_id" value="{{$residentData->resident_id}}">
                 @endif
-                <a href="{{url('/blotters/new/step-two')}}" class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Back</a>
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+                <a href="{{url('/blotters/new/step-two')}}" class="secondary-btn">Back</a>
+                <button class="primary-btn">Next</button>
             </div>
         </form>
     </div>  

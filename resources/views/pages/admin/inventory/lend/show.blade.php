@@ -7,12 +7,12 @@
 
             <div class="flex flex-row gap-3">
                 @if (!$editing)
-                    <a href="{{url("/lend/$item->id/edit")}}" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Edit Details</a>
+                    <a href="{{url("/lend/$item->id/edit")}}" class="primary-btn">Edit Details</a>
     
                     @if ($item->status == 0)
-                        <button type="button" id="return_btn" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit self-end">Return Item</button>
+                        <button type="button" id="return_btn" class="primary-btn w-fit self-end">Return Item</button>
                     @else
-                        <div class="py-2 px-4 bg-table-even text-project-blue/40 rounded-md">Item Returned</div>
+                        <div class="secondary-btn">Item Returned</div>
                     @endif
                 @else
                     <p class="italic text-sm">Editing</p>
@@ -161,9 +161,9 @@
             </div>
         </div>
         @if ($editing)
-            <div class="flex justify-end gap-5 items-center mt-auto">
-                <a class="py-2 px-4 bg-table-even text-project-blue/50 rounded-md w-fit" href="{{url("/lend/$item->id")}}">Cancel</a>
-                <button type="submit" class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md w-fit">Save</button>
+            <div class="flex justify-end gap-3 items-center mt-auto">
+                <a class="secondary-btn" href="{{url("/lend/$item->id")}}">Cancel</a>
+                <button type="submit" class="primary-btn w-fit">Save</button>
             </div>
         @endif
     </form>

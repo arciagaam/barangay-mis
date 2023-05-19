@@ -25,7 +25,7 @@
             <button type="button" class="py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm">Search</button>
         </div>
 
-        <form method="POST" action="{{url('/officials/new/step-one')}}" class="flex flex-col h-full">
+        <form method="POST" action="{{url('/officials/new/step-one')}}" class="flex flex-col h-full gap-5">
             @csrf
             <div class="flex flex-col gap-5">
                 <p class="font-bold text-lg">Resident Information</p>
@@ -182,7 +182,8 @@
                 @if ($residentData && !session()->get('new_resident'))
                     <input type="hidden" name="resident_id" id="resident_id" value="{{$residentData->resident_id}}">
                 @endif
-                <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+                <a href="{{url('/officials')}}" class="secondary-btn">Cancel</a>
+                <button class="primary-btn">Next</button>
             </div>
         </form>
         

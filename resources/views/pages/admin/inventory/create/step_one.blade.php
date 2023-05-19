@@ -14,7 +14,7 @@
             
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="name">Item Name</label>
+                    <label for="name">Item Name <span class="text-xs text-red-500">*</span></label>
                     @error('name')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
@@ -24,7 +24,7 @@
     
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="quantity">Quantity</label>
+                    <label for="quantity">Quantity <span class="text-xs text-red-500">*</span></label>
                     @error('quantity')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
@@ -45,8 +45,9 @@
         </div>
         
 
-        <div class="flex flex-row self-end mt-auto">
-            <button class="py-2 px-4 bg-project-yellow text-project-blue font-bold rounded-md">Next</button>
+        <div class="flex flex-row self-end gap-3 mt-auto">
+            <a href="{{url('/inventory')}}" class="secondary-btn">Cancel</a>
+            <button class="primary-btn">Next</button>
         </div>
         
     </form>    

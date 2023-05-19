@@ -96,6 +96,8 @@ class CertificateController extends Controller
     public function create_StepTwo(Request $request)
     {
         $certificate = $request->session()->get('certificate');
+        $religions = DB::table('religions')->orderBy('id')->get();
+        $occupations = DB::table('occupations')->orderBy('id')->get();
 
         if ($certificate->resident_id) {
             $residentData = DB::table('residents')
@@ -103,21 +105,64 @@ class CertificateController extends Controller
             ->join('religions', 'religions.id', '=', 'residents.religion_id')
             ->join('occupations', 'occupations.id', '=', 'residents.occupation_id')
             ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'religions.name as religion', 'occupations.name as occupation', 'civil_status.name as civil_status')
+            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'religions.name as religion', 'occupations.name as occupation', 'occupations.id as occupation_id', 'civil_status.name as civil_status')
             ->where('residents.archived', '=', '0')
             ->where('residents.id', '=', $certificate->resident_id)
             ->first();
         }
 
-
-        return view('pages.admin.certificate.create.step_two', ['residentData' => $residentData ?? null, 'resident' => $certificate->resident_id ?? null]);
+        return view('pages.admin.certificate.create.step_two', ['residentData' => $residentData ?? null, 'resident' => $certificate->resident_id ?? null, 'religions' => $religions, 'occupations' => $occupations]);
     }
 
     public function post_StepTwo(Request $request)
     {
         $formFields = $request->validate([
-            'resident_id' => 'required'
+            'first_name'  => 'required',
+            'middle_name' => '',
+            'last_name' => 'required',
+            'nickname' => '',
+            'sex' => 'required',
+            'birth_date' => 'required',
+            'age' => 'required',
+            'place_of_birth' => 'required',
+            'occupation_id' => 'required',
+            'religion_id' => 'required',
+            'house_number' => 'required',
+            'purok' => '',
+            'block' => '',
+            'lot' => '',
+            'others' => '',
+            'subdivision' => '',
+            'voter_status' => '',
+            'precinct_number' => '',
+            'disabled' => '',
         ]);
+
+        $checkResident = DB::table('residents')
+        ->join('households', 'households.id', 'residents.household_id')
+        ->where('residents.first_name', $request->first_name)
+        ->where('residents.middle_name', $request->middle_name)
+        ->where('residents.last_name', $request->last_name)
+        ->where('residents.nickname', $request->nickname)
+        ->where('residents.sex', $request->sex)
+        ->where('residents.birth_date', $request->birth_date)
+        ->where('residents.age', $request->age)
+        ->where('residents.place_of_birth', $request->place_of_birth)
+        ->where('residents.occupation_id', $request->occupation_id)
+        ->where('residents.religion_id', $request->religion_id)
+        ->where('residents.voter_status', $request->voter_status)
+        ->where('residents.precinct_number', $request->precinct_number)
+        ->where('residents.disabled', $request->disabled)
+        ->where('households.house_number', $request->house_number)
+        ->where('households.purok', $request->purok)
+        ->where('households.block', $request->block)
+        ->where('households.lot', $request->lot)
+        ->where('households.others', $request->others)
+        ->where('households.subdivision', $request->subdivision)
+        ->first();
+
+        
+
 
         $certificate = $request->session()->get('certificate');
         $certificate->fill(['resident_id' => $request->resident_id]);

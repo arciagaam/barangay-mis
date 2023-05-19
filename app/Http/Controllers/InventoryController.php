@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\View;
 
 class InventoryController extends Controller
 {
+
     public function __construct()
-    {
+    {   
+        View::share('reasons',  DB::table('archive_reasons')->latest()->get());
         View::share('barangayInformation', DB::table('barangay_information')->first());
     }
     /**
@@ -115,7 +117,7 @@ class InventoryController extends Controller
         return redirect("/inventory/$id");
     }
 
-    /**
+    /**     
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -123,12 +125,12 @@ class InventoryController extends Controller
         //
     }
 
-    public function archive(string $id)
+    public function archive(string $id, Request $request)
     {
         DB::table('inventory')
         ->where('id', $id)
-        ->update(['archived' => 1]);
-
+        ->update(['archived' => 1, 'archive_reason_id' => $request->reason]);
+        addToLog('Archive', "Inventory ID: $id Archived");
         return back();
     }
 
@@ -137,7 +139,7 @@ class InventoryController extends Controller
         DB::table('inventory')
         ->where('id', $id)
         ->update(['archived' => 0]);
-
+        addToLog('Recover', "Inventory ID: $id Recovered");
         return back();
     }
 }
