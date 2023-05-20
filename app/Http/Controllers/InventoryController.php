@@ -21,6 +21,7 @@ class InventoryController extends Controller
     {
         $rows = $request->rows;
 
+        // Query para kunin lahat nung inventory items
         if($request->search || $request->search != '') {
             $inventory = DB::table('inventory')
             ->where('archived', 0)
@@ -50,17 +51,18 @@ class InventoryController extends Controller
     public function create_StepOne()
     {
         return view('pages.admin.inventory.create.step_one');
-
     }
 
     public function post_StepOne(Request $request)
     {
+        // Vinavalidate yung input fields
         $formFields = $request->validate([
             'name' => 'required',
             'quantity' => 'required',
             'remarks' => '',
         ]);
 
+        // insert new item to db
         DB::table('inventory')
         ->insert($formFields);
 

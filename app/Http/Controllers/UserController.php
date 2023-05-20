@@ -85,6 +85,8 @@ class UserController extends Controller
             'security_question_answer' => 'required',
         ]);
 
+        $formFields['password'] = bcrypt($formFields['password']);
+
         DB::table('users')
         ->insert($formFields);
 

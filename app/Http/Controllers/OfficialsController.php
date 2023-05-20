@@ -19,11 +19,12 @@ class OfficialsController extends Controller
         ->latest()
         ->get();
         View::share('barangayInformation', DB::table('barangay_information')->first());
-
+        
         $this->middleware(function ($request, $next) {
             if (str_contains($request->path(), 'officials/new') && !str_contains($request->path(), 'officials/new/step-one') && ($request->session()->missing('resident') && $request->session()->missing('official'))) {
                 return redirect('/officials/new/step-one');
             }
+            
             return $next($request);
         });
     }
@@ -134,31 +135,7 @@ class OfficialsController extends Controller
     {
         $official = $request->session()->get('official');
         $religions = DB::table('religions')->orderBy('id')->get();
-
-        $formFields = $request->validate([
-            'first_name'  => 'required',
-            'middle_name' => '',
-            'last_name' => 'required',
-            'nickname' => '',
-            'sex' => 'required',
-            'birth_date' => 'required',
-            'age' => 'required',
-            'place_of_birth' => 'required',
-            'occupation_id' => 'required',
-            'religion_id' => 'required',
-            'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
-            'others' => '',
-            'subdivision' => '',
-            'voter_status' => '',
-            'precinct_number' => '',
-            'disabled' => '',
-        ]);
-
-        
-
+   
         if ($official && $official->resident_id) {
             $residentData = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')

@@ -129,9 +129,11 @@ class ResidentController extends Controller
             'religion_id' => 'required',
         ]);
 
+        // check if may resident session
         if (empty($request->session()->get('resident'))) {
             $resident = new Resident();
             $resident->fill($formFields);
+            // nilalagay yung inputfields or yung resident sa isang session
             $request->session()->put('resident', $resident);
         } else {
             $resident = $request->session()->get('resident');
@@ -238,7 +240,7 @@ class ResidentController extends Controller
         }
 
         $householdDb = DB::table('households')            
-        ->where('house_number', '=', $household->block)
+        ->where('house_number', '=', $household->house_number)
         ->where('others', '=', $household->address_others)
         ->first();
 

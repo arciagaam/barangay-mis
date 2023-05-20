@@ -145,6 +145,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/step-two', [InventoryController::class, 'create_StepTwo']);
             Route::post('/step-two', [InventoryController::class, 'post_StepTwo']);
         });
+        
         Route::get('/{id}', [InventoryController::class, 'show']);
         Route::get('/{id}/edit', [InventoryController::class, 'edit']);
         Route::post('/{id}/edit', [InventoryController::class, 'update']);

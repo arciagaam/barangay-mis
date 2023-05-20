@@ -22,15 +22,21 @@
 
                 <div class="form-input-container w-full">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="inventory_id">Items <span class="text-xs text-red-500">*</span></label>
-                        @error('inventory_id')
+                        <label for="id">Items <span class="text-xs text-red-500">*</span></label>
+                        @error('id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
 
-                    <select class="form-input" name="inventory_id" id="inventory_id">
+                    @php
+                        if(isset($item)) {
+                            $_item = $item;
+                        }
+                    @endphp
+
+                    <select class="form-input" name="id" id="inventory_id">
                         @foreach ($inventory as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            <option value="{{$item->id}}" {{isset($_item) ? ($_item->id == $item->id ? 'selected' : '') : ''}}>{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
