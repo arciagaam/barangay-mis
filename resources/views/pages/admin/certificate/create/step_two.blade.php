@@ -126,6 +126,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="flex flex-col gap-5">
                 <p class="font-bold text-lg">Contact Information</p>
                 <div class="grid grid-cols-3 gap-3">

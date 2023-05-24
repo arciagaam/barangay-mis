@@ -1,7 +1,7 @@
 
 const searchItemsContainer = document.querySelector('#search_items_container');
 
-document.querySelector('#inventory_id').addEventListener('change', (e) => {
+document.querySelector('.inventory_id').addEventListener('change', (e) => {
     fetchItem(e.target.value)
 })
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Household;
+use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -55,40 +57,144 @@ class LendController extends Controller
                 return redirect('/lend/new/step-one/');
             }
         }
+        $religions = DB::table('religions')->orderBy('id')->get();
+        $occupations = DB::table('occupations')->orderBy('id')->get();
 
         $inventory = DB::table('inventory')
         ->where('archived', 0)
         ->latest()
         ->get();
 
-        return view('pages.admin.inventory.lend.create.step_one', ['item' => $item ?? null, 'inventory' => $inventory]);
+        return view('pages.admin.inventory.lend.create.step_one', ['item' => $item ?? null, 'inventory' => $inventory, 'religions' => $religions, 'occupations' => $occupations]);
         
     }
 
     public function post_StepOne(Request $request)
     {
-        if(!$request->resident_id && !$request->id) {
-            return back()->with('error', 'Select an item and borrower');
-        }else if(!$request->resident_id) {
-            return back()->with('error', 'Select borrower');
-        }else if(!$request->id) {
-            return back()->with('error', 'Select an item');
-        }else if($request->quantity == 0) {
-            return back()->with('error', 'Quantity should not be 0. Check if stocks are available');
-        }
 
         $formFields = $request->validate([
+            'id' => 'required',
+            'first_name'  => 'required',
+            'middle_name' => '',
+            'last_name' => 'required',
+            'nickname' => '',
+            'sex' => 'required',
+            'birth_date' => 'required',
+            'age' => 'required',
+            'place_of_birth' => 'required',
+            'occupation_id' => 'required',
+            'religion_id' => 'required',
+            'house_number' => 'required',
+            'purok' => '',
+            'block' => '',
+            'lot' => '',
+            'others' => '',
+            'subdivision' => '',
+            'voter_status' => '',
+            'precinct_number' => '',
+            'disabled' => '',
             'contact' => ['required', 'numeric'],
             'return_date' => 'required',
             'quantity' => 'required'
         ]);
 
+        $checkResident = DB::table('residents')
+        ->join('households', 'households.id', 'residents.household_id')
+        ->where('residents.first_name', $request->first_name)
+        ->where('residents.middle_name', $request->middle_name)
+        ->where('residents.last_name', $request->last_name)
+        ->where('residents.nickname', $request->nickname)
+        ->where('residents.sex', $request->sex)
+        ->where('residents.birth_date', $request->birth_date)
+        ->where('residents.age', $request->age)
+        ->where('residents.place_of_birth', $request->place_of_birth)
+        ->where('residents.occupation_id', $request->occupation_id)
+        ->where('residents.religion_id', $request->religion_id)
+        ->where('residents.voter_status', $request->voter_status)
+        ->where('residents.precinct_number', $request->precinct_number)
+        ->where('residents.disabled', $request->disabled)
+        ->where('households.house_number', $request->house_number)
+        ->where('households.purok', $request->purok)
+        ->where('households.block', $request->block)
+        ->where('households.lot', $request->lot)
+        ->where('households.others', $request->others)
+        ->where('households.subdivision', $request->subdivision)
+        ->first();
+
+        if (!$checkResident) {
+            $formFields['voter_status'] = lcfirst($request->voter_status) == 'registered' ? 1 : 0;
+            $formFields['disabled'] = lcfirst($request->disabled) == 'abled' ? 1 : 0;
+
+            if (empty($request->session()->get('resident'))) {
+                $resident = new Resident();
+                $resident->fill($formFields);
+                $request->session()->put('resident', $resident);
+
+                $household = new Household();
+                $household->fill($formFields);
+                $request->session()->put('household', $household);
+            } else {
+                $resident = $request->session()->get('resident');
+                $resident->fill($request->post());
+                $request->session()->put('resident', $resident);
+
+                $household = $request->session()->get('household');
+                $household->fill($request->post());
+                $request->session()->put('household', $household);
+            }
+
+            $request->session()->put('new_resident', true);
+        } else {
+            $request->session()->forget('resident');
+            $request->session()->forget('household');
+            $request->session()->forget('new_resident');
+
+            if (!DB::table('residents')->where('id', '=', $request->resident_id)->exists()) {
+                return back()->with('error', 'Resident not found');
+            }
+        }
+
+
+        if(!$request->id) {
+            return back()->with('error', 'Select an item');
+        }else if($request->quantity == 0) {
+            return back()->with('error', 'Quantity should not be 0. Check if stocks are available');
+        }
+
+        $details = [
+            'contact' => $formFields['contact'],
+            'return_date' => $formFields['return_date'],
+            'quantity' => $formFields['quantity'],
+        ];
+
+        if ($request->session()->get('new_resident')) {
+
+            $household = $request->session()->get('household');
+            $household = Household::firstOrCreate($household->toArray());
+
+            $resident = $request->session()->get('resident');
+            $resident->fill(['household_id' => $household->id]);
+            $resident->save();
+
+            $recipient = $resident->id;
+
+            addToLog('Create', "New Household Created");
+            addToLog('Create', "New Resident Created");
+            
+            $request->session()->forget('resident');
+            $request->session()->forget('household');
+            $request->session()->forget('new_resident');   
+    
+            DB::table('lent_items')
+            ->insert(['resident_id' => $recipient, 'inventory_id' => $request->id, 'status' => 0, ...$details]);
+        }else {
+            DB::table('lent_items')
+            ->insert(['resident_id' => $request->resident_id, 'inventory_id' => $request->id, 'status' => 0, ...$details]);
+        }
+
         DB::table('inventory')
         ->where('id', '=', $request->id)
         ->decrement('quantity', intval($request->quantity));
-
-        DB::table('lent_items')
-        ->insert(['resident_id' => $request->resident_id, 'inventory_id' => $request->id, 'status' => 0, ...$formFields]);
 
         $request->session()->put('item_id', $request->id);
         
