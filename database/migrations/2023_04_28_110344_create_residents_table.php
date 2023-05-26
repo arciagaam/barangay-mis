@@ -31,6 +31,7 @@ return new class extends Migration
             $table->tinyInteger('voter_status');
             $table->string('precinct_number')->nullable();
             $table->tinyInteger('disabled');
+            $table->tinyInteger('single_parent');
             $table->tinyInteger('archived')->default(0);
             $table->foreignId('archive_reason_id')->nullable()->constrained('archive_reasons')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamp('created_at')->useCurrent();

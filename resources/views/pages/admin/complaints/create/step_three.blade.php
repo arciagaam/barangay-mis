@@ -4,18 +4,16 @@
             <x-progress progress="active" label="Step One"/>
             <x-progress progress="active" label="Step Two"/>
             <x-progress progress="active" label="Step Three"/>
-            <x-progress progress="active" label="Step Four"/>
             <x-progress progress="inactive" label="Complete"/>
         </div>
     </div>
     
 
-    <form method="POST" action="{{url('/blotters/new/step-four')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
+    <form method="POST" action="{{url('/complaints/new/step-three')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
         @csrf
         <div class="flex flex-col gap-5">
-
             <div class="flex">
-                <p class="font-bold text-lg">Blotter Details</p>
+                <p class="font-bold text-lg">Complaint Details</p>
                 <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
             </div>
 
@@ -60,6 +58,41 @@
                     </div>
                     <textarea name="description" class="form-input resize-none" id="description" cols="30" rows="10"></textarea>
                 </div>
+
+            </div>
+
+            <div class="flex flex-col gap-5">
+
+                <div class="form-input-container">
+                    <div class="flex flex-row justify-between items-center">
+                        <label for="first_hearing">First Hearing</label>
+                        @error('first_hearing')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <input class="form-input" type="date" name="first_hearing" id="first_hearing">
+                </div>
+
+                <div class="form-input-container">
+                    <div class="flex flex-row justify-between items-center">
+                        <label for="second_hearing">Second Hearing</label>
+                        @error('second_hearing')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <input class="form-input" type="date" name="second_hearing" id="second_hearing">
+                </div>
+
+                <div class="form-input-container">
+                    <div class="flex flex-row justify-between items-center">
+                        <label for="third_hearing">Third Hearing</label>
+                        @error('third_hearing')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <input class="form-input" type="date" name="third_hearing" id="third_hearing">
+                </div>
+
 
             </div>
         </div>

@@ -3,17 +3,21 @@
         <div class="flex self-center w-[80%]">
             <x-progress progress="active" label="Step One"/>
             <x-progress progress="inactive" label="Complete"/>
-
         </div>
     </div>
 
     <form method="POST" action="{{url('/maintenance/users/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-5">
         @csrf
 
+        <div class="flex">
+            <p class="text-lg font-bold">New User</p>
+            <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+        </div>
+
         <div class="flex flex-wrap gap-3">
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">First Name <span class="text-xs text-red-500">*</span></label>
                     @error('first_name')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
@@ -33,7 +37,7 @@
     
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
-                    <label for="last_name">Last Name</label>
+                    <label for="last_name">Last Name <span class="text-xs text-red-500">*</span></label>
                     @error('last_name')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
@@ -45,7 +49,7 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="username">Username</label>
+                <label for="username">Username <span class="text-xs text-red-500">*</span></label>
                 @error('username')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror
@@ -55,7 +59,7 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="password">Password</label>
+                <label for="password">Password <span class="text-xs text-red-500">*</span></label>
                 @error('password')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror
@@ -65,7 +69,7 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="role_id">Role</label>
+                <label for="role_id">Role <span class="text-xs text-red-500">*</span></label>
                 @error('role_id')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror
@@ -79,7 +83,7 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="security_question_id">Choose a Security Question</label>
+                <label for="security_question_id">Choose a Security Question <span class="text-xs text-red-500">*</span></label>
                 @error('security_question_id')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror
@@ -93,7 +97,7 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="security_question_answer">Answer</label>
+                <label for="security_question_answer">Answer <span class="text-xs text-red-500">*</span></label>
                 @error('security_question_answer')
                     <p class="text-xs text-red-500 italic">{{$message}}</p>
                 @enderror

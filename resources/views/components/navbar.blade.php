@@ -24,16 +24,12 @@
                     <p class="text-sm font-normal">Residents Information</p>
                 </a>
 
-                <a href="{{url('/officials')}}" class="pl-5 flex items-center gap-5 {{ request()->is('officials*') ? 'text-project-yellow' : '' }}">
-                    <i class='bx bx-sm bx{{ request()->is('officials*') ? 's':'' }}-user-pin'></i>
-                    <p class="text-sm font-normal">Barangay Officials</p>
+                <a class="flex items-center gap-5 pl-5 {{ request()->is('blotter*') || request()->is('complaints*')  ? 'text-project-yellow' : '' }}" href="{{url('/blotters')}}">
+                    <i class='bx bx-sm bx{{ request()->is('blotter*') || request()->is('complaints*') ? 's':'' }}-briefcase'></i>
+                    <p class="text-sm font-normal">Blotters/Complaints</p>      
                 </a>
+                
 
-                <a href="{{url('/blotters')}}" class="pl-5 flex items-center gap-5 {{ request()->is('blotter*') ? 'text-project-yellow' : '' }}">
-                    <i class='bx bx-sm bx{{ request()->is('blotter*') ? 's':'' }}-briefcase'></i>
-                    <p class="text-sm font-normal">Blotters</p>
-                </a>
-    
                 <a href="{{url('/certificates')}}" class="pl-5 flex items-center gap-5 {{ request()->is('certificates*') ? 'text-project-yellow' : '' }}">
                     <i class='bx bx-sm bx{{ request()->is('certificates*') ? 's':'' }}-certification'></i>
                     <p class="text-sm font-normal">Barangay Certificate</p>
@@ -54,6 +50,11 @@
                         real_estate_agent
                     </span>
                     <p class="text-sm font-normal">Lend Items</p>
+                </a>
+
+                <a href="{{url('/officials')}}" class="pl-5 flex items-center gap-5 {{ request()->is('officials*') ? 'text-project-yellow' : '' }}">
+                    <i class='bx bx-sm bx{{ request()->is('officials*') ? 's':'' }}-user-pin'></i>
+                    <p class="text-sm font-normal">Barangay Officials</p>
                 </a>
 
                 <div id="maintenance_main" class="pl-5 flex flex-col {{ request()->is('maintenance*') ? 'border-t border-b border-white py-5 ':'' }} transition-all duration-300 ease-in-out">

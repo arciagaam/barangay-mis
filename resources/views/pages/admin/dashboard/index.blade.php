@@ -2,7 +2,7 @@
     <p class="text-3xl font-bold">Dashboard</p>
 
     <div class="flex flex-col gap-5">
-        <div class="flex flex-col min-h-[70vh]">
+        <div class="flex flex-col min-h-[70vh] gap-7">
             <div class="dashboard-grid grid grid-cols-3 gap-5 h-full">
                 <a href="{{url('/residents')}}" class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
@@ -91,10 +91,15 @@
                     </div>
                 </a>
     
+            </div>
+
+            <p class="text-lg font-bold">Blotters</p>
+
+            <div class="dashboard-grid grid grid-cols-3 gap-5 h-full">
                 <a href="{{url('/blotters')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                     <div class="flex flex-1 items-center justify-center">
-                        <i class='bx bx-sm bx-file'></i>
+                        <i class='bx bx-sm bxs-briefcase-alt'></i>
                     </div>
     
                     <div class="flex flex-1 flex-col">
@@ -102,8 +107,99 @@
                         <p class="text-3xl font-bold">{{$data['blotter_count']}}</p>
                     </div>
                 </a>
+    
+                <a href="{{url('/blotters?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-briefcase-alt'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Unsettled Blotters</p>
+                        <p class="text-3xl font-bold">{{$data['unresolved_blotters']}}</p>
+                    </div>
+                </a>
+    
+                <a href="{{url('/blotters?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-briefcase-alt'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Active Blotters</p>
+                        <p class="text-3xl font-bold">{{$data['active_blotters']}}</p>
+                    </div>
+                </a>
+    
+                <a href="{{url('/blotters?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-briefcase-alt'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Rescheduled Blotters</p>
+                        <p class="text-3xl font-bold">{{$data['rescheduled_blotters']}}</p>
+                    </div>
+                </a>
             </div>
+
+            <p class="text-lg font-bold">Complaints</p>
+    
+            <div class="dashboard-grid grid grid-cols-3 gap-5 h-full">
+                <a href="{{url('/complaints')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+        
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-file'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Total Complaints</p>
+                        <p class="text-3xl font-bold">{{$data['complaints_count']}}</p>
+                    </div>
+                </a>
+    
+                <a href="{{url('/complaints?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-file'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Unsettled Complaints</p>
+                        <p class="text-3xl font-bold">{{$data['unresolved_complaints']}}</p>
+                    </div>
+                </a>
+    
+                <a href="{{url('/complaints?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-file'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Active Complaints</p>
+                        <p class="text-3xl font-bold">{{$data['active_complaints']}}</p>
+                    </div>
+                </a>
+    
+                <a href="{{url('/complaints?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+    
+                    <div class="flex flex-1 items-center justify-center">
+                        <i class='bx bx-sm bxs-file'></i>
+                    </div>
+    
+                    <div class="flex flex-1 flex-col">
+                        <p>Rescheduled Complaints</p>
+                        <p class="text-3xl font-bold">{{$data['rescheduled_complaints']}}</p>
+                    </div>
+                </a>
+            </div>
+
         </div>
+
+
 
         <div class="flex flex-col gap-5 mt-5">
             <p class="text-3xl font-bold">Calendar</p>

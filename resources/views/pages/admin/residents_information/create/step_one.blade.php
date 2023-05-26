@@ -11,7 +11,10 @@
 
     <div class="flex flex-col bg-white flex-1 h-fit rounded-md shadow-md py-5 px-5 gap-10">
 
-        <p class="text-2xl font-bold">Personal Information</p>
+        <div class="flex">
+            <p class="text-2xl font-bold">Personal Information</p>
+            <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+        </div>
 
         <form class="flex flex-col gap-5 h-full" method="POST" action="{{url('/residents/new/step-one')}}">
             @csrf

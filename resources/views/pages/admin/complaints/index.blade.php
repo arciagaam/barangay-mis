@@ -38,114 +38,110 @@
             </form>
 
             <div class="flex flex-row w-full items-center">
-                <a href="{{url('/blotters/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Issue Blotter</a>
+                <a href="{{url('/complaints/new/step-one')}}" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Issue Complaint</a>
             </div>
         </div>
+
 
         <table class="main-table max-h-[65vh]">
             <thead>
                 <tr>
-                    <th>Blotter No.</th>
+                    <th>Complaint No.</th>
                     <th>Incident Type</th>
-                    <th>Reporting Person</th>
-                    <th>Victim</th>
-                    <th>Suspect</th>
+                    <th>Complainant</th>
+                    <th>Defendant</th>
                     <th>Place of Incident</th>
                     <th>Status</th>
                     <th class="!text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($blotters as $blotter)
-        
+
+                @foreach ($complaints as $complaint)
+                    
                     @php
-                        $reporterIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 1);
-                        $victimIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 2);
-                        $suspectIndex = array_keys(array_column(json_decode($blotter->recipients, true), 'blotter_role_id'), 3);
+                        $complainantIndex = array_keys(array_column(json_decode($complaint->recipients, true), 'complaint_role_id'), 1);
+                        $defendantIndex = array_keys(array_column(json_decode($complaint->recipients, true), 'complaint_role_id'), 2);
                     @endphp
                     <tr>
-                        <td>{{$blotter->blotter_id}}</td>
-                        <td>{{$blotter->incident_type}}</td>
+                        <td>{{$complaint->complaint_id}}</td>
+                        <td>{{$complaint->incident_type}}</td>
                         <td>
-                            @foreach ($reporterIndex as $index)
-                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
+                            @foreach ($complainantIndex as $index)
+                                <p>{{$complaint->recipients[$index]->first_name}} {{$complaint->recipients[$index]->middle_name}} {{$complaint->recipients[$index]->last_name}}</p>
                             @endforeach
                         </td>
+
                         <td>
-                            @foreach ($victimIndex as $index)
-                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
+                            @foreach ($defendantIndex as $index)
+                                <p>{{$complaint->recipients[$index]->first_name}} {{$complaint->recipients[$index]->middle_name}} {{$complaint->recipients[$index]->last_name}}</p>
                             @endforeach
                         </td>
-                        <td>
-                            @foreach ($suspectIndex as $index)
-                                <p>{{$blotter->recipients[$index]->first_name}} {{$blotter->recipients[$index]->middle_name}} {{$blotter->recipients[$index]->last_name}}</p>
-                            @endforeach
-                        </td>
-                        <td>{{$blotter->incident_place}}</td>
-                        <td>{{ucfirst($blotter->status)}}</td>
+                        <td>{{$complaint->incident_place}}</td>
+                        <td>{{ucfirst($complaint->status)}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
-                                <a href="{{url("/blotters/$blotter->blotter_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
+                                <a href="{{url("/complaints/$complaint->complaint_id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
                             </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
+        <div class="w-full flex">
+            {{$complaint_pagination->links()}}
+        </div>    
+        
         <div class="grid grid-cols-4 gap-5 mt-auto">
 
-            <a href="{{url('/blotters?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/complaints?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
                 </div>
 
                 <div class="flex flex-1 flex-col">
-                    <p>Active Blotters</p>
-                    <p class="text-3xl font-bold">{{$countData['active_blotters']}}</p>
+                    <p>Active Complaints</p>
+                    <p class="text-3xl font-bold">{{$countData['active_complaints']}}</p>
                 </div>
             </a>
 
-            <a href="{{url('/blotters?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/complaints?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
 
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
                 </div>
 
                 <div class="flex flex-1 flex-col">
-                    <p>Settled Blotters</p>
-                    <p class="text-3xl font-bold">{{$countData['settled_blotters']}}</p>
+                    <p>Settled Complaints</p>
+                    <p class="text-3xl font-bold">{{$countData['settled_complaints']}}</p>
                 </div>
             </a>
 
-            <a href="{{url('/blotters?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/complaints?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
 
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
                 </div>
 
                 <div class="flex flex-1 flex-col">
-                    <p>Rescheduled Blotters</p>
-                    <p class="text-3xl font-bold">{{$countData['rescheduled_blotters']}}</p>
+                    <p>Rescheduled Complaints</p>
+                    <p class="text-3xl font-bold">{{$countData['rescheduled_complaints']}}</p>
                 </div>
             </a>
                 
-            <a href="{{url('/blotters?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/complaints?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
                 </div>
 
                 <div class="flex flex-1 flex-col">
-                    <p>Unsettled Blotters</p>
-                    <p class="text-3xl font-bold">{{$countData['unresolved_blotters']}}</p>
+                    <p>Unsettled Complaints</p>
+                    <p class="text-3xl font-bold">{{$countData['unresolved_complaints']}}</p>
                 </div>
             </a>
 
         </div>
-        <div class="w-full flex">
-            {{$blotter_pagination->links()}}
-        </div>     
     </div>
 </x-layout>

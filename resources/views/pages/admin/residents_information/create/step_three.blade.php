@@ -10,15 +10,16 @@
 
     <div class="flex flex-col bg-white flex-1 h-fit rounded-md shadow-md py-5 px-5 gap-10">
 
-        <p class="text-2xl font-bold">Additional Information</p>
+        <div class="flex">
+            <p class="text-2xl font-bold">Additional Information</p>
+            <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+        </div>
 
         <form class="flex flex-col gap-5 h-full" method="POST" action="{{url('residents/new/step-three')}}">
             @csrf
             <div class="flex flex-col gap-5">
 
                 <div class="flex flex-col gap-2">
-                    <p class="font-bold text-lg">Disability</p>
-
                     <div class="form-input-container flex-row gap-5">
                         <div class="flex flex-row justify-between items-center">
                             <label for="disabled">Disabled</label>
@@ -28,6 +29,17 @@
                             @enderror
                         </div>
                         <input type="checkbox" name="disabled" id="disabled">
+                    </div>
+
+                    <div class="form-input-container flex-row gap-5">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="single_parent">Single Parent</label>
+
+                            @error('single_parent')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <input type="checkbox" name="single_parent" id="single_parent">
                     </div>
 
                 </div>

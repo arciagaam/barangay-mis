@@ -9,11 +9,14 @@
 
     <form method="POST" action="{{url('/lend/new/step-one')}}" class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
         @csrf
+        <div class="flex">
+            <p class="text-lg font-bold">Item</p>
+            <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+        </div>
         <p class="text-red-500 italic text-sm">{{session()->get('error')}}</p>
         <div class="flex flex-col gap-2">    
             <div class="flex flex-col gap-3">
-    
-                <p class="text-lg font-bold">Inventory</p>
+                
 
                 <div class="form-input-container w-full">
                     <div class="flex flex-row justify-between items-center">
@@ -86,7 +89,7 @@
                 <div class="grid grid-cols-3 gap-3">
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="first_name">First Name</label>
+                            <label for="first_name">First Name <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="first_name" id="first_name" value="{{$residentData->first_name ?? ''}}">
                     </div>
@@ -98,7 +101,7 @@
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="last_name">Last Name</label>
+                            <label for="last_name">Last Name <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="last_name" id="last_name" value="{{$residentData->last_name ?? ''}}">
                     </div>
@@ -126,19 +129,19 @@
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="birth_date">Birth Date</label>
+                            <label for="birth_date">Birth Date <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="age">Age</label>
+                            <label for="age">Age <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="place_of_birth">Place of Birth</label>
+                            <label for="place_of_birth">Place of Birth <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="place_of_birth" id="place_of_birth" value="{{$residentData->place_of_birth ?? ''}}">
                     </div>
@@ -186,7 +189,7 @@
                 <div class="grid grid-cols-3 gap-3">
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="house_number">House Number</label>
+                            <label for="house_number">House Number <span class="text-xs text-red-500">*</span></label>
                         </div>
                         <input class="form-input" type="text" name="house_number" id="house_number" value="{{$residentData->house_number ?? ''}}">
                     </div>

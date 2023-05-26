@@ -124,12 +124,18 @@ if(residentSearch) {
                     })
                 }
 
-                if(input.name == "age") {
-                    input.value = resident[input.name] = calculateAge(resident["birth_date"])
+                if(input.name == 'voter_status') {
+                    const select = document.querySelector('#voter_status');
+                    select.querySelectorAll('option').forEach(option => {
+                        if(option.value == resident[input.name]) {
+                            console.log(option.value, resident[input.name])
+                            option.selected = true;
+                        }
+                    })
                 }
 
-                if(input.name == 'voter_status') {
-                    input.value = resident[input.name] == 1 ? 'Registered' : 'Unregistered'
+                if(input.name == "age") {
+                    input.value = resident[input.name] = calculateAge(resident["birth_date"])
                 }
 
                 if(input.name == 'disabled') {

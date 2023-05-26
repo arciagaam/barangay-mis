@@ -135,6 +135,7 @@ class OfficialsController extends Controller
     {
         $official = $request->session()->get('official');
         $religions = DB::table('religions')->orderBy('id')->get();
+        $occupations = DB::table('occupations')->orderBy('id')->get();
    
         if ($official && $official->resident_id) {
             $residentData = DB::table('residents')
@@ -148,7 +149,7 @@ class OfficialsController extends Controller
             ->first();
         }
 
-        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null, 'official' => $official, 'religions' => $religions]);
+        return view('pages.admin.officials.create.step_one', ['residentData' => $residentData ?? null, 'resident' => $official->resident_id ?? null, 'official' => $official, 'religions' => $religions, 'occupations' => $occupations]);
 
     }
 

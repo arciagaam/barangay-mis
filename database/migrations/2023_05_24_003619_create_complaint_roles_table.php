@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blotters', function (Blueprint $table) {
+        Schema::create('complaint_roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('status_id')->nullable()->default(2)->constrained('blotter_status')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('incident_type');
-            $table->string('description')->nullable()->default('');
-            $table->string('incident_place');
-            $table->dateTime('date_time_reported')->useCurrent();
-            $table->dateTime('date_time_incident');
+            $table->string('name');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blotters');
+        Schema::dropIfExists('complaint_roles');
     }
 };

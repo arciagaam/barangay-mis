@@ -47,7 +47,7 @@ class ResidentController extends Controller
 
         if($request->search || $request->search != ''){
             $residents = DB::table('residents')
-            ->join('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
             ->where('residents.archived', '=', '0')
             ->where(function($query) use ($request) {
@@ -91,7 +91,7 @@ class ResidentController extends Controller
                     case 'senior' : $query->where("residents.age", '>=', 60); break;
                 }
             })
-            ->join('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
             ->where('residents.archived', '=', '0')
             ->orderBy('residents.created_at', 'desc')

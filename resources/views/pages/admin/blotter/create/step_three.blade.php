@@ -25,6 +25,8 @@
             </div>
 
             <button type="button" class="py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm">Search</button>
+
+            <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
         </div>
 
         <form method="POST" action="{{url('/blotters/new/step-three')}}" class="flex flex-col h-full gap-5">

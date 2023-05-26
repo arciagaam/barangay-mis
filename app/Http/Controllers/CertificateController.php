@@ -286,9 +286,9 @@ class CertificateController extends Controller
     public function print(Request $request)
     {
         $resident = DB::table('certificates')
-            ->join('residents', 'residents.id', '=', 'certificates.resident_id')
-            ->join('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-            ->join('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('residents', 'residents.id', '=', 'certificates.resident_id')
+            ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
+            ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->where('certificates.id', '=', $request->certificate_id)
             ->select([
                 'certificates.created_at',

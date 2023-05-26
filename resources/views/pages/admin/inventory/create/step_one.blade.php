@@ -11,6 +11,11 @@
         @csrf
 
         <div class="flex flex-col gap-3">
+
+            <div class="flex">
+                <p class="text-lg font-bold">Item Details</p>
+                <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+            </div>
             
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">

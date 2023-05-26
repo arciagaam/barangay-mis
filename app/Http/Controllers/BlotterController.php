@@ -41,6 +41,8 @@ class BlotterController extends Controller
         $request->session()->forget('new_resident.suspect');
 
         $rows = $request->rows;
+        $filter = $request->filter ?? null;
+
 
         if ($request->search || $request->search != '') {
             $blotters = DB::table('blotters')
@@ -55,6 +57,14 @@ class BlotterController extends Controller
                         ->orWhere('nickname', 'like', $request->search . '%')
                         ->orWhere('blotters.incident_type', 'like', $request->search . '%')
                         ->orWhere('blotters.incident_place', 'like', $request->search . '%');
+                })
+                ->when($filter != null, function ($query) use ($request, $filter) {
+                    switch(lcfirst($filter)) {
+                        case 'active' : $query->where("blotter_status.id", 2); break;
+                        case 'settled' : $query->where("blotter_status.id", 3); break;
+                        case 'rescheduled' : $query->where("blotter_status.id", 4); break;
+                        case 'unsettled' : $query->where("blotter_status.id", 1); break;
+                    }
                 })
                 ->orderBy('blotters.created_at', 'asc')
                 ->distinct(['blotter_recipients.blotter_id'])
@@ -75,6 +85,14 @@ class BlotterController extends Controller
                 ->join('blotter_recipients', 'blotter_recipients.blotter_id', '=', 'blotters.id')
                 ->join('residents', 'residents.id', '=', 'blotter_recipients.resident_id')
                 ->join('blotter_status', 'blotter_status.id', '=', 'blotters.status_id')
+                ->when($filter != null, function ($query) use ($request, $filter) {
+                    switch(lcfirst($filter)) {
+                        case 'active' : $query->where("blotter_status.id", 2); break;
+                        case 'settled' : $query->where("blotter_status.id", 3); break;
+                        case 'rescheduled' : $query->where("blotter_status.id", 4); break;
+                        case 'unsettled' : $query->where("blotter_status.id", 1); break;
+                    }
+                })
                 ->orderBy('blotters.created_at', 'asc')
                 ->distinct(['blotter_recipients.blotter_id'])
                 ->select([
@@ -111,7 +129,33 @@ class BlotterController extends Controller
             $data[$key]->recipients = $recipients;
         }
 
-        return view('pages.admin.blotter.index', ['blotters' => $data, 'blotter_pagination' => $blotters]);
+
+        $initialBlotter = DB::table('blotters')->get();
+        $unresolved_blotters_count = $initialBlotter->filter(function($value, $key) {
+            return($value->status_id==1);
+        });
+
+        $active_blotters_count = $initialBlotter->filter(function($value, $key) {
+            return($value->status_id==2);
+        });
+
+        $rescheduled_blotters_count = $initialBlotter->filter(function($value, $key) {
+            return($value->status_id==4);
+        });
+
+        $settled_blotters_count = $initialBlotter->filter(function($value, $key) {
+            return($value->status_id==3);
+        });
+
+        $countData = [
+            'unresolved_blotters' => count($unresolved_blotters_count),
+            'active_blotters' => count($active_blotters_count),
+            'rescheduled_blotters' => count($rescheduled_blotters_count),
+            'settled_blotters' => count($settled_blotters_count),
+        ];
+
+
+        return view('pages.admin.blotter.index', ['blotters' => $data, 'blotter_pagination' => $blotters, 'countData' => $countData]);
     }
 
     /**

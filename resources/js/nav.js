@@ -1,5 +1,6 @@
 const chevronContainer = document.querySelector('#chevronContainer');
 const navChevron = document.querySelector('#nav_chevron')
+
 const maintenanceMain = document.querySelector('#maintenance_main')
 const maintenanceBtn = document.querySelector('#maintenance');
 const maintenanceLinks = document.querySelector('#maintenance_links');
@@ -19,3 +20,4 @@ maintenanceBtn.addEventListener('click', () => {
         maintenanceMain.classList.toggle('py-5');
         navChevron.classList.toggle('rotate-180')
 })
+

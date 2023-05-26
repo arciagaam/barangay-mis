@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blotters', function (Blueprint $table) {
+        Schema::create('complaint_hearings', function (Blueprint $table) {
             $table->id();
+            $table->integer('number');
+            $table->foreignId('complaint_id')->nullable()->default(2)->constrained('complaints')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('status_id')->nullable()->default(2)->constrained('blotter_status')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('incident_type');
-            $table->string('description')->nullable()->default('');
-            $table->string('incident_place');
-            $table->dateTime('date_time_reported')->useCurrent();
-            $table->dateTime('date_time_incident');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->date('date');
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blotters');
+        Schema::dropIfExists('complaint_hearings');
     }
 };

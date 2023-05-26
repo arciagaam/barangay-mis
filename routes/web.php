@@ -8,6 +8,7 @@ use App\Http\Controllers\BarangayInformationController;
 use App\Http\Controllers\BlotterController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\InventoryController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +35,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/migrate', function() {
+    return view('pages.migrate');
+});
+
+Route::get('/migrate/start', function() {
+    Artisan::call('migrate:refresh', array('--force' => true));
+    Artisan::call('db:seed');
+    return redirect('/');
+});
+
 Route::middleware(['guest'])->group(function() {
     Route::get('/', [AuthController::class, 'index'])->name('login');
     Route::post('/authenticate', [AuthController::class, 'authenticate']);
@@ -44,7 +56,6 @@ Route::middleware(['guest'])->group(function() {
         Route::post('/security-check', [ForgotPasswordController::class, 'questionCheck']);
         Route::get('/change-password', [ForgotPasswordController::class, 'passwordCheck']);
         Route::post('/change-password', [ForgotPasswordController::class, 'changePassword']);
-    
     });
 });
 
@@ -99,6 +110,30 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{id}', [BlotterController::class, 'show']);
         Route::get('/{id}/edit', [BlotterController::class, 'edit']);
         Route::post('/{id}/edit', [BlotterController::class, 'update']);
+    });
+
+    Route::prefix('complaints')->group(function() {
+        Route::get('/', [ComplaintController::class, 'index']);
+
+        Route::prefix('/new')->group(function() {
+            Route::get('/step-one', [ComplaintController::class, 'create_StepOne']);
+            Route::post('/step-one', [ComplaintController::class, 'post_StepOne']);
+
+            Route::get('/step-two', [ComplaintController::class, 'create_StepTwo']);
+            Route::post('/step-two', [ComplaintController::class, 'post_StepTwo']);
+
+            Route::get('/step-three', [ComplaintController::class, 'create_StepThree']);
+            Route::post('/step-three', [ComplaintController::class, 'post_StepThree']);
+
+            Route::get('/step-four', [ComplaintController::class, 'create_StepFour']);
+            Route::post('/step-four', [ComplaintController::class, 'post_StepFour']);
+
+            Route::get('/step-five', [ComplaintController::class, 'create_StepFive']);
+        });
+
+        Route::get('/{id}', [ComplaintController::class, 'show']);
+        Route::get('/{id}/edit', [ComplaintController::class, 'edit']);
+        Route::post('/{id}/edit', [ComplaintController::class, 'update']);
     });
 
     Route::prefix('certificates')->group(function() {

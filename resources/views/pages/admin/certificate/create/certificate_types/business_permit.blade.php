@@ -1,39 +1,42 @@
 <div class="flex flex-col gap-10">
 
-    <p class="font-bold text-lg">Business Permit</p>
+    <div class="flex">
+        <p class="font-bold text-lg">Business Permit</p>
+        <p class="text-project-blue/50 ml-auto text-xs italic">Fields with * are required.</p>
+    </div>
     
     <div class="grid grid-cols-3 gap-3">
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="business_name">Business Name or Trade Activity</label>
+                <label for="business_name">Business Name or Trade Activity <span class="text-xs text-red-500">*</span></label>
             </div>
             <input class="form-input" type="text" name="business_name" id="business_name">
         </div>
     
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="location">Location</label>
+                <label for="location">Location <span class="text-xs text-red-500">*</span></label>
             </div>
             <input class="form-input" type="text" name="location" id="location">
         </div>
     
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="operator">Operator</label>
+                <label for="operator">Operator <span class="text-xs text-red-500">*</span></label>
             </div>
             <input class="form-input" type="text" name="operator" id="operator">
         </div>
     
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="address">Address</label>
+                <label for="address">Address <span class="text-xs text-red-500">*</span></label>
             </div>
             <input class="form-input" type="text" name="address" id="address">
         </div>
     </div>
 
     <div class="flex flex-col gap-3">
-        <p class="font-bold text-md">Has applied for the RENEWAL of the corresponding mayor's permit for CY 2023 has been found to be;</p>
+        <p class="font-bold text-md">Has applied for the RENEWAL of the corresponding mayor's permit for CY 2023 has been found to be; <span class="text-xs text-red-500">*</span></p>
 
         <div class="form-input-container flex-row items-start gap-5 focus-within:font-normal">
             <input class="form-input mt-[6px] self-start" type="checkbox" name="complying" id="complying">
@@ -51,7 +54,7 @@
     </div>
 
     <div class="flex flex-col gap-3">
-        <p class="font-bold text-md">In viewing of the foregoing, this barangay thru the undersigned;</p>
+        <p class="font-bold text-md">In viewing of the foregoing, this barangay thru the undersigned; <span class="text-xs text-red-500">*</span></p>
 
         <div class="form-input-container flex-row items-start gap-5 focus-within:font-normal">
             <input class="form-input mt-[6px] self-start" type="checkbox" name="no_objection" id="no_objection">

@@ -92,6 +92,10 @@
     .dashboard-grid i {
         font-size: 4em !important;
     }
+
+    .dashboard-grid a {
+        min-height: 16rem;
+    }
     
     #complete-check {
         font-size: 10em !important;

@@ -92,11 +92,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // DO NOT ALTER
+        DB::table('complaint_roles')->insert([
+            ['name' => 'complainant'],
+            ['name' => 'defendant'],
+        ]);
+
+        // DO NOT ALTER
         DB::table('blotter_status')->insert([
-            ['name' => 'inactive'],
+            ['name' => 'unresolved'],
             ['name' => 'active'],
             ['name' => 'settled'],
-            ['name' => 'scheduled'],
+            ['name' => 'rescheduled'],
         ]);
 
         DB::table('activities')->insert([
