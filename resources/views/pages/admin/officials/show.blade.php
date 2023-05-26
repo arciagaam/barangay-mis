@@ -143,3 +143,5 @@
         @endif
     </form>
 </x-layout>
+
+@vite('resources/js/age.js')

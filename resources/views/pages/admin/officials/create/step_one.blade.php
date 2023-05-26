@@ -214,3 +214,4 @@
     </div>  
 </x-layout>
 @vite('resources/js/searchresident.js')
+@vite('resources/js/age.js')
