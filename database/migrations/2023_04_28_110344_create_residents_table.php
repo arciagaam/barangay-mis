@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('nickname')->nullable();
             $table->tinyInteger('sex');
-            $table->foreignId('gender_id')->nullable()->constrained('genders')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignId('gender_id')->nullable()->constrained('genders')->default('')->cascadeOnUpdate()->nullOnDelete();
             $table->date('birth_date');
             $table->integer('age');
             $table->string('place_of_birth');

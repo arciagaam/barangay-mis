@@ -7,7 +7,7 @@
             @if (!$editing)
                 <div class="flex gap-3">
                     @if (auth()->user()->role_id == 1)  
-                        <button type="button" data-url="{{url("/maintenance/users/$user->id/delete")}}" data-type="delete" data-group="user" class="popup_trigger primary-btn bg-red-500 font-normal text-white">Delete User</button>
+                        <button type="button" data-url="{{url("/maintenance/users/$user->id/delete")}}" data-fallback="{{url("/maintenance/users/")}}" data-type="delete" data-group="user" class="popup_trigger primary-btn bg-red-500 font-normal text-white">Delete User</button>
                     @endif
                     <a href="{{url("/maintenance/users/$user->id/edit")}}" class="primary-btn">Edit</a>
                 </div>

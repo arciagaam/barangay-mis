@@ -79,10 +79,10 @@ class CalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
         DB::table('activities')
-        ->where('id', $request->id)
+        ->where('id', $id)
         ->delete();
 
         addToLog('Delete', "Deleted Calendar Activity ID: $request->id");

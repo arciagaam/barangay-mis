@@ -77,7 +77,7 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="gender_id">Gender <span class="text-xs text-red-500">*</span></label>
+                        <label for="gender_id">Gender</label>
                         @error('gender_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
@@ -86,6 +86,7 @@
                         $_gender = old('gender_id') ?? ($resident->gender_id ?? '')
                     @endphp
                     <select class="form-input" name="gender_id" id="gender_id">
+                        <option value="{{null}}"></option>
                         @foreach ($options['genders'] as $gender)
                             <option value="{{$gender->id}}" {{$_gender == $gender->id ? 'selected' : ''}}>{{$gender->name}}</option>
                         @endforeach

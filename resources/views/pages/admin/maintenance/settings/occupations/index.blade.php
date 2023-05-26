@@ -76,7 +76,7 @@
         </div>
 
 
-        <button id="submit" data-group="occupations" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Occupation</button>
+        <button id="submit_settings" data-group="occupations" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Occupation</button>
 
     </div>
 </div>

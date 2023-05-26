@@ -76,7 +76,7 @@
         </div>
 
 
-        <button id="submit" data-group="positions" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Position</button>
+        <button id="submit_settings" data-group="positions" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Position</button>
 
     </div>
 </div>

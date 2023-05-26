@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
 
         // DO NOT ALTER
         DB::table('blotter_status')->insert([
-            ['name' => 'unresolved'],
+            ['name' => 'unsettled'],
             ['name' => 'active'],
             ['name' => 'settled'],
             ['name' => 'rescheduled'],

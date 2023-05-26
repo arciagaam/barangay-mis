@@ -120,7 +120,7 @@ class ResidentController extends Controller
             'last_name' => 'required',
             'nickname' => '',
             'sex' => 'required',
-            'gender_id' => 'required',
+            'gender_id' => 'nullable',
             'birth_date' => 'required',
             'age' => 'required',
             'place_of_birth' => 'required',
@@ -210,17 +210,20 @@ class ResidentController extends Controller
             $formFields = $request->validate([
                 'voter_status' => 'required',
                 'precinct_number' => 'required',
-                'disabled' => '',
+                'single_parent' => 'nullable',
+                'disabled' => 'nullable',
             ]);
         } else {
             $formFields = $request->validate([
                 'voter_status' => 'required',
-                'precinct_number' => '',
-                'disabled' => '',
+                'precinct_number' => 'nullable',
+                'single_parent' => 'nullable',
+                'disabled' => 'nullable',
             ]);
         }
 
         $formFields['disabled'] = $request->disabled == 'on' ? 1 : 0;
+        $formFields['single_parent'] = $request->single_parent == 'on' ? 1 : 0;
 
         $resident = $request->session()->get('resident');
         $resident->fill($formFields);

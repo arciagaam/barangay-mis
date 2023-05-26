@@ -472,3 +472,65 @@ Route::get('/genders/{id}/delete', function(Request $request, $id) {
     return response()->json(['message' => 'success'], 200);
 });
 
+/*
+    API ROUTES FOR ARCHIVE REASONS
+*/
+
+Route::get('/archive_reasons/{id}', function(Request $request, $id) {
+    $data = DB::table('archive_reasons')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Occupation not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/archive_reasons', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    addToLog('Create', "New Gender Created");
+
+    $data = DB::table('archive_reasons')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/archive_reasons/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    addToLog('Update', "Gender ID: $id Updated");
+
+    DB::table('archive_reasons')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/archive_reasons/{id}/delete', function(Request $request, $id) {
+
+    DB::table('archive_reasons')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Gender ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+

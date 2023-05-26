@@ -76,7 +76,7 @@
         </div>
 
 
-        <button id="submit" data-group="security_questions" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Security Question</button>
+        <button id="submit_settings" data-group="security_questions" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Security Question</button>
 
     </div>
 </div>

@@ -156,4 +156,25 @@ class SettingsController extends Controller
         return view('pages.admin.maintenance.settings.genders.index', ['genders' => $genders]);
     }
 
+    public function index_archive(Request $request)
+    {
+        $rows = $request->rows;
+
+        if($request->search || $request->search == '') {
+            $reasons = DB::table('archive_reasons')
+            ->latest('archive_reasons.created_at')
+            ->where(function($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            })
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $reasons = DB::table('archive_reasons')
+            ->latest()
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+        return view('pages.admin.maintenance.settings.archive_reasons.index', ['reasons' => $reasons]);
+    }
 }

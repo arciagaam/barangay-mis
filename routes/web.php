@@ -234,7 +234,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/{id}', [UserController::class, 'show']);
             Route::get('/{id}/edit', [UserController::class, 'edit']);
             Route::post('/{id}/edit', [UserController::class, 'update']);
-            Route::post('/{id}/delete', [UserController::class, 'destroy']);
+            Route::get('/{id}/delete', [UserController::class, 'destroy']);
         });
 
         Route::prefix('/settings')->group(function() {
@@ -246,6 +246,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/religions', [SettingsController::class, 'index_religions']);
             Route::get('/security-questions', [SettingsController::class, 'index_security_questions']);
             Route::get('/genders', [SettingsController::class, 'index_genders']);
+            Route::get('/archive-reasons', [SettingsController::class, 'index_archive']);
         });
 
         Route::prefix('/audit-trail')->group(function() {

@@ -155,10 +155,10 @@ class UserController extends Controller
         return redirect("/maintenance/users/$id");
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
         DB::table('users')
-        ->delete($request->id);
+        ->delete($id);
         addToLog('Delete', "User ID: $request->id Deleted");
     }
 }

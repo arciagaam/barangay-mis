@@ -74,7 +74,7 @@
 
         </div>
 
-        <button id="submit" data-group="civil_status" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Civil Status</button>
+        <button id="submit_settings" data-group="civil_status" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Civil Status</button>
 
     </div>
 </div>

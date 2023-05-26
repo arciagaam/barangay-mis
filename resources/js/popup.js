@@ -3,14 +3,16 @@ const modal = document.querySelector('#warning_modal');
 let fetchUrl = '';
 let fetchType = '';
 let _method = '';
+let _fallbackRoute = null;
 
 document.addEventListener('click', (e) => {
     const target = e.target;
     if(target.classList.contains('popup_trigger') || target.closest('.popup_trigger')) {
         const btnTarget = target.classList.contains('.popup_trigger') ? target : target.closest('.popup_trigger')
-        const {url, type, group} = btnTarget.dataset
+        const {url, type, group, fallback} = btnTarget.dataset
         fetchType = type;
         fetchUrl = url;
+        _fallbackRoute = fallback;
         openModal({url, type, group});
     }
 
@@ -45,7 +47,6 @@ modal.querySelector('#submit').addEventListener('click', async () => {
         location.reload();
     } else if (fetchType == 'delete') {
         const data = await fetch(fetchUrl, {
-            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
@@ -53,7 +54,11 @@ modal.querySelector('#submit').addEventListener('click', async () => {
             credentials: 'same-origin',
         });
 
-        location.href = BASE_PATH + "/maintenance/users"
+        if(_fallbackRoute){
+            location.href = _fallbackRoute;
+        }else{
+            location.reload();
+        }
         return false
 
     } else {

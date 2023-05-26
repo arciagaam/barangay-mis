@@ -23,7 +23,7 @@
             </form>
 
             <div class="flex flex-row w-full items-center">
-                <button id="add_position" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Add Gender</button>
+                <button id="add_gender" class="ml-auto py-2 px-4 bg-project-yellow text-project-blue rounded-md text-sm flex items-center gap-2 font-bold"><i class='bx bx-xs font-bold bx-plus'></i>Add Gender</button>
             </div>
         </div>
 
@@ -75,7 +75,7 @@
         </div>
 
 
-        <button id="submit" data-group="genders" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Gender</button>
+        <button id="submit_settings" data-group="genders" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Gender</button>
 
     </div>
 </div>

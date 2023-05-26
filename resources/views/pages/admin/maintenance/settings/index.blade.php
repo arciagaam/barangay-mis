@@ -34,5 +34,10 @@
             <p class="text-lg">Gender</p>
         </a>
 
+        <a href="{{url('/maintenance/settings/archive-reasons')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
+            <i class='bx bx-lg bxs-bookmark-plus'></i>
+            <p class="text-lg">Archive Reasons</p>
+        </a>
+
     </div>
 </x-layout>
