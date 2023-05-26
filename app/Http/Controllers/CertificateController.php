@@ -109,7 +109,10 @@ class CertificateController extends Controller
                 ->where('residents.archived', '=', '0')
                 ->where('residents.id', '=', $certificate->resident_id)
                 ->first();
+        }else if($request->session()->has('resident')) {
+            $residentData = $request->session()->get('resident');
         }
+
 
         return view('pages.admin.certificate.create.step_two', ['residentData' => $residentData ?? null, 'resident' => $certificate->resident_id ?? null, 'religions' => $religions, 'occupations' => $occupations]);
     }

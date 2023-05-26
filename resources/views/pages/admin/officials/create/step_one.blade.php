@@ -79,13 +79,13 @@
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="text" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
+                        <input class="form-input" type="date" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
                             <label for="age">Age <span class="text-xs text-red-500">*</span></label>
                         </div>
-                        <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}">
+                        <input class="form-input" type="text" name="age" id="age" value="{{$residentData->age ?? ''}}" readonly>
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">

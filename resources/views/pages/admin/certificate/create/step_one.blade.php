@@ -21,7 +21,8 @@
                 </select>
             </div>
 
-            <div class="flex flex-row self-end mt-auto">
+            <div class="flex flex-row self-end mt-auto gap-3">
+                <a href="{{url('/certificates')}}" class="secondary-btn">Cancel</a>
                 <button class="primary-btn">Next</button>
             </div>
             
