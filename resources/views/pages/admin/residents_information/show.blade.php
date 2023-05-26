@@ -6,7 +6,11 @@
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">{{$resident->first_name}} {{$resident->middle_name}} {{$resident->last_name}}</p>
             @if (!$editing)
+
+            <div class="flex gap-3 h-fit">
+                <button type="button" data-id="{{$resident->resident_id}}" data-fallback="{{url('/residents')}}" data-route="positions" data-url="{{url("residents/$resident->resident_id/delete")}}" data-type="delete" data-group="resident" class="popup_trigger py-2 px-4 bg-red-500 text-white font-bold rounded-md">Delete Resident</button>
                 <a href="{{url("/residents/$resident->resident_id/edit")}}" class="primary-btn">Edit</a>
+            </div>
             @else
                 <p class="italic text-sm">Editing</p>
             @endif

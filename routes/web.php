@@ -86,6 +86,7 @@ Route::middleware(['auth'])->group(function() {
         Route::post('/{id}/edit', [ResidentController::class, 'update']);
         Route::post('/{id}/archive', [ResidentController::class, 'archive']);
         Route::get('/{id}/recover', [ResidentController::class, 'recover']);
+        Route::get('/{id}/delete', [ResidentController::class, 'remove']);
     });
 
     Route::prefix('blotters')->group(function() {

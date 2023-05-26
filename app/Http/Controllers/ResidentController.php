@@ -209,7 +209,7 @@ class ResidentController extends Controller
         if ($request->voter_status == 1) {
             $formFields = $request->validate([
                 'voter_status' => 'required',
-                'precinct_number' => 'required',
+                'precinct_number' => 'nullable',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
             ]);
@@ -389,5 +389,11 @@ class ResidentController extends Controller
         addToLog('Recover', "Resident ID: $id Recovered");
 
         return back();
+    }
+
+    public function remove(string $id)
+    {
+        DB::table('residents')
+        ->delete($id);
     }
 }

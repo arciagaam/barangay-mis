@@ -75,6 +75,9 @@
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
                             <label for="birth_date">Birth Date <span class="text-xs text-red-500">*</span></label>
+                            @error('sex')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
                         <input class="form-input" type="text" name="birth_date" id="birth_date" value="{{$residentData->birth_date ?? ''}}">
                     </div>
