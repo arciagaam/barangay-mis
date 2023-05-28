@@ -15,7 +15,6 @@ if (birthDate) {
     });
     
     birthDate.addEventListener('change', (event) => {
-        console.log(event.target.value)
         ageInput.value = calculateAge(event.target.value);
     });
 };

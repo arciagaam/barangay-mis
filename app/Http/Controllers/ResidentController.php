@@ -116,9 +116,9 @@ class ResidentController extends Controller
     {
         $formFields = $request->validate([
             'first_name'  => 'required',
-            'middle_name' => '',
+            'middle_name' => 'nullable',
             'last_name' => 'required',
-            'nickname' => '',
+            'nickname' => 'nullable',
             'sex' => 'required',
             'gender_id' => 'nullable',
             'birth_date' => 'required',

@@ -102,7 +102,8 @@
                     </div>
                     <input class="form-input" type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') ?? ($resident->birth_date ?? '') }}">
                 </div>
-    
+
+                
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
                         <label for="age">Age <span class="text-xs text-red-500">*</span></label>
@@ -186,3 +187,4 @@
 
 @vite('resources/js/residents.js')
 @vite('resources/js/age.js')
+
