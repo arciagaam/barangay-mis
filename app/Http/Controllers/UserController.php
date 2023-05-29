@@ -111,7 +111,9 @@ class UserController extends Controller
             ->where('users.id', $id)
             ->first();
 
-        return view('pages.admin.maintenance.user.show', ['user' => $user, 'editing' => false]);
+        $securityQuestions = DB::table('security_questions')->get();
+
+        return view('pages.admin.maintenance.user.show', ['user' => $user, 'editing' => false, 'securityQuestions' => $securityQuestions]);
     }
 
     /**
@@ -127,7 +129,9 @@ class UserController extends Controller
             ->latest()
             ->get();
 
-        return view('pages.admin.maintenance.user.show', ['user' => $user, 'roles' => $roles, 'editing' => true]);
+        $securityQuestions = DB::table('security_questions')->get();
+
+        return view('pages.admin.maintenance.user.show', ['user' => $user, 'roles' => $roles, 'editing' => true, 'securityQuestions' => $securityQuestions]);
     }
 
     /**
@@ -142,6 +146,8 @@ class UserController extends Controller
             'password' => 'required',
             'role_id' => 'required',
             'username' => "required|unique:users,username, $id",
+            'security_question_id' => 'required',
+            'security_question_answer' => 'required',
         ]);
 
         $formFields['password'] = bcrypt($request->password);

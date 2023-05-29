@@ -71,6 +71,32 @@
 
             <div class="form-input-container">
                 <div class="flex flex-row justify-between items-center">
+                    <label for="security_question_id">Security Question</label>
+                    @error('security_question_id')
+                    <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
+                </div>
+
+                <select class="form-input" name="security_question_id" id="security_question_id" {{$editing ? '' : 'disabled'}}>
+                    @foreach ($securityQuestions as $securityQuestion)
+                        <option value="{{$securityQuestion->id}}" {{$user->security_question_id == $securityQuestion->id ? 'selected' : ''}}>{{ucfirst($securityQuestion->name)}}</option>
+                    @endforeach
+                </select>
+
+            </div>
+
+            <div class="form-input-container">
+                <div class="flex flex-row justify-between items-center">
+                    <label for="security_question_answer">Answer</label>
+                    @error('security_question_answer')
+                    <p class="text-xs text-red-500 italic">{{$message}}</p>
+                    @enderror
+                </div>
+                <input class="form-input w-1/4" type="security_question_answer" name="security_question_answer" id="security_question_answer" value="{{$user->security_question_answer}}" {{$editing ? '' : 'disabled'}}>
+            </div>
+
+            <div class="form-input-container">
+                <div class="flex flex-row justify-between items-center">
                     @if($editing)
                         @if(auth()->user()->role_id == 1)
                             <label for="role_id">Role</label>
