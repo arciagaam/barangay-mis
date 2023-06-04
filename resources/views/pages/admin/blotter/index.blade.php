@@ -95,7 +95,7 @@
 
         <div class="grid grid-cols-4 gap-5 mt-auto">
 
-            <a href="{{url('/blotters?filter=unsettled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/blotters?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
     
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
@@ -107,7 +107,7 @@
                 </div>
             </a>
 
-            <a href="{{url('/blotters?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/blotters?filter=settled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
 
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
@@ -119,7 +119,7 @@
                 </div>
             </a>
 
-            <a href="{{url('/blotters?filter=active')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
+            <a href="{{url('/blotters?filter=rescheduled')}}"class="flex justify-center items-center bg-white shadow-md rounded-md p-3 gap-5">
 
                 <div class="flex flex-1 items-center justify-center">
                     <i class='bx bx-sm bxs-file'></i>
