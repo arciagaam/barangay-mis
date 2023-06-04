@@ -27,7 +27,8 @@ Route::get('/residents', function (Request $request) {
     ->leftJoin('religions', 'religions.id', '=', 'residents.religion_id')
     ->leftJoin('occupations', 'occupations.id', '=', 'residents.occupation_id')
     ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-    ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'religions.name as religion', 'occupations.name as occupation', 'civil_status.name as civil_status')
+    ->leftJoin('streets', 'streets.id', 'households.street_id')
+    ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'religions.name as religion', 'occupations.name as occupation', 'civil_status.name as civil_status', 'streets.name as street')
     ->where('residents.archived', '=', '0')
     ->where(function($query) use ($request) {
         $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', $request->search . '%')
@@ -38,11 +39,8 @@ Route::get('/residents', function (Request $request) {
         ->orWhere('birth_date', 'like', $request->search.'%')
         ->orWhere('place_of_birth', 'like', $request->search.'%')
         ->orWhere('house_number', 'like', $request->search.'%')
-        ->orWhere('purok', 'like', $request->search.'%')
-        ->orWhere('block', 'like', $request->search.'%')
-        ->orWhere('lot', 'like', $request->search.'%')
-        ->orWhere('others', 'like', $request->search.'%')
-        ->orWhere('subdivision', 'like', $request->search.'%');
+        ->leftJoin('streets', 'streets.id', 'households.street_id')
+        ->orWhere('others', 'like', $request->search.'%');
     })
     ->orderBy('residents.created_at', 'asc')
     ->limit(10)
@@ -79,7 +77,7 @@ Route::put('/calendar', function (Request $request) {
         'start_time' => '',
         'end_time' => '',
         'name' => 'required',
-        'description' => 'required',
+        'details' => 'required',
         'is_all_day' => '',
     ]);
 
@@ -108,7 +106,7 @@ Route::get('/positions/{id}', function(Request $request, $id) {
     ->first();
     
     if(!$data) {
-        return response()->json(['message' => 'Occupation not found.'], 422);
+        return response()->json(['message' => 'Position not found.'], 422);
     }
 
     echo json_encode(['data' => $data]);
@@ -296,7 +294,7 @@ Route::get('/religions/{id}', function(Request $request, $id) {
     ->first();
     
     if(!$data) {
-        return response()->json(['message' => 'Occupation not found.'], 422);
+        return response()->json(['message' => 'Religion not found.'], 422);
     }
 
     echo json_encode(['data' => $data]);
@@ -358,7 +356,7 @@ Route::get('/security_questions/{id}', function(Request $request, $id) {
     ->first();
     
     if(!$data) {
-        return response()->json(['message' => 'Occupation not found.'], 422);
+        return response()->json(['message' => 'Security Question not found.'], 422);
     }
     
 
@@ -412,22 +410,22 @@ Route::get('/security_questions/{id}/delete', function(Request $request, $id) {
 });
 
 /*
-    API ROUTES FOR GENDERS
+    API ROUTES FOR SEX
 */
 
-Route::get('/genders/{id}', function(Request $request, $id) {
-    $data = DB::table('genders')
+Route::get('/sex/{id}', function(Request $request, $id) {
+    $data = DB::table('sex')
     ->where('id', $id)
     ->first();
     
     if(!$data) {
-        return response()->json(['message' => 'Occupation not found.'], 422);
+        return response()->json(['message' => 'Sex not found.'], 422);
     }
 
     echo json_encode(['data' => $data]);
 });
 
-Route::put('/genders', function(Request $request) {
+Route::put('/sex', function(Request $request) {
     $validator = Validator::make($request->all(), [
         'name' => 'required',
     ]);
@@ -436,15 +434,15 @@ Route::put('/genders', function(Request $request) {
         return response()->json($validator->errors(), 422);
     }
 
-    addToLog('Create', "New Gender Created");
+    addToLog('Create', "New Sex Created");
 
-    $data = DB::table('genders')
+    $data = DB::table('sex')
     ->insert(['name' => $request->name]);
     
     echo json_encode(['data' => $data]);
 });
 
-Route::patch('/genders/{id}', function(Request $request, $id) {
+Route::patch('/sex/{id}', function(Request $request, $id) {
     $validator = Validator::make($request->all(), [
         'name' => 'required',
     ]);
@@ -453,22 +451,22 @@ Route::patch('/genders/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
-    addToLog('Update', "Gender ID: $id Updated");
+    addToLog('Update', "Sex ID: $id Updated");
 
-    DB::table('genders')
+    DB::table('sex')
     ->where('id', $id)
     ->update(['name' => $request->name]);
 
     return response()->json(['message' => 'success'], 200);
 });
 
-Route::get('/genders/{id}/delete', function(Request $request, $id) {
+Route::get('/sex/{id}/delete', function(Request $request, $id) {
 
-    DB::table('genders')
+    DB::table('sex')
     ->where('id', $id)
     ->delete();
 
-    addToLog('Delete', "Gender ID: $id Deleted");
+    addToLog('Delete', "Sex ID: $id Deleted");
 
     return response()->json(['message' => 'success'], 200);
 });
@@ -483,7 +481,7 @@ Route::get('/archive_reasons/{id}', function(Request $request, $id) {
     ->first();
     
     if(!$data) {
-        return response()->json(['message' => 'Occupation not found.'], 422);
+        return response()->json(['message' => 'Reason not found.'], 422);
     }
 
     echo json_encode(['data' => $data]);
@@ -498,7 +496,7 @@ Route::put('/archive_reasons', function(Request $request) {
         return response()->json($validator->errors(), 422);
     }
 
-    addToLog('Create', "New Gender Created");
+    addToLog('Create', "New Archive Reason Created");
 
     $data = DB::table('archive_reasons')
     ->insert(['name' => $request->name]);
@@ -515,7 +513,7 @@ Route::patch('/archive_reasons/{id}', function(Request $request, $id) {
         return response()->json($validator->errors(), 422);
     }
 
-    addToLog('Update', "Gender ID: $id Updated");
+    addToLog('Update', "Archive Reason ID: $id Updated");
 
     DB::table('archive_reasons')
     ->where('id', $id)
@@ -530,7 +528,69 @@ Route::get('/archive_reasons/{id}/delete', function(Request $request, $id) {
     ->where('id', $id)
     ->delete();
 
-    addToLog('Delete', "Gender ID: $id Deleted");
+    addToLog('Delete', "Archive Reason ID: $id Deleted");
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+/*
+    API ROUTES FOR STREETS
+*/
+
+Route::get('/streets/{id}', function(Request $request, $id) {
+    $data = DB::table('streets')
+    ->where('id', $id)
+    ->first();
+    
+    if(!$data) {
+        return response()->json(['message' => 'Street not found.'], 422);
+    }
+
+    echo json_encode(['data' => $data]);
+});
+
+Route::put('/streets', function(Request $request) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    addToLog('Create', "New Street Created");
+
+    $data = DB::table('streets')
+    ->insert(['name' => $request->name]);
+    
+    echo json_encode(['data' => $data]);
+});
+
+Route::patch('/streets/{id}', function(Request $request, $id) {
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+    
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    addToLog('Update', "Street ID: $id Updated");
+
+    DB::table('streets')
+    ->where('id', $id)
+    ->update(['name' => $request->name]);
+
+    return response()->json(['message' => 'success'], 200);
+});
+
+Route::get('/streets/{id}/delete', function(Request $request, $id) {
+
+    DB::table('streets')
+    ->where('id', $id)
+    ->delete();
+
+    addToLog('Delete', "Street ID: $id Deleted");
 
     return response()->json(['message' => 'success'], 200);
 });

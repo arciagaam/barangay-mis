@@ -94,12 +94,12 @@
     
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="description" >Activity Description</label>
-                        @error('description')
+                        <label for="details" >Activity Details</label>
+                        @error('details')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea class="form-input resize-none" name="description" id="description" cols="30" rows="10" {{$editing ? '' : 'disabled'}}>{{$activity->description}}</textarea>
+                    <textarea class="form-input resize-none" name="details" id="details" cols="30" rows="10" {{$editing ? '' : 'disabled'}}>{{$activity->details}}</textarea>
     
                 </div>
             </div>

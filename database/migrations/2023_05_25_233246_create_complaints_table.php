@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('status_id')->nullable()->default(2)->constrained('blotter_status')->cascadeOnUpdate()->nullOnDelete();
             $table->string('incident_type');
-            $table->string('description')->nullable()->default('');
+            $table->string('details')->nullable()->default('');
             $table->string('incident_place');
             $table->dateTime('date_time_reported')->useCurrent();
             $table->dateTime('date_time_incident');

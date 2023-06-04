@@ -14,7 +14,7 @@ class Blotter extends Model
         'incident_type',
         'incident_place',
         'date_time_incident',
-        'description'
+        'details'
     ];
     
 }

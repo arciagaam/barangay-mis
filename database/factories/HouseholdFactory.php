@@ -17,12 +17,9 @@ class HouseholdFactory extends Factory
     public function definition(): array
     {
         return [
-            'purok' => fake()->numberBetween(1, 999),
             'house_number' => fake()->numberBetween(1, 999),
-            'block' => fake()->numberBetween(1, 999),
-            'lot' => fake()->numberBetween(1, 999),
             'others' => fake()->streetName(),
-            'subdivision' => fake()->state()
+            'street_id' => fake()->numberBetween(1, 2),
         ];
     }
 }

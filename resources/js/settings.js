@@ -6,8 +6,9 @@ const addCivilStatus = document.querySelector('#add_civil_status');
 const addOccupation = document.querySelector('#add_occupation');
 const addReligion = document.querySelector('#add_religion');
 const addSecurityQuestion = document.querySelector('#add_security_question');
-const addGender = document.querySelector('#add_gender');
+const addSex = document.querySelector('#add_sex');
 const addArchiveReason = document.querySelector('#add_archive_reasons');
+const addStreet = document.querySelector('#add_street');
 
 const addModal = document.querySelector('#add_modal');
 const submitBtn = document.querySelector('#submit_settings');
@@ -123,12 +124,12 @@ if (addSecurityQuestion) {
     })
 }
 
-if (addGender) {
-    addGender.addEventListener('click', () => {
+if (addSex) {
+    addSex.addEventListener('click', () => {
         console.log(submitBtn)
         submitBtn.dataset.type = 'create';
-        submitBtn.innerText = 'Add Gender'
-        modalTitle.innerHTML = 'Add Gender'
+        submitBtn.innerText = 'Add Sex'
+        modalTitle.innerHTML = 'Add Sex'
         addModal.classList.toggle('hidden');
     })
 }
@@ -138,6 +139,15 @@ if (addArchiveReason) {
         submitBtn.dataset.type = 'create';
         submitBtn.innerText = 'Add Reason'
         modalTitle.innerHTML = 'Add Reason'
+        addModal.classList.toggle('hidden');
+    })
+}
+
+if (addStreet) {
+    addStreet.addEventListener('click', () => {
+        submitBtn.dataset.type = 'create';
+        submitBtn.innerText = 'Add Street'
+        modalTitle.innerHTML = 'Add Street'
         addModal.classList.toggle('hidden');
     })
 }

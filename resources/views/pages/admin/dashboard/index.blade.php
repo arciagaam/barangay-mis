@@ -285,10 +285,10 @@
 
         <div class="form-input-container">
             <div class="flex flex-row justify-between items-center">
-                <label for="description">Description</label>
+                <label for="details">Details</label>
                     <p id="error_description" class="text-xs text-red-500 italic"></p>
             </div>
-            <textarea class="form-input w-1/2 resize-none" t name="description" id="description" cols="30" rows="10"></textarea>
+            <textarea class="form-input w-1/2 resize-none" t name="details" id="details" cols="30" rows="10"></textarea>
         </div>
 
         <button id="submit_activity" class="bg-project-yellow font-bold py-2 px-4 rounded-md">Add Activity</button>

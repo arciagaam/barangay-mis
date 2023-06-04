@@ -87,14 +87,14 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="description" >Description</label>
-                        @error('description')
+                        <label for="details" >Details</label>
+                        @error('details')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
 
 
-                    <textarea class="form-input resize-none" type="text" name="description" id="description" {{$editing ? '' : 'disabled'}} cols="30" rows="10">{{$blotter->description}}</textarea>
+                    <textarea class="form-input resize-none" type="text" name="details" id="details" {{$editing ? '' : 'disabled'}} cols="30" rows="10">{{$blotter->details}}</textarea>
                 </div>    
             </div>
 

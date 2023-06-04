@@ -16,14 +16,15 @@ class ResidentController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('streets', DB::table('streets')->get());
         View::share('reasons',  DB::table('archive_reasons')->latest()->get());
+        View::share('sex',  DB::table('sex')->orderBy('id')->get());
 
         $civilStatus = DB::table('civil_status')->select('id', 'name')->orderBy('id', 'asc')->get();
         $occupation = DB::table('occupations')->select('id', 'name')->orderBy('id', 'asc')->get();
         $religion = DB::table('religions')->select('id', 'name')->orderBy('id', 'asc')->get();
-        $genders = DB::table('genders')->select('id', 'name')->orderBy('id', 'asc')->get();
 
-        $this->options = ['civilStatus' => $civilStatus, 'occupation' => $occupation, 'religion' => $religion, 'genders' => $genders];
+        $this->options = ['civilStatus' => $civilStatus, 'occupation' => $occupation, 'religion' => $religion];
 
         $this->middleware(function ($request, $next) {
             if (str_contains($request->path(), 'residents/new') && !str_contains($request->path(), 'residents/new/step-one') && $request->session()->missing('resident')) {
@@ -48,7 +49,9 @@ class ResidentController extends Controller
         if($request->search || $request->search != ''){
             $residents = DB::table('residents')
             ->leftJoin('households', 'households.id', '=', 'residents.household_id')
-            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
+            ->leftJoin('sex', 'sex.id', 'residents.sex')
+            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'streets.name as street', 'sex.name as sex', 'sex.id as sex_id')
             ->where('residents.archived', '=', '0')
             ->where(function($query) use ($request) {
                 $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', '%' . $request->search . '%')
@@ -59,11 +62,8 @@ class ResidentController extends Controller
                 ->orWhere('birth_date', 'like', '%'.$request->search.'%')
                 ->orWhere('place_of_birth', 'like', '%'.$request->search.'%')
                 ->orWhere('house_number', 'like', '%'.$request->search.'%')
-                ->orWhere('purok', 'like', '%'.$request->search.'%')
-                ->orWhere('block', 'like', '%'.$request->search.'%')
-                ->orWhere('lot', 'like', '%'.$request->search.'%')
-                ->orWhere('others', 'like', '%'.$request->search.'%')
-                ->orWhere('subdivision', 'like', '%'.$request->search.'%');
+                ->orWhere('street', 'like', $request->search.'%')
+                ->orWhere('others', 'like', '%'.$request->search.'%');
             })
             ->when($filter != null, function ($query) use ($request, $filter) {
                 switch(lcfirst($filter)) {
@@ -92,7 +92,9 @@ class ResidentController extends Controller
                 }
             })
             ->leftJoin('households', 'households.id', '=', 'residents.household_id')
-            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
+            ->leftJoin('sex', 'sex.id', 'residents.sex')
+            ->select('residents.*', 'households.*', 'residents.id as resident_id', 'households.id as household_id', 'streets.name as street','sex.name as sex', 'sex.id as sex_id')
             ->where('residents.archived', '=', '0')
             ->orderBy('residents.created_at', 'desc')
             ->orderBy('residents.id', 'asc')
@@ -120,7 +122,6 @@ class ResidentController extends Controller
             'last_name' => 'required',
             'nickname' => 'nullable',
             'sex' => 'required',
-            'gender_id' => 'nullable',
             'birth_date' => 'required',
             'age' => 'required',
             'place_of_birth' => 'required',
@@ -157,12 +158,9 @@ class ResidentController extends Controller
         $formFields = $request->validate([
             'phone_number' => ['numeric', 'required'],
             'telephone_number' => 'nullable',
-            'block' => 'nullable',
-            'lot' => 'nullable',
             'others' => 'nullable',
-            'subdivision' => 'nullable',
-            'purok' => 'nullable',
-            'house_number' => 'required'
+            'house_number' => 'required',
+            'street_id' => 'required'
         ]);
 
         $residentFields = [
@@ -171,12 +169,9 @@ class ResidentController extends Controller
         ];
 
         $householdFields = [
-            'block' => $formFields['block'],
-            'lot' => $formFields['lot'],
             'others' => $formFields['others'],
-            'subdivision' => $formFields['subdivision'],
-            'purok' => $formFields['purok'],
             'house_number' => $formFields['house_number'],
+            'street_id' => $formFields['street_id'],
         ];
 
         $resident = $request->session()->get('resident');
@@ -208,13 +203,13 @@ class ResidentController extends Controller
     {
         if ($request->voter_status == 1) {
             $formFields = $request->validate([
-                'voter_status' => 'required',
+                'voter_status' => '',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
             ]);
         } else {
             $formFields = $request->validate([
-                'voter_status' => 'required',
+                'voter_status' => '',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
             ]);
@@ -242,6 +237,7 @@ class ResidentController extends Controller
 
         $householdDb = DB::table('households')            
         ->where('house_number', '=', $household->house_number)
+        ->where('street_id', '=', $household->street_id)
         ->where('others', '=', $household->address_others)
         ->first();
 
@@ -268,12 +264,13 @@ class ResidentController extends Controller
     {
         $resident = DB::table('residents')
         ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
-        ->leftJoin('genders', 'genders.id', '=', 'residents.gender_id')
         ->leftJoin('occupations', 'occupations.id', '=', 'residents.occupation_id')
         ->leftJoin('religions', 'religions.id', '=', 'residents.religion_id')
         ->leftJoin('households', 'households.id', '=', 'residents.household_id')
+        ->leftJoin('streets', 'streets.id', 'households.street_id')
+        ->leftJoin('sex', 'sex.id', 'residents.sex')
         ->where('residents.id', '=', $id)
-        ->select('residents.*', 'residents.id as resident_id','genders.name as gender', 'civil_status.name as civil_status', 'occupations.name as occupation', 'religions.name as religion', 'households.*', 'households.id as household_id')
+        ->select('residents.*', 'residents.id as resident_id', 'civil_status.name as civil_status', 'occupations.name as occupation', 'religions.name as religion', 'households.*', 'households.id as household_id', 'streets.name as street', 'sex.name as sex', 'sex.id as sex_id')
         ->first();
 
         return view('pages.admin.residents_information.show', ['resident' => $resident, 'options' => $this->options, 'editing' => false]);
@@ -305,7 +302,7 @@ class ResidentController extends Controller
             'first_name' => 'required',
             'middle_name' => '',
             'last_name' => 'required',
-            'nickname' => 'required',
+            'nickname' => '',
             'sex' => 'required',
             'birth_date' => 'required',
             'age' => 'required',
@@ -314,12 +311,9 @@ class ResidentController extends Controller
             'occupation_id' => 'required',
             'religion_id' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
-            'voter_status' => 'required',
+            'voter_status' => '',
             'disabled' => 'required',
         ]);
 
@@ -341,11 +335,8 @@ class ResidentController extends Controller
 
         $householdFields = [
             'house_number' => $request->house_number,
-            'purok' => $request->purok,
-            'block' => $request->block,
-            'lot' => $request->lot,
+            'street_id' => $request->street_id,
             'others' => $request->others,
-            'subdivision' => $request->subdivision
         ];
 
         $householdID = DB::table('residents')

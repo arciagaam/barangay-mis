@@ -134,26 +134,26 @@ class SettingsController extends Controller
         return view('pages.admin.maintenance.settings.security_questions.index', ['security_questions' => $security_questions]);
     }
 
-    public function index_genders(Request $request)
+    public function index_sex(Request $request)
     {
         $rows = $request->rows;
 
         if($request->search || $request->search == '') {
-            $genders = DB::table('genders')
-            ->latest('genders.created_at')
+            $sex = DB::table('sex')
+            ->latest('sex.created_at')
             ->where(function($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->search . '%');
             })
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         } else {
-            $genders = DB::table('genders')
+            $sex = DB::table('sex')
             ->latest()
             ->paginate($rows ?? 10)
             ->appends(request()->query());
         }
 
-        return view('pages.admin.maintenance.settings.genders.index', ['genders' => $genders]);
+        return view('pages.admin.maintenance.settings.sex.index', ['sex' => $sex]);
     }
 
     public function index_archive(Request $request)
@@ -176,5 +176,27 @@ class SettingsController extends Controller
         }
 
         return view('pages.admin.maintenance.settings.archive_reasons.index', ['reasons' => $reasons]);
+    }
+
+    public function index_streets(Request $request)
+    {
+        $rows = $request->rows;
+
+        if($request->search || $request->search == '') {
+            $streets = DB::table('streets')
+            ->latest('streets.created_at')
+            ->where(function($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            })
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $streets = DB::table('streets')
+            ->latest()
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+        return view('pages.admin.maintenance.settings.streets.index', ['streets' => $streets]);
     }
 }

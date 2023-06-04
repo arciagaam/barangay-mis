@@ -86,14 +86,14 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="description" >Description</label>
-                        @error('description')
+                        <label for="details" >Details</label>
+                        @error('details')
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
 
 
-                    <textarea class="form-input resize-none" type="text" name="description" id="description" {{$editing ? '' : 'disabled'}} cols="30" rows="10">{{$complaint->description}}</textarea>
+                    <textarea class="form-input resize-none" type="text" name="details" id="details" {{$editing ? '' : 'disabled'}} cols="30" rows="10">{{$complaint->details}}</textarea>
                 </div>    
             </div>
 
@@ -196,38 +196,49 @@
 
             <div class="flex flex-col gap-3">
                 <p class="text-lg font-bold">First Hearing</p>
-                <div class="flex gap-3">
+                <div class="flex flex-col gap-3">
 
-                    <div class="form-input-container w-fit">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="first_hearing_status_id" >Status</label>
-                            @error('first_hearing_status_id')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
+                    <div class="flex gap-3">
+                        <div class="form-input-container w-fit">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="first_hearing_status_id" >Status</label>
+                                @error('first_hearing_status_id')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            @php
+                            $oneStatus = $hearings[0]->status_id ?? null
+                            @endphp
+                            @if ($editing)
+                                <select class="form-input" name="first_hearing_status_id" id="first_hearing_status_id">
+                                    <option value="{{null}}">Choose status</option>
+                                    @foreach ($status as $value)
+                                        <option value="{{$value->id}}" {{$oneStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <input class="form-input" type="text" name="first_hearing_status_id" id="first_hearing_status_id" value="{{ucfirst($hearings[0]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
+                            @endif
                         </div>
-                        @php
-                        $oneStatus = $hearings[0]->status_id ?? null
-                        @endphp
-                        @if ($editing)
-                            <select class="form-input" name="first_hearing_status_id" id="first_hearing_status_id">
-                                <option value="{{null}}">Choose status</option>
-                                @foreach ($status as $value)
-                                    <option value="{{$value->id}}" {{$oneStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <input class="form-input" type="text" name="first_hearing_status_id" id="first_hearing_status_id" value="{{ucfirst($hearings[0]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
-                        @endif
+                        <div class="form-input-container">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="first_hearing_date" >Date</label>
+                                @error('first_hearing_date')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <input class="form-input" type="date" name="first_hearing_date" id="first_hearing_date" value="{{$hearings[0]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        </div>
                     </div>
 
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="first_hearing_date" >Date</label>
-                            @error('first_hearing_date')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            <label for="first_hearing_details">Details</label>
+                            @error('first_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="date" name="first_hearing_date" id="first_hearing_date" value="{{$hearings[0]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        <textarea class="form-input resize-none" name="first_hearing_details" id="first_hearing_details" cols="30" rows="10"  {{$editing ? '' : 'disabled'}}>{{$hearings[0]->details ?? null}}</textarea>
                     </div>
 
                 </div>
@@ -235,77 +246,97 @@
 
             <div class="flex flex-col gap-3">
                 <p class="text-lg font-bold">Second Hearing</p>
-                <div class="flex gap-3">
+                <div class="flex flex-col gap-3">
 
-                    <div class="form-input-container w-fit">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="second_hearing_status_id" >Status</label>
-                            @error('second_hearing_status_id')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
+                    <div class="flex gap-3">
+                        <div class="form-input-container w-fit">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="second_hearing_status_id" >Status</label>
+                                @error('second_hearing_status_id')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            @php
+                            $twoStatus = $hearings[1]->status_id ?? null
+                            @endphp
+                            @if ($editing)
+                                <select class="form-input" name="second_hearing_status_id" id="second_hearing_status_id">
+                                    <option value="{{null}}">Choose status</option>
+                                    @foreach ($status as $value)
+                                        <option value="{{$value->id}}" {{$twoStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <input class="form-input" type="text" name="second_hearing_status_id" id="second_hearing_status_id" value="{{ucfirst($hearings[1]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
+                            @endif
                         </div>
-                        @php
-                        $twoStatus = $hearings[1]->status_id ?? null
-                        @endphp
-                        @if ($editing)
-                            <select class="form-input" name="second_hearing_status_id" id="second_hearing_status_id">
-                                <option value="{{null}}">Choose status</option>
-                                @foreach ($status as $value)
-                                    <option value="{{$value->id}}" {{$twoStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <input class="form-input" type="text" name="second_hearing_status_id" id="second_hearing_status_id" value="{{ucfirst($hearings[1]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
-                        @endif
-                    </div>
-
+                        <div class="form-input-container">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="second_hearing_date" >Date</label>
+                                @error('second_hearing_date')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <input class="form-input" type="date" name="second_hearing_date" id="second_hearing_date" value="{{$hearings[1]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        </div>
+                    </div>                    
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="second_hearing_date" >Date</label>
-                            @error('second_hearing_date')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            <label for="second_hearing_details">Details</label>
+                            @error('second_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="date" name="second_hearing_date" id="second_hearing_date" value="{{$hearings[1]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        <textarea class="form-input resize-none" name="second_hearing_details" id="second_hearing_details" cols="30" rows="10"  {{$editing ? '' : 'disabled'}}>{{$hearings[1]->details ?? null}}</textarea>
                     </div>
-
                 </div>
             </div>
 
             <div class="flex flex-col gap-3">
                 <p class="text-lg font-bold">Third Hearing</p>
-                <div class="flex gap-3">
+                <div class="flex flex-col gap-3">
 
-                    <div class="form-input-container w-fit">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="third_hearing_status_id" >Status</label>
-                            @error('third_hearing_status_id')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
+                    <div class="flex gap-3">
+                        <div class="form-input-container w-fit">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="third_hearing_status_id" >Status</label>
+                                @error('third_hearing_status_id')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            @php
+                                $threeStatus = $hearings[2]->status_id ?? null
+                            @endphp
+                            @if ($editing)
+                                <select class="form-input" name="third_hearing_status_id" id="third_hearing_status_id">
+                                    <option value="{{null}}">Choose status</option>
+                                    @foreach ($status as $value)
+                                        <option value="{{$value->id}}" {{$threeStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <input class="form-input" type="text" name="third_hearing_status_id" id="third_hearing_status_id" value="{{ucfirst($hearings[2]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
+                            @endif
                         </div>
-                        @php
-                            $threeStatus = $hearings[2]->status_id ?? null
-                        @endphp
-                        @if ($editing)
-                            <select class="form-input" name="third_hearing_status_id" id="third_hearing_status_id">
-                                <option value="{{null}}">Choose status</option>
-                                @foreach ($status as $value)
-                                    <option value="{{$value->id}}" {{$threeStatus == $value->id ? 'selected' : ''}}>{{ucfirst($value->name)}}</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <input class="form-input" type="text" name="third_hearing_status_id" id="third_hearing_status_id" value="{{ucfirst($hearings[2]->status ?? null)}}" {{$editing ? '' : 'disabled'}}>
-                        @endif
+                        <div class="form-input-container">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="third_hearing_date" >Date</label>
+                                @error('third_hearing_date')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+                            <input class="form-input" type="date" name="third_hearing_date" id="third_hearing_date" value="{{$hearings[2]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        </div>
                     </div>
 
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="third_hearing_date" >Date</label>
-                            @error('third_hearing_date')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            <label for="third_hearing_details">Details</label>
+                            @error('third_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
                             @enderror
                         </div>
-                        <input class="form-input" type="date" name="third_hearing_date" id="third_hearing_date" value="{{$hearings[2]->date ?? null}}" {{$editing ? '' : 'disabled'}}>
+                        <textarea class="form-input resize-none" name="third_hearing_details" id="third_hearing_details" cols="30" rows="10"  {{$editing ? '' : 'disabled'}}>{{$hearings[2]->details ?? null}}</textarea>
                     </div>
 
                 </div>

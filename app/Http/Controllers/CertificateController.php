@@ -14,6 +14,8 @@ class CertificateController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('streets', DB::table('streets')->get());
+        View::share('sex', DB::table('sex')->orderBy('id')->get());
 
         $this->middleware(function ($request, $next) {
             if (str_contains($request->path(), 'certificates/new') && !str_contains($request->path(), 'certificates/new/step-one') && $request->session()->missing('certificate')) {
@@ -29,6 +31,7 @@ class CertificateController extends Controller
     {
 
         $request->session()->forget('certificate');
+        $request->session()->forget('resident');
 
         $rows = $request->rows;
 
@@ -131,11 +134,8 @@ class CertificateController extends Controller
             'occupation_id' => 'required',
             'religion_id' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
             'others' => '',
-            'subdivision' => '',
+            'street_id' => 'required',
             'voter_status' => '',
             'disabled' => '',
         ]);
@@ -155,11 +155,8 @@ class CertificateController extends Controller
             ->where('residents.voter_status', $request->voter_status)
             ->where('residents.disabled', $request->disabled)
             ->where('households.house_number', $request->house_number)
-            ->where('households.purok', $request->purok)
-            ->where('households.block', $request->block)
-            ->where('households.lot', $request->lot)
             ->where('households.others', $request->others)
-            ->where('households.subdivision', $request->subdivision)
+            ->where('households.street_id', $request->street_id)
             ->first();
 
         if (!$checkResident) {
@@ -205,7 +202,6 @@ class CertificateController extends Controller
     public function create_StepThree(Request $request)
     {
         $certificate = $request->session()->get('certificate');
-        $certificate->save();
 
         return view('pages.admin.certificate.create.step_three', ['certificate' => $certificate]);
     }
@@ -214,6 +210,7 @@ class CertificateController extends Controller
     {
         $certificate = $request->session()->get('certificate');
         $type_id = $certificate->certificate_type_id;
+
 
         if ($request->session()->get('new_resident')) {
 
@@ -290,6 +287,7 @@ class CertificateController extends Controller
             ->leftJoin('residents', 'residents.id', '=', 'certificates.resident_id')
             ->leftJoin('civil_status', 'civil_status.id', '=', 'residents.civil_status_id')
             ->leftJoin('households', 'households.id', '=', 'residents.household_id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->where('certificates.id', '=', $request->certificate_id)
             ->select([
                 'certificates.created_at',
@@ -298,11 +296,8 @@ class CertificateController extends Controller
                 'residents.last_name',
                 'civil_status.name as civil_status',
                 'households.house_number',
-                'households.purok',
-                'households.block',
-                'households.lot',
                 'households.others',
-                'households.subdivision',
+                'streets.name as street',
             ])
             ->first();
 

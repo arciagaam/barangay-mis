@@ -54,7 +54,7 @@ class CalendarController extends Controller
             'start_time' => '',
             'end_time' => '',
             'name' => 'required',
-            'description' => 'required',
+            'details' => 'required',
         ]);
 
         $formFields['is_all_day'] = 0;

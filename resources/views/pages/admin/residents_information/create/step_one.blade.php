@@ -67,28 +67,11 @@
                         @enderror
                     </div>
                     @php
-                        $sex = old('sex') ?? ($resident->sex ?? '')
+                        $_sex = old('sex') ?? ($resident->sex ?? '')
                     @endphp
                     <select class="form-input" name="sex" id="sex">
-                        <option value="1" {{$sex == 1 ? 'selected' : ''}}>Male</option>
-                        <option value="2" {{$sex == 2 ? 'selected' : ''}}>Female</option>
-                    </select>
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="gender_id">Gender</label>
-                        @error('gender_id')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
-                    </div>
-                    @php
-                        $_gender = old('gender_id') ?? ($resident->gender_id ?? '')
-                    @endphp
-                    <select class="form-input" name="gender_id" id="gender_id">
-                        <option value="{{null}}"></option>
-                        @foreach ($options['genders'] as $gender)
-                            <option value="{{$gender->id}}" {{$_gender == $gender->id ? 'selected' : ''}}>{{$gender->name}}</option>
+                        @foreach ($sex as $s)
+                            <option value="{{$s->id}}" {{$s->id == $_sex ? 'selected' : ''}}>{{$s->name}}</option>
                         @endforeach
                     </select>
                 </div>

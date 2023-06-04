@@ -51,46 +51,85 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="description">Description</label>
-                        @error('description')
+                        <label for="details">Details</label>
+                        @error('details')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea name="description" class="form-input resize-none" id="description" cols="30" rows="10"></textarea>
+                    <textarea name="details" class="form-input resize-none" id="details" cols="30" rows="10"></textarea>
                 </div>
 
             </div>
 
             <div class="flex flex-col gap-5">
 
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="first_hearing">First Hearing</label>
-                        @error('first_hearing')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
+                <div class="flex flex-col gap-3">
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="first_hearing">First Hearing</label>
+                            @error('first_hearing')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <input class="form-input" type="date" name="first_hearing" id="first_hearing" min={{date('Y-m-d')}}>
                     </div>
-                    <input class="form-input" type="date" name="first_hearing" id="first_hearing">
+
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="first_hearing_details">Details</label>
+                            @error('first_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <textarea class="form-input resize-none" name="first_hearing_details" id="first_hearing_details" cols="30" rows="10"></textarea>
+                    </div>
                 </div>
 
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="second_hearing">Second Hearing</label>
-                        @error('second_hearing')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
+
+                <div class="flex flex-col gap-3">
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="second_hearing">Second Hearing</label>
+                            @error('second_hearing')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <input class="form-input" type="date" name="second_hearing" id="second_hearing" min={{date('Y-m-d')}}>
                     </div>
-                    <input class="form-input" type="date" name="second_hearing" id="second_hearing">
+
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="second_hearing_details">Details</label>
+                            @error('second_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <textarea class="form-input resize-none" name="second_hearing_details" id="second_hearing_details" cols="30" rows="10"></textarea>
+                    </div>
+
                 </div>
 
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="third_hearing">Third Hearing</label>
-                        @error('third_hearing')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
+
+                <div class="flex flex-col gap-3">
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="third_hearing">Third Hearing</label>
+                            @error('third_hearing')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <input class="form-input" type="date" name="third_hearing" id="third_hearing" min={{date('Y-m-d')}}>
                     </div>
-                    <input class="form-input" type="date" name="third_hearing" id="third_hearing">
+
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="third_hearing_details">Details</label>
+                            @error('third_hearing_details')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <textarea class="form-input resize-none" name="third_hearing_details" id="third_hearing_details" cols="30" rows="10"></textarea>
+                    </div>
                 </div>
 
 

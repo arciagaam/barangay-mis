@@ -32,52 +32,30 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="purok">Purok</label>
-                        @error('purok')
+                        <label for="street_id" class="flex gap-2 items-center">Street<span class="text-xs text-red-500">*</span></label>
+                        @error('street_id')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="purok" id="purok" value="{{ old('purok') ?? ($household->purok ?? '') }}">
+
+                    <select class="form-input" name="street_id" id="street_id">
+                        @php
+                            $_streetId = $residentData->street_id ?? null
+                        @endphp
+                        @foreach ($streets as $street)
+                            <option value="{{$street->id}}" {{$_streetId == $street->id ? 'selected' : ''}}>{{$street->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="block">Block</label>
-                        @error('block')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <input class="form-input" type="text" name="block" id="block" value="{{ old('block') ?? ($household->block ?? '') }}">
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="lot">Lot</label>
-                        @error('lot')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <input class="form-input" type="text" name="lot" id="lot" value="{{ old('lot') ?? ($household->lot ?? '') }}">
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="others">Street/Unit/Bldg/Others</label>
+                        <label for="others">Unit/Bldg/Others</label>
                         @error('others')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
                     <input class="form-input" type="text" name="others" id="others" value="{{ old('others') ?? ($household->others ?? '') }}">
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="subdivision">Subdivision</label>
-                        @error('subdivision')
-                            <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <input class="form-input" type="text" name="subdivision" id="subdivision" value="{{ old('subdivision') ?? ($household->subdivision ?? '') }}">
                 </div>
 
                 <div class="form-input-container">

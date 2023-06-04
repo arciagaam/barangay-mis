@@ -111,7 +111,7 @@ if(calendarEl){
         startTime.value = ""
         endTime.value = ""
         document.querySelector('#name').value = ""
-        document.querySelector('#description').value = ""
+        document.querySelector('#details').value = ""
         document.querySelector('#error_name').innerText = "";
         document.querySelector('#error_description').innerText = "";
         document.querySelector('#error_start_end_time').innerText = "";
@@ -132,17 +132,17 @@ if(calendarEl){
                 start_time: startTime.value,
                 end_time: endTime.value,
                 name: document.querySelector('#name').value,
-                description: document.querySelector('#description').value,
+                details: document.querySelector('#details').value,
                 is_all_day: allDay.checked ? 1 : 0
             })
         })
     
         if(data.status == 422) {
-            const {name, description, message} = await data.json(); 
+            const {name, details, message} = await data.json(); 
 
-            if(name || description) {
+            if(name || details) {
                 document.querySelector('#error_name').innerText = name ?? '';
-                document.querySelector('#error_description').innerText = description ?? '';
+                document.querySelector('#error_description').innerText = details ?? '';
             }
 
             if(message) {
@@ -160,7 +160,7 @@ if(calendarEl){
             startTime.value = ""
             endTime.value = ""
             document.querySelector('#name').value = ""
-            document.querySelector('#description').value = ""
+            document.querySelector('#details').value = ""
             allDay.checked = 0
             closeModal.click();
         }

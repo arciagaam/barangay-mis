@@ -26,11 +26,6 @@ class DatabaseSeeder extends Seeder
             ['name' => 'What is your favorite ballpen?'],
         ]);
 
-        DB::table('genders')->insert([
-            ['name' => 'Gender 1'],
-            ['name' => 'Gender 2'],
-        ]);
-
         DB::table('archive_reasons')->insert([
             ['name' => 'Reason 1'],
             ['name' => 'Reason 2'],
@@ -108,7 +103,7 @@ class DatabaseSeeder extends Seeder
         DB::table('activities')->insert([
             [
                 'name' => 'Test Activity',
-                'description' => 'Test Activity Description',
+                'details' => 'Test Activity details',
                 'start_date' => now(),
                 'is_all_day' => 1,
             ],
@@ -121,6 +116,17 @@ class DatabaseSeeder extends Seeder
         DB::table('official_positions')->insert([
             ['name' => 'Barangay Captain'],
             ['name' => 'SK Kagawad'],
+        ]);
+
+        DB::table('streets')->insert([
+            ['name' => 'Street 1'],
+            ['name' => 'Street 2'],
+        ]);
+
+        DB::table('sex')->insert([
+            ['name' => 'Male'],
+            ['name' => 'Female'],
+            ['name' => 'Prefer not to say'],
         ]);
 
         Household::factory(10)->create();

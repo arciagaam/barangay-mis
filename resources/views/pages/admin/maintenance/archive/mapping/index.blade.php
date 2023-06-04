@@ -39,12 +39,9 @@
 
                     @php
                         $address = 
-                        ($mapping->block ? "Blk $mapping->block" : '') . 
-                        ($mapping->lot ? " Lot $mapping->lot" : '') . 
-                        ($mapping->block || $mapping->block ? " " : '') .
-                        $mapping->house_number . 
-                        ($mapping->others ? " $mapping->others" : '' ) . 
-                        ($mapping->subdivision ? ", $mapping->subdivision" : '') 
+                        $mapping->house_number . ' ' .
+                        $mapping->street . ' ' .
+                        ($mapping->others ? " $mapping->others" : '' );
                     @endphp
 
                     <tr>

@@ -95,12 +95,9 @@
     <p id="civil_status" class="absolute">{{ucfirst($resident->civil_status)}}</p>
     @php
         $address = 
-        ($resident->block ? "Blk $resident->block" : '') . 
-        ($resident->lot ? " Lot $resident->lot" : '') . 
-        ($resident->block || $resident->block ? " " : '') .
-        $resident->house_number . 
-        ($resident->others ? " $resident->others" : '' ) . 
-        ($resident->subdivision ? ", $resident->subdivision" : '') ;
+        $resident->house_number . ' ' .
+        $resident->street . ' ' .
+        ($resident->others ? " $resident->others" : '' );
 
         $timestamp = strtotime($resident->created_at);
         $day = date('jS', $timestamp);

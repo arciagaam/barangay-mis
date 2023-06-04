@@ -54,19 +54,16 @@
 
                     @php
                         $address = 
-                        ($resident->block ? "Blk $resident->block" : '') . 
-                        ($resident->lot ? " Lot $resident->lot" : '') . 
-                        ($resident->block || $resident->block ? " " : '') .
-                        $resident->house_number . 
-                        ($resident->others ? " $resident->others" : '' ) . 
-                        ($resident->subdivision ? ", $resident->subdivision" : '') 
+                        $resident->house_number . ' ' . 
+                        $resident->street . ' ' .
+                        ($resident->others ? " $resident->others" : '' );
                     @endphp
 
                     <tr>
                         <td>{{$resident->first_name}} {{$resident->middle_name}} {{$resident->last_name}}</td>
                         <td>{{$resident->birth_date}}</td>
                         <td>{{$resident->place_of_birth}}</td>
-                        <td>{{$resident->sex == 1 ? 'Male' : 'Female'}}</td>
+                        <td>{{$resident->sex}}</td>
                         <td>{{$address}}</td>
                         <td>
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">

@@ -94,6 +94,7 @@ class ArchiveController extends Controller
             ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
             ->leftJoin('archive_reasons', 'archive_reasons.id', 'mappings.archive_reason_id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -102,11 +103,8 @@ class ArchiveController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street',
             'archive_reasons.name as reason'
             ])
             ->where(function($query) use ($request) {
@@ -118,11 +116,8 @@ class ArchiveController extends Controller
                 ->orWhere('birth_date', 'like', $request->search.'%')
                 ->orWhere('place_of_birth', 'like', $request->search.'%')
                 ->orWhere('house_number', 'like', $request->search.'%')
-                ->orWhere('purok', 'like', $request->search.'%')
-                ->orWhere('block', 'like', $request->search.'%')
-                ->orWhere('lot', 'like', $request->search.'%')
-                ->orWhere('others', 'like', $request->search.'%')
-                ->orWhere('subdivision', 'like', $request->search.'%');
+                ->orWhere('street', 'like', $request->search.'%')
+                ->orWhere('others', 'like', $request->search.'%');
             })
             ->where(function($query) use ($request) {
                 $query->where('mappings.longitude', '!=', null)
@@ -138,6 +133,7 @@ class ArchiveController extends Controller
             ->leftJoin('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
             ->leftJoin('archive_reasons', 'archive_reasons.id', 'mappings.archive_reason_id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -146,11 +142,8 @@ class ArchiveController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street',
             'archive_reasons.name as reason'
             ])
             ->where('mappings.archived', 1)

@@ -14,6 +14,8 @@ class LendController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('streets', DB::table('streets')->get());
+        View::share('sex', DB::table('sex')->orderBy('id')->get());
     }
     /**
      * Display a listing of the resource.
@@ -85,14 +87,11 @@ class LendController extends Controller
             'occupation_id' => 'required',
             'religion_id' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
             'voter_status' => '',
             'disabled' => '',
-            'contact' => ['required', 'numeric'],
+            'contact' => ['required'],
             'return_date' => 'required',
             'quantity' => 'required'
         ]);
@@ -112,11 +111,8 @@ class LendController extends Controller
         ->where('residents.voter_status', $request->voter_status)
         ->where('residents.disabled', $request->disabled)
         ->where('households.house_number', $request->house_number)
-        ->where('households.purok', $request->purok)
-        ->where('households.block', $request->block)
-        ->where('households.lot', $request->lot)
         ->where('households.others', $request->others)
-        ->where('households.subdivision', $request->subdivision)
+        ->where('households.street_id', $request->street_id)
         ->first();
 
         if (!$checkResident) {

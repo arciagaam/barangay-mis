@@ -29,14 +29,20 @@
             <p class="text-lg">Security Questions</p>
         </a>
 
-        <a href="{{url('/maintenance/settings/genders')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
+        <a href="{{url('/maintenance/settings/sex')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
             <i class='bx bx-lg bx-male-female'></i>
-            <p class="text-lg">Gender</p>
+            <p class="text-lg">Sex</p>
         </a>
 
         <a href="{{url('/maintenance/settings/archive-reasons')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
             <i class='bx bx-lg bxs-bookmark-plus'></i>
             <p class="text-lg">Archive Reasons</p>
+        </a>
+
+        
+        <a href="{{url('/maintenance/settings/streets')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
+            <i class='bx bx-lg bx-street-view'></i>
+            <p class="text-lg">Streets</p>
         </a>
 
     </div>

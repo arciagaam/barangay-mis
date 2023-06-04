@@ -53,12 +53,12 @@
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
-                        <label for="description">Description</label>
-                        @error('description')
+                        <label for="details">Details</label>
+                        @error('details')
                             <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <textarea name="description" class="form-input resize-none" id="description" cols="30" rows="10"></textarea>
+                    <textarea name="details" class="form-input resize-none" id="details" cols="30" rows="10"></textarea>
                 </div>
 
             </div>

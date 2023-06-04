@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('number');
             $table->foreignId('complaint_id')->nullable()->default(2)->constrained('complaints')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('status_id')->nullable()->default(2)->constrained('blotter_status')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('details')->default('');
             $table->date('date');
         });
     }

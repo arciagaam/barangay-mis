@@ -16,6 +16,8 @@ class ComplaintController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('streets', DB::table('streets')->get());
+        View::share('sex', DB::table('sex')->orderBy('id')->get());
 
 
         $this->middleware(function ($request, $next) {
@@ -56,11 +58,19 @@ class ComplaintController extends Controller
                         ->orWhere('complaints.incident_place', 'like', $request->search . '%');
                 })
                 ->when($filter != null, function ($query) use ($request, $filter) {
-                    switch(lcfirst($filter)) {
-                        case 'active' : $query->where("blotter_status.id", 2); break;
-                        case 'settled' : $query->where("blotter_status.id", 3); break;
-                        case 'rescheduled' : $query->where("blotter_status.id", 4); break;
-                        case 'unsettled' : $query->where("blotter_status.id", 1); break;
+                    switch (lcfirst($filter)) {
+                        case 'active':
+                            $query->where("blotter_status.id", 2);
+                            break;
+                        case 'settled':
+                            $query->where("blotter_status.id", 3);
+                            break;
+                        case 'rescheduled':
+                            $query->where("blotter_status.id", 4);
+                            break;
+                        case 'unsettled':
+                            $query->where("blotter_status.id", 1);
+                            break;
                     }
                 })
                 ->orderBy('complaints.created_at', 'asc')
@@ -70,7 +80,7 @@ class ComplaintController extends Controller
                     'complaints.status_id',
                     'blotter_status.name as status',
                     'complaints.incident_type',
-                    'complaints.description',
+                    'complaints.details',
                     'complaints.incident_place',
                     'complaints.date_time_reported',
                     'complaints.date_time_incident'
@@ -83,11 +93,19 @@ class ComplaintController extends Controller
                 ->join('residents', 'residents.id', '=', 'complaint_recipients.resident_id')
                 ->join('blotter_status', 'blotter_status.id', '=', 'complaints.status_id')
                 ->when($filter != null, function ($query) use ($request, $filter) {
-                    switch(lcfirst($filter)) {
-                        case 'active' : $query->where("blotter_status.id", 2); break;
-                        case 'settled' : $query->where("blotter_status.id", 3); break;
-                        case 'rescheduled' : $query->where("blotter_status.id", 4); break;
-                        case 'unsettled' : $query->where("blotter_status.id", 1); break;
+                    switch (lcfirst($filter)) {
+                        case 'active':
+                            $query->where("blotter_status.id", 2);
+                            break;
+                        case 'settled':
+                            $query->where("blotter_status.id", 3);
+                            break;
+                        case 'rescheduled':
+                            $query->where("blotter_status.id", 4);
+                            break;
+                        case 'unsettled':
+                            $query->where("blotter_status.id", 1);
+                            break;
                     }
                 })
                 ->orderBy('complaints.created_at', 'asc')
@@ -97,7 +115,7 @@ class ComplaintController extends Controller
                     'complaints.status_id',
                     'blotter_status.name as status',
                     'complaints.incident_type',
-                    'complaints.description',
+                    'complaints.details',
                     'complaints.incident_place',
                     'complaints.date_time_reported',
                     'complaints.date_time_incident'
@@ -127,20 +145,20 @@ class ComplaintController extends Controller
         }
 
         $initialComplaints = DB::table('complaints')->get();
-        $unresolved_complaints_count = $initialComplaints->filter(function($value, $key) {
-            return($value->status_id==1);
+        $unresolved_complaints_count = $initialComplaints->filter(function ($value, $key) {
+            return ($value->status_id == 1);
         });
 
-        $active_complaints_count = $initialComplaints->filter(function($value, $key) {
-            return($value->status_id==2);
+        $active_complaints_count = $initialComplaints->filter(function ($value, $key) {
+            return ($value->status_id == 2);
         });
 
-        $rescheduled_complaints_count = $initialComplaints->filter(function($value, $key) {
-            return($value->status_id==4);
+        $rescheduled_complaints_count = $initialComplaints->filter(function ($value, $key) {
+            return ($value->status_id == 4);
         });
 
-        $settled_complaints_count = $initialComplaints->filter(function($value, $key) {
-            return($value->status_id==3);
+        $settled_complaints_count = $initialComplaints->filter(function ($value, $key) {
+            return ($value->status_id == 3);
         });
 
         $countData = [
@@ -180,6 +198,7 @@ class ComplaintController extends Controller
 
     public function post_StepOne(Request $request)
     {
+
         $formFields = $request->validate([
             'first_name'  => 'required',
             'middle_name' => '',
@@ -189,11 +208,8 @@ class ComplaintController extends Controller
             'birth_date' => 'required',
             'age' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
         ]);
 
         $checkResident = DB::table('residents')
@@ -234,7 +250,7 @@ class ComplaintController extends Controller
                 return back()->with('error', 'Resident not found');
             }
 
-            $request->session()->put('complaint.reporter', $request->resident_id);
+            $request->session()->put('complaint.complainant', $request->resident_id);
         }
 
         return redirect('/complaints/new/step-two');
@@ -272,12 +288,10 @@ class ComplaintController extends Controller
             'birth_date' => 'required',
             'age' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
         ]);
+
 
         $checkResident = DB::table('residents')
             ->join('households', 'households.id', 'residents.household_id')
@@ -289,11 +303,8 @@ class ComplaintController extends Controller
             ->where('residents.birth_date', $request->birth_date)
             ->where('residents.age', $request->age)
             ->where('households.house_number', $request->house_number)
-            ->where('households.purok', $request->purok)
-            ->where('households.block', $request->block)
-            ->where('households.lot', $request->lot)
             ->where('households.others', $request->others)
-            ->where('households.subdivision', $request->subdivision)
+            ->where('households.street_id', $request->street_id)
             ->first();
 
         if (!$checkResident) {
@@ -340,7 +351,7 @@ class ComplaintController extends Controller
         $formFields = $request->validate([
             'incident_type' => 'required',
             'incident_place' => 'required',
-            'description' => '',
+            'details' => '',
             'date_time_incident' => 'required',
         ]);
 
@@ -387,10 +398,16 @@ class ComplaintController extends Controller
             DB::table('complaint_recipients')->insert(['complaint_id' => $complaint_id, 'resident_id' => $recipient, 'complaint_role_id' => $index + 1]);
         }
 
-        $hearings = [$request->first_hearing, $request->second_hearing, $request->third_hearing];
+        $hearings = [
+            ['date' => $request->first_hearing, 'details' => $request->first_hearing_details], 
+            ['date' => $request->second_hearing, 'details' => $request->second_hearing_details], 
+            ['date' => $request->third_hearing, 'details' => $request->third_hearing_details], 
+        ];
+
         foreach ($hearings as $index => $hearing) {
-            if ($hearing == null) continue;
-            DB::table('complaint_hearings')->insert(['number' => $index + 1, 'complaint_id' => $complaint_id, 'status_id' => 2, 'date' => $hearing]);
+            if ($hearing['date'] == null) continue;
+
+            DB::table('complaint_hearings')->insert(['number' => $index + 1, 'complaint_id' => $complaint_id, 'status_id' => 2, 'date' => $hearing['date'], 'details' => $hearing['details']]);
         }
 
 
@@ -426,7 +443,7 @@ class ComplaintController extends Controller
                 'complaints.status_id',
                 'blotter_status.name as status',
                 'complaints.incident_type',
-                'complaints.description',
+                'complaints.details',
                 'complaints.incident_place',
                 'complaints.date_time_reported',
                 'complaints.date_time_incident'
@@ -475,7 +492,7 @@ class ComplaintController extends Controller
                 'complaints.status_id',
                 'blotter_status.name as status',
                 'complaints.incident_type',
-                'complaints.description',
+                'complaints.details',
                 'complaints.incident_place',
                 'complaints.date_time_reported',
                 'complaints.date_time_incident'
@@ -503,9 +520,9 @@ class ComplaintController extends Controller
             ->where('complaints.id', $complaint->complaint_id)
             ->orderBy('number', 'asc')
             ->get(['complaint_hearings.*', 'complaints.*', 'blotter_status.name as status', 'complaint_hearings.status_id as status_id']);
-        
+
         $status = DB::table('blotter_status')
-        ->get();
+            ->get();
 
         return view('pages.admin.complaints.show', ['complaint' => $complaint, 'recipients' => $recipients, 'hearings' => $hearings, 'editing' => true, 'status' => $status]);
     }
@@ -521,7 +538,7 @@ class ComplaintController extends Controller
             'date_time_reported' => 'required',
             'incident_place' => 'required',
             'incident_type' => 'required',
-            'description' => '',
+            'details' => '',
         ]);
 
         DB::table('complaints')
@@ -530,17 +547,17 @@ class ComplaintController extends Controller
 
         addToLog('Update', "Updated Complaint ID: $id");
 
-        if($request->first_hearing_status_id && $request->first_hearing_date) {
+        if ($request->first_hearing_status_id && $request->first_hearing_date) {
             DB::table('complaint_hearings')->updateOrInsert(['complaint_id' => $id, 'number' => 1], ['status_id' => $request->first_hearing_status_id, 'date' => $request->first_hearing_date]);
             addToLog('Update', "Updated First Hearing Details of Complaint ID: $id");
         }
 
-        if($request->second_hearing_status_id && $request->second_hearing_date) {
+        if ($request->second_hearing_status_id && $request->second_hearing_date) {
             DB::table('complaint_hearings')->updateOrInsert(['complaint_id' => $id, 'number' => 2], ['status_id' => $request->second_hearing_status_id, 'date' => $request->second_hearing_date]);
             addToLog('Update', "Updated Second Hearing Details of Complaint ID: $id");
         }
 
-        if($request->third_hearing_status_id && $request->third_hearing_date) {
+        if ($request->third_hearing_status_id && $request->third_hearing_date) {
             DB::table('complaint_hearings')->updateOrInsert(['complaint_id' => $id, 'number' => 3], ['status_id' => $request->third_hearing_status_id, 'date' => $request->third_hearing_date]);
             addToLog('Update', "Updated Third Hearing Details of Complaint ID: $id");
         }

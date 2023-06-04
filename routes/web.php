@@ -247,8 +247,9 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/occupations', [SettingsController::class, 'index_occupations']);
             Route::get('/religions', [SettingsController::class, 'index_religions']);
             Route::get('/security-questions', [SettingsController::class, 'index_security_questions']);
-            Route::get('/genders', [SettingsController::class, 'index_genders']);
+            Route::get('/sex', [SettingsController::class, 'index_sex']);
             Route::get('/archive-reasons', [SettingsController::class, 'index_archive']);
+            Route::get('/streets', [SettingsController::class, 'index_streets']);
         });
 
         Route::prefix('/audit-trail')->group(function() {

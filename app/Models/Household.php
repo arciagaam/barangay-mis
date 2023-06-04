@@ -12,11 +12,8 @@ class Household extends Model
     protected $table = "households";
 
     protected $fillable = [
-        'purok',
         'house_number',
-        'block',
-        'lot',
         'others',
-        'subdivision',
+        'street_id'
     ];
 }

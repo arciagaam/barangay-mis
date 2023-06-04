@@ -18,6 +18,8 @@ class BlotterController extends Controller
     public function __construct()
     {
         View::share('barangayInformation', DB::table('barangay_information')->first());
+        View::share('streets', DB::table('streets')->get());
+        View::share('sex', DB::table('sex')->orderBy('id')->get());
 
 
         $this->middleware(function ($request, $next) {
@@ -73,7 +75,7 @@ class BlotterController extends Controller
                     'blotters.status_id',
                     'blotter_status.name as status',
                     'blotters.incident_type',
-                    'blotters.description',
+                    'blotters.details',
                     'blotters.incident_place',
                     'blotters.date_time_reported',
                     'blotters.date_time_incident'
@@ -100,7 +102,7 @@ class BlotterController extends Controller
                     'blotters.status_id',
                     'blotter_status.name as status',
                     'blotters.incident_type',
-                    'blotters.description',
+                    'blotters.details',
                     'blotters.incident_place',
                     'blotters.date_time_reported',
                     'blotters.date_time_incident'
@@ -194,11 +196,8 @@ class BlotterController extends Controller
             'birth_date' => 'required',
             'age' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
         ]);
 
         $checkResident = DB::table('residents')
@@ -277,11 +276,8 @@ class BlotterController extends Controller
             'birth_date' => 'required',
             'age' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
         ]);
 
         $checkResident = DB::table('residents')
@@ -294,11 +290,8 @@ class BlotterController extends Controller
             ->where('residents.birth_date', $request->birth_date)
             ->where('residents.age', $request->age)
             ->where('households.house_number', $request->house_number)
-            ->where('households.purok', $request->purok)
-            ->where('households.block', $request->block)
-            ->where('households.lot', $request->lot)
             ->where('households.others', $request->others)
-            ->where('households.subdivision', $request->subdivision)
+            ->where('households.street_id', $request->street_id)
             ->first();
 
         if (!$checkResident) {
@@ -368,11 +361,8 @@ class BlotterController extends Controller
             'birth_date' => 'required',
             'age' => 'required',
             'house_number' => 'required',
-            'purok' => '',
-            'block' => '',
-            'lot' => '',
+            'street_id' => 'required',
             'others' => '',
-            'subdivision' => '',
         ]);
 
         $checkResident = DB::table('residents')
@@ -385,11 +375,8 @@ class BlotterController extends Controller
             ->where('residents.birth_date', $request->birth_date)
             ->where('residents.age', $request->age)
             ->where('households.house_number', $request->house_number)
-            ->where('households.purok', $request->purok)
-            ->where('households.block', $request->block)
-            ->where('households.lot', $request->lot)
             ->where('households.others', $request->others)
-            ->where('households.subdivision', $request->subdivision)
+            ->where('households.street_id', $request->street_id)
             ->first();
 
         if (!$checkResident) {
@@ -435,7 +422,7 @@ class BlotterController extends Controller
         $formFields = $request->validate([
             'incident_type' => 'required',
             'incident_place' => 'required',
-            'description' => '',
+            'details' => '',
             'date_time_incident' => 'required',
         ]);
 
@@ -530,7 +517,7 @@ class BlotterController extends Controller
                 'blotters.status_id',
                 'blotter_status.name as status',
                 'blotters.incident_type',
-                'blotters.description',
+                'blotters.details',
                 'blotters.incident_place',
                 'blotters.date_time_reported',
                 'blotters.date_time_incident'
@@ -572,7 +559,7 @@ class BlotterController extends Controller
                 'blotters.status_id',
                 'blotter_status.name as status',
                 'blotters.incident_type',
-                'blotters.description',
+                'blotters.details',
                 'blotters.incident_place',
                 'blotters.date_time_reported',
                 'blotters.date_time_incident'
@@ -611,7 +598,7 @@ class BlotterController extends Controller
             'date_time_reported' => 'required',
             'incident_place' => 'required',
             'incident_type' => 'required',
-            'description' => '',
+            'details' => '',
         ]);
 
         DB::table('blotters')

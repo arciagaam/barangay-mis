@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('households', function (Blueprint $table) {
+        Schema::create('streets', function (Blueprint $table) {
             $table->id();
-            $table->string('house_number');
-            $table->string('others')->nullable()->default('');
-            $table->foreignId('street_id')->nullable()->constrained('streets')->nullOnDelete()->cascadeOnUpdate();
+            $table->string('name');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('households');
+        Schema::dropIfExists('streets');
     }
 };

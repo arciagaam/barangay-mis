@@ -35,6 +35,7 @@ class MappingController extends Controller
             $mappings = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -43,11 +44,8 @@ class MappingController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street'
             ])
             ->where(function($query) use ($request) {
                 $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', $request->search . '%')
@@ -58,11 +56,8 @@ class MappingController extends Controller
                 ->orWhere('birth_date', 'like', $request->search.'%')
                 ->orWhere('place_of_birth', 'like', $request->search.'%')
                 ->orWhere('house_number', 'like', $request->search.'%')
-                ->orWhere('purok', 'like', $request->search.'%')
-                ->orWhere('block', 'like', $request->search.'%')
-                ->orWhere('lot', 'like', $request->search.'%')
-                ->orWhere('others', 'like', $request->search.'%')
-                ->orWhere('subdivision', 'like', $request->search.'%');
+                ->orWhere('street', 'like', $request->search.'%')
+                ->orWhere('others', 'like', $request->search.'%');
             })
             ->where('residents.archived', 0)
             ->orderBy('mappings.longitude', 'desc')
@@ -74,6 +69,7 @@ class MappingController extends Controller
             $mappings = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -82,11 +78,8 @@ class MappingController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street',
             ])
             ->where('residents.archived', 0)
             ->orderBy('mappings.longitude', 'desc')
@@ -140,6 +133,7 @@ class MappingController extends Controller
             $mappings = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -148,11 +142,8 @@ class MappingController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street',
             ])
             ->where(function($query) use ($request) {
                 $query->where(DB::raw('CONCAT(first_name, " ", middle_name, " ", last_name)'), 'like', $request->search . '%')
@@ -163,11 +154,8 @@ class MappingController extends Controller
                 ->orWhere('birth_date', 'like', $request->search.'%')
                 ->orWhere('place_of_birth', 'like', $request->search.'%')
                 ->orWhere('house_number', 'like', $request->search.'%')
-                ->orWhere('purok', 'like', $request->search.'%')
-                ->orWhere('block', 'like', $request->search.'%')
-                ->orWhere('lot', 'like', $request->search.'%')
-                ->orWhere('others', 'like', $request->search.'%')
-                ->orWhere('subdivision', 'like', $request->search.'%');
+                ->orWhere('street', 'like', $request->search.'%')
+                ->orWhere('others', 'like', $request->search.'%');
             })
             ->where(function($query) use ($request) {
                 $query->where('mappings.longitude', '!=', null)
@@ -183,6 +171,7 @@ class MappingController extends Controller
             $mappings = DB::table('residents')
             ->join('households', 'households.id', '=', 'residents.household_id')
             ->leftJoin('mappings', 'mappings.resident_id', '=', 'residents.id')
+            ->leftJoin('streets', 'streets.id', 'households.street_id')
             ->select(['residents.id as resident_id',  
             'residents.first_name',
             'residents.middle_name',
@@ -191,11 +180,8 @@ class MappingController extends Controller
             'mappings.longitude',
             'mappings.latitude',
             'households.house_number',
-            'households.purok',
-            'households.block',
-            'households.lot',
             'households.others',
-            'households.subdivision',
+            'streets.name as street',
             ])
             ->where('residents.archived', 0)
             ->where('mappings.archived', 0)

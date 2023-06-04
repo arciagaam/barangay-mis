@@ -123,8 +123,9 @@
                             $_sex = $residentData->sex ?? null;
                         @endphp
                         <select class="form-input" name="sex" id="sex">
-                            <option value="1" {{$_sex == 1 ? 'selected' : ''}}>Male</option>
-                            <option value="2" {{$_sex == 2 ? 'selected' : ''}}>Female</option>
+                            @foreach ($sex as $s)
+                                <option value="{{$s->id}}" {{$s->id == $_sex ? 'selected' : ''}}>{{$s->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-input-container">
@@ -159,7 +160,7 @@
 
                         <select class="form-input" name="occupation_id" id="occupation_id">
                             @foreach ($occupations as $occupation) 
-                                <option value="{{$occupation->id}}" {{$_occupation_id == $occupation ? 'selected' : ''}}>{{ucfirst($occupation->name)}}</option>
+                                <option value="{{$occupation->id}}" {{$_occupation_id == $occupation->id ? 'selected' : ''}}>{{ucfirst($occupation->name)}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -193,35 +194,30 @@
                         </div>
                         <input class="form-input" type="text" name="house_number" id="house_number" value="{{$residentData->house_number ?? ''}}">
                     </div>
+
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="purok">Purok</label>
+                            <label for="street_id" class="flex gap-2 items-center">Street<span class="text-xs text-red-500">*</span></label>
+                            @error('street_id')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
                         </div>
-                        <input class="form-input" type="text" name="purok" id="purok" value="{{$residentData->purok ?? ''}}">
+
+                        <select class="form-input" name="street_id" id="street_id">
+                            @php
+                                $_streetId = $residentData->street_id ?? null
+                            @endphp
+                            @foreach ($streets as $street)
+                                <option value="{{$street->id}}" {{$_streetId == $street->id ? 'selected' : ''}}>{{$street->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="block">Block</label>
-                        </div>
-                        <input class="form-input" type="text" name="block" id="block" value="{{$residentData->block ?? ''}}">
-                    </div>
-                    <div class="form-input-container">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="lot">Lot</label>
-                        </div>
-                        <input class="form-input" type="text" name="lot" id="lot" value="{{$residentData->lot ?? ''}}">
-                    </div>
-                    <div class="form-input-container">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="others">Street/Unit/Bldg/Others</label>
+                            <label for="others">Unit/Bldg/Others</label>
                         </div>
                         <input class="form-input" type="text" name="others" id="others" value="{{$residentData->others ?? ''}}">
-                    </div>
-                    <div class="form-input-container">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="subdivision">Subdivision</label>
-                        </div>
-                        <input class="form-input" type="text" name="subdivision" id="subdivision" value="{{$residentData->subdivision ?? ''}}">
                     </div>
                 </div>
             </div>
@@ -260,7 +256,7 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
                 </div>
-                <input class="form-input w-1/2" type="number" name="contact" id="contact">
+                <input class="form-input w-1/2" type="text" name="contact" id="contact">
             </div>
 
             <div class="form-input-container">
@@ -270,7 +266,7 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                     @enderror
                 </div>
-                <input class="form-input w-1/2" type="date" name="return_date" id="return_date">
+                <input class="form-input w-1/2" type="date" name="return_date" id="return_date" min={{date('Y-m-d')}}>
             </div>
         </div>
 

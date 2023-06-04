@@ -102,6 +102,10 @@ if(residentSearch) {
             document.querySelector('form').append(hiddenInput);
         }
 
+        if(document.querySelector('#contact')){
+            document.querySelector('#contact').value = resident["phone_number"];
+        }
+        
         document.querySelectorAll('.form-input').forEach(input => {
             if(input.name in resident) {
                 input.value = resident[input.name];
