@@ -209,14 +209,12 @@ class ResidentController extends Controller
         if ($request->voter_status == 1) {
             $formFields = $request->validate([
                 'voter_status' => 'required',
-                'precinct_number' => 'nullable',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
             ]);
         } else {
             $formFields = $request->validate([
                 'voter_status' => 'required',
-                'precinct_number' => 'nullable',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
             ]);
@@ -322,7 +320,6 @@ class ResidentController extends Controller
             'others' => '',
             'subdivision' => '',
             'voter_status' => 'required',
-            'precinct_number' => '',
             'disabled' => 'required',
         ]);
 
@@ -339,7 +336,6 @@ class ResidentController extends Controller
             'occupation_id' => $request->occupation_id,
             'religion_id' => $request->religion_id,
             'voter_status' => $request->voter_status,
-            'precinct_number' => $request->precinct_number,
             'disabled' => $request->disabled
         ];
 

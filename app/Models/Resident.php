@@ -28,7 +28,6 @@ class Resident extends Model
         'phone_number',
         'telephone_number',
         'voter_status',
-        'precinct_number',
         'disabled',
     ];
 }

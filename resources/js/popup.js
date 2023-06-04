@@ -20,7 +20,6 @@ document.addEventListener('click', (e) => {
 })
 
 function openModal({url, type, group}) {
-
     if(type == 'archive') {
         modal.querySelector('#archive_input').classList.toggle('hidden');
     }else{
@@ -43,8 +42,13 @@ modal.querySelector('#submit').addEventListener('click', async () => {
                 reason: modal.querySelector('#reason').value
             }),
         });
-        
-        location.reload();
+
+        if(_fallbackRoute){
+            location.href = _fallbackRoute;
+        }else{
+            location.reload();
+        }
+
     } else if (fetchType == 'delete') {
         const data = await fetch(fetchUrl, {
             headers: {

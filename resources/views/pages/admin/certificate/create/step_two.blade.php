@@ -209,15 +209,6 @@
                     </div>
                     <div class="form-input-container">
                         <div class="flex flex-row justify-between items-center">
-                            <label for="precinct_number">Precinct Number</label>
-                            @error('number')
-                                <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
-                        </div>
-                        <input class="form-input" type="text" name="precinct_number" id="precinct_number" value="{{$residentData->precinct_number ?? ''}}">
-                    </div>
-                    <div class="form-input-container">
-                        <div class="flex flex-row justify-between items-center">
                             <label for="disabled">Disabled</label>
                         </div>
                         <input class="form-input" type="text" name="disabled" id="disabled" value="{{$residentData->disabled ?? ''}}">
@@ -238,3 +229,4 @@
 
 @vite('resources/js/searchresident.js')
 @vite('resources/js/age.js')
+@vite('resources/js/voter_status.js')

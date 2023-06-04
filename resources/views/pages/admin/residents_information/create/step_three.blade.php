@@ -46,39 +46,30 @@
 
                 <div class="flex min-h-[1px] h-[1px] bg-table-even rounded-md"></div>
 
-                <div class="flex flex-col gap-2">
-                    <p class="font-bold text-lg">Voter Information</p>
+                @if (session()->get('resident')->age >= 18)  
+                    <div class="flex flex-col gap-2">
+                        <p class="font-bold text-lg">Voter Information</p>
 
-                    <div class="form-input-container gap-1">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="voter_status">Voter Status</label>
-                            @error('voter_status')
-                                <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
+                        <div class="form-input-container gap-1">
+                            <div class="flex flex-row justify-between items-center">
+                                <label for="voter_status">Voter Status</label>
+                                @error('voter_status')
+                                    <p class="text-xs text-red-500 italic">{{$message}}</p>
+                                @enderror
+                            </div>
+
+                            @php
+                                $status = old('voter_status') ?? ($resident->voter_status ?? '')
+                            @endphp
+
+                            <select class="form-input w-fit" name="voter_status" id="voter_status">
+                                <option value="0" {{$status == 0 ? 'selected' : ''}}>Unregistered</option>
+                                <option value="1" {{$status == 1 ? 'selected' : ''}}>Registered</option>
+                            </select>
                         </div>
 
-                        @php
-                            $status = old('voter_status') ?? ($resident->voter_status ?? '')
-                        @endphp
-
-                        <select class="form-input w-fit" name="voter_status" id="voter_status">
-                            <option value="0" {{$status == 0 ? 'selected' : ''}}>Unregistered</option>
-                            <option value="1" {{$status == 1 ? 'selected' : ''}}>Registered</option>
-                        </select>
                     </div>
-
-                    <div class="form-input-container gap-1 hidden">
-                        <div class="flex flex-row justify-between items-center">
-                            <label for="preinct_number">Precinct Number</label>
-                            @error('preinct_number')
-                                <p class="text-xs text-red-500 italic">{{$message}}</p>
-                            @enderror
-                        </div>
-
-                        <input class="form-input w-1/2" type="text" name="precinct_number" id="precinct_number">
-                    </div>
-
-                </div>
+                @endif
 
             </div>
 
@@ -94,3 +85,4 @@
 </x-layout>
 
 @vite('resources/js/residents.js')
+@vite('resources/js/voter_status.js')

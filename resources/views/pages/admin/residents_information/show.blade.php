@@ -120,7 +120,7 @@
                         <p class="text-xs text-red-500 italic">{{$message}}</p>
                         @enderror
                     </div>
-                    <input class="form-input" type="text" name="age" id="age" value="{{$resident->age}}" {{$editing ? '' : 'disabled'}}>
+                    <input class="form-input" type="text" name="age" id="age" value="{{$resident->age}}" {{$editing ? '' : 'disabled'}} readonly>
                 </div>
 
                 <div class="form-input-container">
@@ -265,33 +265,25 @@
             <p class="font-bold text-lg">Additional Information</p>
 
             <div class="grid grid-cols-3 gap-3">
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="voter_status" >Voter Status</label>
-                        @error('voter_status')
-                        <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
+                @if ($resident->age >= 18)   
+                    <div class="form-input-container">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="voter_status" >Voter Status</label>
+                            @error('voter_status')
+                            <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        
+                        @if ($editing)                    
+                            <select class="form-input" name="voter_status" id="voter_status" {{$editing ? '' : 'disabled'}}>
+                                    <option value="0" {{$resident->voter_status == 0 ? 'selected' : ''}}>Unregistered</option>
+                                    <option value="1" {{$resident->voter_status == 1 ? 'selected' : ''}}>Registered</option>
+                            </select> 
+                        @else
+                            <input class="form-input" type="text" name="voter_status" id="voter_status" value="{{ucfirst($resident->voter_status == 1 ? 'Registered' : 'Non Registered')}}" {{$editing ? '' : 'disabled'}}>
+                        @endif
                     </div>
-                    
-                    @if ($editing)                    
-                        <select class="form-input" name="voter_status" id="voter_status" {{$editing ? '' : 'disabled'}}>
-                                <option value="0" {{$resident->voter_status == 0 ? 'selected' : ''}}>Unregistered</option>
-                                <option value="1" {{$resident->voter_status == 1 ? 'selected' : ''}}>Registered</option>
-                        </select> 
-                    @else
-                        <input class="form-input" type="text" name="voter_status" id="voter_status" value="{{ucfirst($resident->religion)}}" {{$editing ? '' : 'disabled'}}>
-                    @endif
-                </div>
-
-                <div class="form-input-container">
-                    <div class="flex flex-row justify-between items-center">
-                        <label for="precinct_number" > Precinct Number</label>
-                        @error('precinct_number')
-                        <p class="text-xs text-red-500 italic">{{$message}}</p>
-                        @enderror
-                    </div>
-                    <input class="form-input" type="text" name="precinct_number" id="precinct_number" value="{{$resident->precinct_number ?? 'N/A'}}" {{$editing ? '' : 'disabled'}}>
-                </div>
+                @endif
 
                 <div class="form-input-container">
                     <div class="flex flex-row justify-between items-center">
@@ -321,3 +313,6 @@
         @endif
     </form>
 </x-layout>
+
+@vite('resources/js/age.js')
+@vite('resources/js/voter_status.js')

@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Resident;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -14,6 +16,7 @@ class ResidentFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    
     public function definition(): array
     {
         return [
@@ -24,7 +27,7 @@ class ResidentFactory extends Factory
             'sex' => fake()->numberBetween(1,2),
             'gender_id' => fake()->numberBetween(1,2),
             'birth_date' => fake()->date(),
-            'age' => fake()->numberBetween(1,100),
+            'age' => '',
             'place_of_birth' => fake()->city(),
             'civil_status_id' => fake()->numberBetween(1,5),
             'occupation_id' => fake()->numberBetween(1,2),
@@ -35,5 +38,12 @@ class ResidentFactory extends Factory
             'voter_status' => fake()->numberBetween(0,1),
             'disabled' => fake()->numberBetween(0,1),
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterMaking(function (Resident $resident) {
+            $resident->fill(['age' => Carbon::parse($resident->birth_date)->age]);
+        });
     }
 }

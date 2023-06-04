@@ -213,6 +213,7 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/residents', [ArchiveController::class, 'residents']);
             Route::get('/inventory', [ArchiveController::class, 'inventory']);
             Route::get('/mapping', [ArchiveController::class, 'mapping']);
+            Route::get('/activity', [ArchiveController::class, 'activity']);
         });
 
         Route::prefix('/barangay-information')->group(function() {
@@ -260,6 +261,8 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/activity/{id}/edit', [CalendarController::class, 'edit']);
         Route::post('/activity/{id}/edit', [CalendarController::class, 'update']);
         Route::post('/activity/{id}/delete', [CalendarController::class, 'destroy']);
+        Route::post('/activity/{id}/archive', [CalendarController::class, 'archive']);
+        Route::get('/activity/{id}/recover', [CalendarController::class, 'recover']);
     });
 
     Route::prefix('profile')->group(function() {

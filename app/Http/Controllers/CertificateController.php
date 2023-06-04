@@ -137,7 +137,6 @@ class CertificateController extends Controller
             'others' => '',
             'subdivision' => '',
             'voter_status' => '',
-            'precinct_number' => '',
             'disabled' => '',
         ]);
 
@@ -154,7 +153,6 @@ class CertificateController extends Controller
             ->where('residents.occupation_id', $request->occupation_id)
             ->where('residents.religion_id', $request->religion_id)
             ->where('residents.voter_status', $request->voter_status)
-            ->where('residents.precinct_number', $request->precinct_number)
             ->where('residents.disabled', $request->disabled)
             ->where('households.house_number', $request->house_number)
             ->where('households.purok', $request->purok)

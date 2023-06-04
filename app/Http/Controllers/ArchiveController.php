@@ -167,5 +167,36 @@ class ArchiveController extends Controller
         return view('pages.admin.maintenance.archive.mapping.index', ['mappings' => $mappings]);   
     }
 
+    public function activity(Request $request)
+    {
+        $rows = $request->rows;
+
+        if($request->search || $request->search != '') {
+            $activities = DB::table('activities')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'activities.archive_reason_id')
+            ->where('archived', 1)
+            ->where(function($query) use ($request) {
+                $query->where('activities.name', 'like', $request->search.'%')
+                ->orWhere('start_date', 'like', $request->search.'%')
+                ->orWhere('end_date', 'like', $request->search.'%')
+                ->orWhere('archive_reasons.name', 'like', $request->search.'%');
+            })
+            ->select('archive_reasons.name as reason', 'activities.*')
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        } else {
+            $activities = DB::table('activities')
+            ->leftJoin('archive_reasons', 'archive_reasons.id', 'activities.archive_reason_id')
+            ->select('archive_reasons.name as reason', 'activities.*')
+            ->where('archived', 1)
+            ->paginate($rows ?? 10)
+            ->appends(request()->query());
+        }
+
+        return view('pages.admin.maintenance.archive.activity.index', ['activities' => $activities]);   
+
+
+    }
+
     
 }

@@ -6,6 +6,9 @@
 
             <div class="flex gap-3">
                 @if (!$editing)
+                    @if (auth()->user()->role_id == 1)  
+                        <button data-url="{{url("/calendar/activity/$activity->id/archive")}}" data-type="archive" data-fallback="{{url('/')}}" data-group="activity" class="popup_trigger primary-btn">Archive Activity</button>
+                    @endif
                     <form action="{{url("/calendar/activity/$activity->id/delete")}}" method="POST">
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{$activity->id}}">

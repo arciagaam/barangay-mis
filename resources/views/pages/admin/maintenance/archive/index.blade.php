@@ -17,5 +17,10 @@
             <i class='bx bx-lg bxs-map-alt' ></i>
             <p class="text-lg">Mapping</p>
         </a>
+
+        <a href="{{url('/maintenance/archive/activity')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
+            <i class='bx bx-lg bxs-calendar-x'></i>
+            <p class="text-lg">Activity</p>
+        </a>
     </div>
 </x-layout>

@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->string('telephone_number')->nullable();
             $table->tinyInteger('voter_status');
-            $table->string('precinct_number')->nullable();
             $table->tinyInteger('disabled');
             $table->tinyInteger('single_parent');
             $table->tinyInteger('archived')->default(0);
