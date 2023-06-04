@@ -1,0 +1,81 @@
+{
+  "_axios-4a70c6fc.js": {
+    "file": "assets/axios-4a70c6fc.js"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-0fd9f123.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/age.js": {
+    "file": "assets/age-e6607558.js",
+    "isEntry": true,
+    "src": "resources/js/age.js"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-359a5dbc.js",
+    "imports": [
+      "_axios-4a70c6fc.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/barangay_information.js": {
+    "file": "assets/barangay_information-7860f492.js",
+    "isEntry": true,
+    "src": "resources/js/barangay_information.js"
+  },
+  "resources/js/bootstrap.js": {
+    "file": "assets/bootstrap-359a5dbc.js",
+    "imports": [
+      "_axios-4a70c6fc.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/bootstrap.js"
+  },
+  "resources/js/calendar.js": {
+    "file": "assets/calendar-91e4159d.js",
+    "isEntry": true,
+    "src": "resources/js/calendar.js"
+  },
+  "resources/js/lend.js": {
+    "file": "assets/lend-c1917b0e.js",
+    "isEntry": true,
+    "src": "resources/js/lend.js"
+  },
+  "resources/js/mapping.js": {
+    "file": "assets/mapping-e64e9112.js",
+    "isEntry": true,
+    "src": "resources/js/mapping.js"
+  },
+  "resources/js/nav.js": {
+    "file": "assets/nav-f0eee956.js",
+    "isEntry": true,
+    "src": "resources/js/nav.js"
+  },
+  "resources/js/popup.js": {
+    "file": "assets/popup-f2c302d5.js",
+    "isEntry": true,
+    "src": "resources/js/popup.js"
+  },
+  "resources/js/residents.js": {
+    "file": "assets/residents-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/residents.js"
+  },
+  "resources/js/searchitem.js": {
+    "file": "assets/searchitem-c0463308.js",
+    "isEntry": true,
+    "src": "resources/js/searchitem.js"
+  },
+  "resources/js/searchresident.js": {
+    "file": "assets/searchresident-d50958f5.js",
+    "isEntry": true,
+    "src": "resources/js/searchresident.js"
+  },
+  "resources/js/settings.js": {
+    "file": "assets/settings-75064bb2.js",
+    "isEntry": true,
+    "src": "resources/js/settings.js"
+  }
+}
