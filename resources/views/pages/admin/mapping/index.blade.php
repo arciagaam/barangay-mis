@@ -1,5 +1,5 @@
 <x-layout>
-
+    
     <x-pageheader>Mapping</x-pageheader>
 
     <div class="flex flex-row gap-5 justify-end items-center">
@@ -14,5 +14,6 @@
         </div>
     </div>
 </x-layout>
+
 
 @vite('resources/js/mapping.js')

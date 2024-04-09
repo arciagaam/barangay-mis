@@ -41,6 +41,32 @@ function generateMap({ map_id, dragging = false }) {
 // CHECK KUNG NASA MAPPING HOMEPAGE OR INDEX
 if (index_map) {
     const map = generateMap({ map_id: 'map' });
+
+    const res = await fetch(BASE_PATH + '/api/mappings', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        credentials: 'same-origin',
+    });
+
+    if(res.ok) {
+        const {data} = await res.json();
+
+        data.forEach(mapping => {
+            L.marker([mapping.latitude, mapping.longitude])
+            .addTo(map)
+            .bindPopup(`
+                <div style="display:flex; flex-direction:column; gap:.5rem">
+                    <p style="margin:0">${mapping.first_name} ${mapping.middle_name} ${mapping.first_name}</p>
+                    <p style="margin:0">${mapping.house_number} ${mapping.street_name} ${mapping.others}</p>
+                </div>
+            `)
+            ;
+        })
+    }
+
 }
 
 // CHECK KUNG NASA ADD MAPPING

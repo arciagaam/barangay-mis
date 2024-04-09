@@ -595,3 +595,14 @@ Route::get('/streets/{id}/delete', function(Request $request, $id) {
     return response()->json(['message' => 'success'], 200);
 });
 
+Route::get('mappings', function(Request $request) {
+
+    $data = DB::table('mappings')
+    ->join('residents', 'residents.id', 'mappings.resident_id')
+    ->join('households', 'households.id', 'residents.household_id')
+    ->join('streets', 'streets.id', 'households.street_id')
+    ->select('*', 'mappings.id as id', 'streets.name as street_name')
+    ->get();
+
+    echo json_encode(['data' => $data]);
+});
