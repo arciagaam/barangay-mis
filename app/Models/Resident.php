@@ -28,5 +28,6 @@ class Resident extends Model
         'telephone_number',
         'voter_status',
         'disabled',
+        'head_of_the_family'
     ];
 }

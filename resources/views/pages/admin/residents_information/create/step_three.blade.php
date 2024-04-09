@@ -42,6 +42,17 @@
                         <input type="checkbox" name="single_parent" id="single_parent">
                     </div>
 
+                    <div class="form-input-container flex-row gap-5">
+                        <div class="flex flex-row justify-between items-center">
+                            <label for="head_of_the_family">Head of the Family</label>
+
+                            @error('head_of_the_family')
+                                <p class="text-xs text-red-500 italic">{{$message}}</p>
+                            @enderror
+                        </div>
+                        <input type="checkbox" name="head_of_the_family" id="head_of_the_family">
+                    </div>
+
                 </div>
 
                 <div class="flex min-h-[1px] h-[1px] bg-table-even rounded-md"></div>

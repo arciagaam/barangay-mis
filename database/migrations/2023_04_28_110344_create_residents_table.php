@@ -30,6 +30,7 @@ return new class extends Migration
             $table->tinyInteger('voter_status');
             $table->tinyInteger('disabled');
             $table->tinyInteger('single_parent');
+            $table->tinyInteger('head_of_the_family')->default(0);
             $table->tinyInteger('archived')->default(0);
             $table->foreignId('archive_reason_id')->nullable()->constrained('archive_reasons')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamp('created_at')->useCurrent();

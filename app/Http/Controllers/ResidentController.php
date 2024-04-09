@@ -206,17 +206,19 @@ class ResidentController extends Controller
                 'voter_status' => '',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
+                'head_of_the_family' => 'nullable',
             ]);
         } else {
             $formFields = $request->validate([
                 'voter_status' => '',
                 'single_parent' => 'nullable',
                 'disabled' => 'nullable',
+                'head_of_the_family' => 'nullable',
             ]);
         }
-
         $formFields['disabled'] = $request->disabled == 'on' ? 1 : 0;
         $formFields['single_parent'] = $request->single_parent == 'on' ? 1 : 0;
+        $formFields['head_of_the_family'] = $request->head_of_the_family == 'on' ? 1 : 0;
 
         $resident = $request->session()->get('resident');
         $resident->fill($formFields);

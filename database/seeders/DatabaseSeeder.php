@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
 
         // DO NOT ALTER
         DB::table('certificate_types')->insert([
-            ['name' => 'Business Permit'],
+            // ['name' => 'Business Permit'],
             ['name' => 'Barangay Clearance'],
             ['name' => 'Barangay Indigency'],
         ]);
