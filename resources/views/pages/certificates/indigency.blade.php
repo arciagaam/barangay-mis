@@ -88,7 +88,7 @@
     <img class="absolute certificate" src="{{url('/images/indigency.png')}}" alt="">
     
     <p id="name" class="absolute">{{$resident->first_name}} {{$resident->middle_name ?? ''}} {{$resident->last_name}}</p>
-    <p id="civil_status" class="absolute">{{ucfirst($resident->civil_status)}}</p>
+    {{-- <p id="civil_status" class="absolute">{{ucfirst($resident->civil_status)}}</p> --}}
     @php
         $address = 
         $resident->house_number . ' ' .
