@@ -40,8 +40,9 @@
     #name {
         top: 373px;
         left: 295px;
-        width: 234px;
+        width: 275px;
         text-align: center;
+
     }
 
     #civil_status {
@@ -53,29 +54,32 @@
 
     #address {
         top: 399px;
-        left: 185px;
-        width: 370px;
+        left: 235px;
+        width: 270px;
         text-align: center;
+    
     }
 
     #purpose {
         top: 538px;
-        left: 394px;
-        width: 125px;
+        left: 390px;
+        width: 68px;
         text-align: center;
     }
 
     #issued_this {
         top: 586px;
         left: 224px;
-        width: 35px;
+        width: 25px;
+        background: white;
         text-align: center;
+
     }
 
     #issued_of {
         top: 586px;
-        left: 318px;
-        width: 56px;
+        left: 310px;
+        width: 28px;
         text-align: center;
     }
 
@@ -119,8 +123,8 @@
             adjustTextSize(element);
         }
 
-        window.print();
-        setTimeout(window.close, 500); 
     })
 </script>
+{{-- window.print();
+setTimeout(window.close, 500);  --}}
 </html>

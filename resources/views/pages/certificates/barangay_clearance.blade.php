@@ -39,8 +39,9 @@
     #name {
         top: 335px;
         left: 257px;
-        width: 265px;
+        width: 235px;
         text-align: center;
+        white-space: nowrap;
     }
 
     #civil_status {
@@ -48,43 +49,50 @@
         left: 625px;
         width: 75px;
         text-align: center;
+
     }
 
     #address {
         top: 359px;
         left: 250px;
-        width: 410px;
+        width: 310px;
         text-align: center;
+
     }
 
     #purpose {
-        top: 502px;
-        left: 378px;
-        width: 125px;
+        top: 500px;
+        left: 380px;
+        width: 75px;
         text-align: center;
+
     }
 
     #issued_this {
-        top: 550px;
-        left: 212px;
-        width: 37px;
+        top: 554px;
+        left: 210px;
+        width: 22px;
         text-align: center;
+
+
     }
 
     #issued_of {
         top: 550px;
-        left: 308px;
-        width: 52px;
+        left: 286px;
+        width: 55px;
         text-align: center;
+
     }
 
     #individual_sig {
         text-transform: uppercase;
-        top: 750px;
-        left: 80px;
-        width: 275px;
+        top: 792px;
+        left: 130px;
+        width: 200px;
         font-weight: bold;
         text-align: center;
+
     }
 
 </style>
@@ -129,8 +137,9 @@
             adjustTextSize(element);
         }
 
-        window.print();
-        setTimeout(window.close, 500); 
     })
+    
+    window.print();
+    setTimeout(window.close, 500);
 </script>
 </html>

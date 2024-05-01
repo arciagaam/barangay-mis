@@ -16,11 +16,13 @@
         @csrf
         <div class="flex flex-col bg-white flex-1 rounded-md shadow-md py-5 px-5 gap-7">
             @if ($id == 1)
-                @include('pages.admin.certificate.create.certificate_types.business_permit')
-            @elseif ($id == 2)
+                {{-- @include('pages.admin.certificate.create.certificate_types.business_permit') --}}
                 @include('pages.admin.certificate.create.certificate_types.barangay_clearance')
-            @elseif ($id == 3)
+            @elseif ($id == 2)
+                {{-- @include('pages.admin.certificate.create.certificate_types.barangay_clearance') --}}
                 @include('pages.admin.certificate.create.certificate_types.certificate_of_indigency')
+            {{-- @elseif ($id == 3)
+                @include('pages.admin.certificate.create.certificate_types.certificate_of_indigency') --}}
             @endif
 
             <div class="flex flex-row self-end mt-auto gap-3">

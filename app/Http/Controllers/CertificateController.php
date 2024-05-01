@@ -202,7 +202,6 @@ class CertificateController extends Controller
     public function create_StepThree(Request $request)
     {
         $certificate = $request->session()->get('certificate');
-
         return view('pages.admin.certificate.create.step_three', ['certificate' => $certificate]);
     }
 
@@ -241,26 +240,30 @@ class CertificateController extends Controller
         $request->session()->put('certificate_type_id', $type_id);
 
         // BUSINESS PERMIT
-        if ($type_id == 1) {
-            $formFields = $request->validate([
-                'business_name' => 'required',
-                'location' => 'required',
-                'operator' => 'required',
-                'address' => 'required',
-                'complying' => '',
-                'partially_complying' => '',
-                'no_objection' => '',
-                'recommends' => '',
-            ]);
-        } else if ($type_id == 2) {
-            $formFields = $request->validate([
-                'purpose' => 'required',
-            ]);
-        } else if ($type_id == 3) {
-            $formFields = $request->validate([
-                'purpose' => 'required',
-            ]);
-        }
+        // if ($type_id == 1) {
+        //     $formFields = $request->validate([
+        //         'business_name' => 'required',
+        //         'location' => 'required',
+        //         'operator' => 'required',
+        //         'address' => 'required',
+        //         'complying' => '',
+        //         'partially_complying' => '',
+        //         'no_objection' => '',
+        //         'recommends' => '',
+        //     ]);
+        // } else if ($type_id == 2) {
+        //     $formFields = $request->validate([
+        //         'purpose' => 'required',
+        //     ]);
+        // } else if ($type_id == 3) {
+        //     $formFields = $request->validate([
+        //         'purpose' => 'required',
+        //     ]);
+        // }
+
+        $formFields = $request->validate([
+            'purpose' => 'required',
+        ]);
 
         foreach ($request->post() as $key => $inputField) {
             if ($key == '_token') {
@@ -307,12 +310,15 @@ class CertificateController extends Controller
             ->get();
 
         if ($request->certificate_type_id == 1) {
-            $view = 'pages.certificates.business_permit';
-        } else if ($request->certificate_type_id == 2) {
+            // $view = 'pages.certificates.business_permit';
             $view = 'pages.certificates.barangay_clearance';
-        } else if ($request->certificate_type_id == 3) {
+        } else if ($request->certificate_type_id == 2) {
+            // $view = 'pages.certificates.barangay_clearance';
             $view = 'pages.certificates.indigency';
-        }
+        } 
+        // else if ($request->certificate_type_id == 3) {
+        //     $view = 'pages.certificates.indigency';
+        // }
 
         $request->session()->forget('certificate');
         $request->session()->forget('certificate_type_id');
