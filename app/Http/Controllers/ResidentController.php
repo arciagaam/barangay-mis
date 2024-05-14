@@ -62,7 +62,7 @@ class ResidentController extends Controller
                 ->orWhere('birth_date', 'like', '%'.$request->search.'%')
                 ->orWhere('place_of_birth', 'like', '%'.$request->search.'%')
                 ->orWhere('house_number', 'like', '%'.$request->search.'%')
-                ->orWhere('street', 'like', $request->search.'%')
+                ->orWhere('streets.name', 'like', $request->search.'%')
                 ->orWhere('others', 'like', '%'.$request->search.'%');
             })
             ->when($filter != null, function ($query) use ($request, $filter) {

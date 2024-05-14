@@ -48,9 +48,9 @@
                             <div class="flex flex-row flex-wrap justify-center items-center gap-2">
                                 <a href="{{url("/inventory/$item->id")}}" class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><span class="material-symbols-outlined">visibility</span></a>
                                 <a href={{url("/lend/new/step-one/$item->id")}} class="aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm font-bold bxs-hand'></i></a>
-                                @if (auth()->user()->role_id == 1)
+                                {{-- @if (auth()->user()->role_id == 1)
                                     <button data-url="{{url("/inventory/$item->id/archive")}}" data-type="archive" data-group="item" class="popup_trigger aspect-square rounded-md h-fit flex items-center justify-center p-[.25rem]"><i class='bx bx-sm bx-archive-in'></i></button>
-                                @endif
+                                @endif --}}
                             </div>
                         </td>
                     </tr>

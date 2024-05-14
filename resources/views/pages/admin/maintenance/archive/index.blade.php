@@ -8,10 +8,10 @@
             <p class="text-lg">Residents</p>
         </a>
 
-        <a href="{{url('/maintenance/archive/inventory')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
+        {{-- <a href="{{url('/maintenance/archive/inventory')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
             <i class='bx bx-lg bxs-package' ></i>
             <p class="text-lg">Inventory</p>
-        </a>
+        </a> --}}
 
         <a href="{{url('/maintenance/archive/mapping')}}" class="flex gap-3 items-center bg-white p-5 rounded-md">
             <i class='bx bx-lg bxs-map-alt' ></i>
