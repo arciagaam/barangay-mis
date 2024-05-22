@@ -48,7 +48,7 @@ class CertificateController extends Controller
                         ->orWhere('certificate_types.name', 'like', '%' . $request->search . '%')
                         ->orWhere('certificates.created_at', 'like', '%' . $request->search . '%');
                 })
-                ->orderBy('certificates.created_at', 'asc')
+                ->orderBy('certificates.created_at', 'desc')
                 ->select('residents.first_name', 'residents.middle_name', 'residents.last_name', 'certificates.*', 'certificate_types.name as certificate_type')
                 ->paginate($rows ?? 10)
                 ->appends(request()->query());
@@ -56,7 +56,7 @@ class CertificateController extends Controller
             $certificates = DB::table('certificates')
                 ->join('residents', 'residents.id', '=', 'certificates.resident_id')
                 ->join('certificate_types', 'certificate_types.id', '=', 'certificates.certificate_type_id')
-                ->orderBy('certificates.created_at', 'asc')
+                ->orderBy('certificates.created_at', 'desc')
                 ->select('residents.first_name', 'residents.middle_name', 'residents.last_name', 'certificates.*', 'certificate_types.name as certificate_type')
                 ->paginate($rows ?? 10)
                 ->appends(request()->query());

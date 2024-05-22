@@ -61,8 +61,8 @@ Route::get('/inventory/{id}', function ($id) {
 
 Route::post('/calendar', function (Request $request) {
     $activities = DB::table('activities')
-    ->where('start_date', '>', "$request->year-$request->month-01")
-    ->where('start_date', '<', "$request->year-$request->month-31")
+    ->where('start_date', '>=', "$request->year-$request->month-01")
+    ->where('start_date', '<=', "$request->year-$request->month-31")
     ->where('archived', 0)
     ->get();
 

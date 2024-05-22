@@ -37,6 +37,7 @@ class LendController extends Controller
             'lent_items.quantity as quantity',
             'lent_items.contact as contact',
         ])
+        ->orderBy('lent_items.created_at', 'desc')
         ->paginate($rows ?? 10)
         ->appends(request()->query());
 

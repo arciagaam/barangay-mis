@@ -3,7 +3,7 @@
 
         <div class="flex w-full items-center justify-between">
             <p class="font-bold text-xl">{{$activity->name}}</p>
-
+            
             <div class="flex gap-3">
                 @if (!$editing)
                     @if (auth()->user()->role_id == 1)  
@@ -14,7 +14,10 @@
                         <input type="hidden" name="id" id="id" value="{{$activity->id}}">
                         <button class="py-2 px-4 bg-red-500 text-white font-bold rounded-md">Remove Activity</button>
                     </form>
-                    <a href="{{url("/calendar/activity/$activity->id/edit")}}" class="primary-btn">Edit</a>
+
+                    @if ($activity->start_date > now())    
+                        <a href="{{url("/calendar/activity/$activity->id/edit")}}" class="primary-btn">Edit</a>
+                    @endif
                 @else
                     <p class="italic text-sm">Editing</p>
                 @endif

@@ -97,13 +97,14 @@
             @csrf
             <p class="text-lg font-bold">Change Password</p>
 
-            @if(session()->has('error'))
+            {{-- @if(session()->has('error'))
+                
                 <p class="text-xs text-red-500 italic">{{session()->get('error')}}</p>
-            @endif
+            @endif --}}
 
             @if(session()->has('success'))
-            <p class="text-xs text-green-500 italic">{{session()->get('success')}}</p>
-        @endif
+                <p class="text-xs text-green-500 italic">{{session()->get('success')}}</p>
+            @endif
 
             <div class="grid grid-cols-3 gap-3">
                 <div class="form-input-container">

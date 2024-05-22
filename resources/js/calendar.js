@@ -26,7 +26,7 @@ if(calendarEl){
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,listWeek',
+            right: 'dayGridMonth,listMonth',
         },
     
         buttonText: {
@@ -78,7 +78,9 @@ if(calendarEl){
             })
         })
         .then(res => res.json());
-    
+        
+        console.log(data);
+
         data.activities.map((activity) => {
             events.push(
                 {extendedProps:{id:activity.id} , title: activity.name, start: activity.start_date}
@@ -136,7 +138,8 @@ if(calendarEl){
                 is_all_day: allDay.checked ? 1 : 0
             })
         })
-    
+        
+
         if(data.status == 422) {
             const {name, details, message} = await data.json(); 
 

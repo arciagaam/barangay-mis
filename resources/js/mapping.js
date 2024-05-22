@@ -1,14 +1,39 @@
 const index_map = document.querySelector('#map');
 const create_map = document.querySelector('#create_map');
 const view_map = document.querySelector('#view_map');
+
+const legends = [
+    {
+        label: 'Barangay Hall',
+        lat: 14.493992,
+        lng: 120.904130,
+        icon: "<i class='bx bxs-institution text-3xl text-red-500'></i>"
+    },
+    {
+        label: 'Covered Court / Evacuation Center',
+        lat: 14.493658,
+        lng: 120.903555,
+        icon: "<i class='bx bxs-landmark text-3xl text-yellow-500'></i>"
+    },
+    {
+        label: 'Barangay Hospital',
+        lat: 14.494520,
+        lng: 120.90500,
+        icon: "<i class='bx bxs-clinic text-3xl text-pink-600' ></i>"
+    },
+]
 /*
     Etong function na to yung nag gegenerate ng map sa "MAP DIV"
 */
 
 function generateMap({ map_id, dragging = false }) {
 
+    // brgy hall 14.493992, 120.904130
+    // covered court 14.493627, 120.903492
+    // hospital 14.494438, 120.905073
+
     // SET MAP VARIABLE OR SETTINGS (INITIALIZE NG MAP)
-    var map = L.map(map_id, {
+    let map = L.map(map_id, {
         center: [14.493569, 120.904096], // CENTER NG YAKAL 5A
         zoom: 18, 
         maxZoom: 20,
@@ -66,6 +91,19 @@ if (index_map) {
             ;
         })
     }
+
+    console.log(legends)
+    legends.forEach(legend => {
+        let icon = L.divIcon({html: legend.icon, className: ''})
+
+        L.marker([legend.lat, legend.lng], {icon: icon})
+        .addTo(map)
+        .bindPopup(`
+            <div style="display:flex; flex-direction:column; gap:.5rem">
+                <p style="margin:0">${legend.label}</p>
+            </div>
+        `)
+    });
 
 }
 

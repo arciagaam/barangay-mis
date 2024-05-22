@@ -85,12 +85,12 @@ class ProfileController extends Controller
 
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
-            'password' => 'required',
+            'password' => 'required|alpha_num|min:6|max:12',
             'confirm_password' => ['required', 'same:password'],
         ]);
     
         if ($validator->fails()) {
-            return redirect('/profile')->with('error', 'Incorrect yes. Please try again.');
+            return redirect('/profile')->withErrors($validator);
         }
 
         DB::table('users')

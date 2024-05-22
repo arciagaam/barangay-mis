@@ -68,8 +68,8 @@ class BlotterController extends Controller
                         case 'unsettled' : $query->where("blotter_status.id", 1); break;
                     }
                 })
-                ->orderBy('blotters.created_at', 'asc')
                 ->distinct(['blotter_recipients.blotter_id'])
+                ->orderBy('blotters.created_at', 'desc')
                 ->select([
                     'blotters.id as blotter_id',
                     'blotters.status_id',
@@ -95,7 +95,7 @@ class BlotterController extends Controller
                         case 'unsettled' : $query->where("blotter_status.id", 1); break;
                     }
                 })
-                ->orderBy('blotters.created_at', 'asc')
+                ->orderBy('blotters.created_at', 'desc')
                 ->distinct(['blotter_recipients.blotter_id'])
                 ->select([
                     'blotters.id as blotter_id',

@@ -8,7 +8,7 @@
             @if (!$editing)
 
             <div class="flex gap-3 h-fit">
-                <button type="button" data-id="{{$resident->resident_id}}" data-fallback="{{url('/residents')}}" data-route="positions" data-url="{{url("residents/$resident->resident_id/delete")}}" data-type="delete" data-group="resident" class="popup_trigger py-2 px-4 bg-red-500 text-white font-bold rounded-md">Delete Resident</button>
+                <button type="button" data-id="{{$resident->resident_id}}" data-fallback="{{url('/residents')}}" data-route="positions" data-url="{{url("residents/$resident->resident_id/delete")}}" data-type="archive" data-group="resident" class="popup_trigger py-2 px-4 bg-red-500 text-white font-bold rounded-md">Archive Resident</button>
                 <a href="{{url("/residents/$resident->resident_id/edit")}}" class="primary-btn">Edit</a>
             </div>
             @else
